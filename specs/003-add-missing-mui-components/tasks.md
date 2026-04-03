@@ -28,7 +28,7 @@
 
 **⚠️ CRITICAL**: `useTransition` must be complete before US3 (Transitions). `useAnchorPosition` must be complete before US2 (Popover) and US4 (Popper).
 
-- [ ] T002 [P] Implement `useTransition` hook — ENTERING/ENTERED/EXITING/EXITED state machine, `withTiming` worklet, `reduceMotion` short-circuit — in `src/hooks/useTransition.ts`
+- [ ] T002 [P] Implement `useTransition` hook — ENTERING/ENTERED/EXITING/EXITED state machine, `withTiming` worklet, `reduceMotion` short-circuit, returns `{ state: TransitionState; animatedStyle: AnimatedStyle }` — in `src/hooks/useTransition.ts`
 - [ ] T003 [P] Implement `useAnchorPosition` hook — `ref.measure()` pattern (see `src/components/Menu/Menu.tsx`), returns `{ top, left, width, height }` — in `src/hooks/useAnchorPosition.ts`
 
 **Checkpoint**: Both hooks exported and TypeScript-strict-clean — US2, US3, US4 can now proceed
@@ -43,8 +43,8 @@
 
 - [ ] T004 [P] [US1] Create `CircularProgressProps` interface (variant, value, size, color, style) + barrel export in `src/components/CircularProgress/types.ts` and `src/components/CircularProgress/index.ts`
 - [ ] T005 [P] [US1] Create `LinearProgressProps` interface (variant, value, valueBuffer, color, style) + barrel export in `src/components/LinearProgress/types.ts` and `src/components/LinearProgress/index.ts`
-- [ ] T006 [P] [US1] Implement `CircularProgress` — indeterminate spinning `withRepeat` worklet, determinate arc via two-half-circle View clipping technique (`// RN-DEVIATION: no SVG`), value clamped to [0,100], `accessibilityRole="progressbar"`, `accessibilityValue` for determinate — in `src/components/CircularProgress/CircularProgress.tsx`
-- [ ] T007 [P] [US1] Implement `LinearProgress` — three-layer absolute-positioned Views (track → buffer → fill), indeterminate two-staggered-bar animation (2100 ms loop + 715 ms delay), value/valueBuffer clamped, `accessibilityRole="progressbar"`, `accessibilityValue` for determinate — in `src/components/LinearProgress/LinearProgress.tsx`
+- [ ] T006 [P] [US1] Implement `CircularProgress` — `React.memo`, indeterminate spinning `withRepeat` worklet, determinate arc via two-half-circle View clipping technique (`// RN-DEVIATION: no SVG`), value clamped to [0,100], `accessibilityRole="progressbar"`, `accessibilityValue` for determinate — in `src/components/CircularProgress/CircularProgress.tsx`
+- [ ] T007 [P] [US1] Implement `LinearProgress` — `React.memo`, three-layer absolute-positioned Views (track → buffer → fill), indeterminate two-staggered-bar animation (2100 ms loop + 715 ms delay), value/valueBuffer clamped, `accessibilityRole="progressbar"`, `accessibilityValue` for determinate — in `src/components/LinearProgress/LinearProgress.tsx`
 - [ ] T008 [P] [US1] Write `CircularProgress` test suite — render test, indeterminate variant, determinate variant at `value={75}`, `color` prop, `size` prop, out-of-range value clamping, accessibility roles — in `src/components/CircularProgress/CircularProgress.test.tsx`
 - [ ] T009 [P] [US1] Write `LinearProgress` test suite — render test, indeterminate variant, determinate variant at `value={40}`, buffer variant with `value={60} valueBuffer={80}`, `valueBuffer < value` edge case, accessibility roles — in `src/components/LinearProgress/LinearProgress.test.tsx`
 
@@ -61,8 +61,8 @@
 **Depends on**: T003 (`useAnchorPosition`)
 
 - [ ] T010 [US2] Create `PopoverProps` interface (open, anchorRef, onClose, anchorOrigin, transformOrigin, children, style) + barrel export in `src/components/Popover/types.ts` and `src/components/Popover/index.ts`
-- [ ] T011 [US2] Implement `Popover` — `useAnchorPosition` for coordinates, `<Portal>` via `PortalContext`, backdrop `Pressable` calling `onClose`, `anchorOrigin`/`transformOrigin` positioning formula (vFactor/hFactor), `Fade` animation (once Fade exists — compose or inline `withTiming` opacity) — in `src/components/Popover/Popover.tsx`
-- [ ] T012 [US2] Write `Popover` test suite — renders nothing when `open={false}`, renders content when `open={true}`, `onClose` called on outside tap, null `anchorRef` does not throw, `anchorOrigin` bottom-left alignment — in `src/components/Popover/Popover.test.tsx`
+- [ ] T011 [US2] Implement `Popover` — `useAnchorPosition` for coordinates, `<Portal>` via `PortalContext`, backdrop `Pressable` calling `onClose`, `anchorOrigin`/`transformOrigin` positioning formula (vFactor/hFactor), inline `withTiming` opacity animation (do NOT import from `Fade`/T018 — prevents circular dependency) — in `src/components/Popover/Popover.tsx`
+- [ ] T012 [US2] Write `Popover` test suite — renders nothing when `open={false}`, renders content when `open={true}`, `onClose` called on outside tap, null `anchorRef` does not throw, `anchorOrigin` bottom-left alignment, `toBeAccessible` assertion on backdrop `Pressable` (Principle V) — in `src/components/Popover/Popover.test.tsx`
 
 **Checkpoint**: `npm test -- --testPathPattern=Popover` passes — US2 independently verified
 
@@ -77,7 +77,7 @@
 **Depends on**: T002 (`useTransition`)
 
 - [ ] T013 [P] [US3] Create `FadeProps` interface (in, timeout, mountOnEnter, unmountOnExit, children, style) + barrel in `src/components/Fade/types.ts` and `src/components/Fade/index.ts`
-- [ ] T014 [P] [US3] Create `GrowProps` interface (same base + timeout) + barrel in `src/components/Grow/types.ts` and `src/components/Grow/index.ts`
+- [ ] T014 [P] [US3] Create `GrowProps` interface (same base as `FadeProps` — no additional props) + barrel in `src/components/Grow/types.ts` and `src/components/Grow/index.ts`
 - [ ] T015 [P] [US3] Create `SlideProps` interface (base + direction: `up|down|left|right`) + barrel in `src/components/Slide/types.ts` and `src/components/Slide/index.ts`
 - [ ] T016 [P] [US3] Create `ZoomProps` interface (same base) + barrel in `src/components/Zoom/types.ts` and `src/components/Zoom/index.ts`
 - [ ] T017 [P] [US3] Create `CollapseProps` interface (base + orientation: `horizontal|vertical`, collapsedSize: number default 0) + barrel in `src/components/Collapse/types.ts` and `src/components/Collapse/index.ts`
@@ -86,11 +86,11 @@
 - [ ] T020 [P] [US3] Implement `Slide` — `useTransition` + `withTiming` translateX/translateY from off-screen based on `direction` — in `src/components/Slide/Slide.tsx`
 - [ ] T021 [P] [US3] Implement `Zoom` — `useTransition` + `withTiming` scale 0↔1 — in `src/components/Zoom/Zoom.tsx`
 - [ ] T022 [P] [US3] Implement `Collapse` — `useTransition` + `onLayout` on inner container for natural size, `withTiming` height/width from `collapsedSize` to measured size, `orientation` toggles axis — in `src/components/Collapse/Collapse.tsx`
-- [ ] T023 [P] [US3] Write `Fade` test suite — mounted-but-hidden default, `in={true}` visible, `unmountOnExit` removes child, `mountOnEnter` lazy mount — in `src/components/Fade/Fade.test.tsx`
-- [ ] T024 [P] [US3] Write `Grow` test suite — renders child, `in` toggle, `timeout` prop, `unmountOnExit` — in `src/components/Grow/Grow.test.tsx`
-- [ ] T025 [P] [US3] Write `Slide` test suite — renders child, `direction="up"` enters from bottom, `direction` prop variants — in `src/components/Slide/Slide.test.tsx`
-- [ ] T026 [P] [US3] Write `Zoom` test suite — renders child, `in={true}` shows, `unmountOnExit` removes — in `src/components/Zoom/Zoom.test.tsx`
-- [ ] T027 [P] [US3] Write `Collapse` test suite — renders child, `collapsedSize={40}` baseline height, `orientation="vertical"` default, double-toggle `unmountOnExit`+`mountOnEnter`, negative `collapsedSize` clamped to 0 — in `src/components/Collapse/Collapse.test.tsx`
+- [ ] T023 [P] [US3] Write `Fade` test suite — mounted-but-hidden default, `in={true}` visible, `unmountOnExit` removes child, `mountOnEnter` lazy mount, `reduceMotion=true` produces instant transition with no intermediate animation states (Principle V) — in `src/components/Fade/Fade.test.tsx`
+- [ ] T024 [P] [US3] Write `Grow` test suite — renders child, `in` toggle, `timeout` prop, `unmountOnExit`, `reduceMotion=true` produces instant transition (Principle V) — in `src/components/Grow/Grow.test.tsx`
+- [ ] T025 [P] [US3] Write `Slide` test suite — renders child, `direction="up"` enters from bottom, `direction` prop variants, `reduceMotion=true` produces instant transition (Principle V) — in `src/components/Slide/Slide.test.tsx`
+- [ ] T026 [P] [US3] Write `Zoom` test suite — renders child, `in={true}` shows, `unmountOnExit` removes, `reduceMotion=true` produces instant transition (Principle V) — in `src/components/Zoom/Zoom.test.tsx`
+- [ ] T027 [P] [US3] Write `Collapse` test suite — renders child, `collapsedSize={40}` baseline height, `orientation="vertical"` default, double-toggle `unmountOnExit`+`mountOnEnter`, negative `collapsedSize` clamped to 0, `reduceMotion=true` produces instant transition (Principle V) — in `src/components/Collapse/Collapse.test.tsx`
 
 **Checkpoint**: `npm test -- --testPathPattern=Fade|Grow|Slide|Zoom|Collapse` passes — US3 independently verified
 
@@ -106,7 +106,7 @@
 
 - [ ] T028 [US4] Create `PopperProps` interface + `PopperPlacement` enum (12 values: top/bottom/left/right + `-start`/`-end` variants) + barrel in `src/components/Popper/types.ts` and `src/components/Popper/index.ts`
 - [ ] T029 [US4] Implement `Popper` — `useAnchorPosition`, 12-placement → origin mapping table (see `contracts/Popper.md`), `<Portal>` unless `disablePortal={true}`, NO backdrop Pressable — in `src/components/Popper/Popper.tsx`
-- [ ] T030 [US4] Write `Popper` test suite — hidden when `open={false}`, visible when `open={true}`, `placement="bottom"` positions below anchor, `placement="top"` positions above, `disablePortal={true}` renders inline, null `anchorRef` does not throw — in `src/components/Popper/Popper.test.tsx`
+- [ ] T030 [US4] Write `Popper` test suite — hidden when `open={false}`, visible when `open={true}`, `placement="bottom"` positions below anchor, `placement="top"` positions above, `disablePortal={true}` renders inline, null `anchorRef` does not throw, `toBeAccessible` assertion on popper content container (Principle V) — in `src/components/Popper/Popper.test.tsx`
 
 **Checkpoint**: `npm test -- --testPathPattern=Popper` passes — US4 independently verified
 
@@ -136,7 +136,7 @@
 - [ ] T035 [P] [US6] Implement `Timeline` (root container, provides `TimelineContext`, `position` prop: `left|right|alternate`) + `TimelineItem` (reads context for alignment) in `src/components/Timeline/Timeline.tsx` and `src/components/Timeline/TimelineItem.tsx`
 - [ ] T036 [P] [US6] Implement `TimelineSeparator` (vertical flex column), `TimelineDot` (`React.memo`, `variant: filled|outlined`, `color` prop from theme, 48dp touch area) + `TimelineConnector` (`React.memo`, flex-grow vertical line) in `src/components/Timeline/TimelineSeparator.tsx`, `src/components/Timeline/TimelineDot.tsx`, `src/components/Timeline/TimelineConnector.tsx`
 - [ ] T037 [P] [US6] Implement `TimelineContent` (flex-1 body column) + `TimelineOppositeContent` (mirror body, flex-1 opposite column) in `src/components/Timeline/TimelineContent.tsx` and `src/components/Timeline/TimelineOppositeContent.tsx`
-- [ ] T038 [US6] Write `Timeline` test suite — renders 3 items in vertical order, dot + connector visible in separator, `TimelineDot color="primary"`, `TimelineDot variant="outlined"`, opposite content on both sides, `position="alternate"` alternates sides, single item with no connector renders cleanly — in `src/components/Timeline/Timeline.test.tsx`
+- [ ] T038 [US6] Write `Timeline` test suite — renders 3 items in vertical order, dot + connector visible in separator, `TimelineDot color="primary"`, `TimelineDot variant="outlined"`, opposite content on both sides, `position="alternate"` alternates sides, single item with no connector renders cleanly, `toBeAccessible` assertion on `TimelineDot` (Principle V) — in `src/components/Timeline/Timeline.test.tsx`
 
 **Checkpoint**: `npm test -- --testPathPattern=Timeline` passes — US6 independently verified
 
@@ -144,12 +144,16 @@
 
 ## Phase 9: Polish & Cross-Cutting Concerns
 
-**Purpose**: Wire all new components into the public package API, verify strict TypeScript, confirm zero regressions across the full suite.
+**Purpose**: Wire all new components into the public package API; run all six DoD quality gates (token compliance, bundle size, Storybook stories, visual review); confirm zero regressions across the full suite.
 
 - [ ] T039 Add all new component exports and type exports to `src/index.ts` — `CircularProgress`, `LinearProgress`, `Popover`, `Fade`, `Grow`, `Slide`, `Zoom`, `Collapse`, `Popper`, `Masonry`, `Timeline`, `TimelineItem`, `TimelineSeparator`, `TimelineDot`, `TimelineConnector`, `TimelineContent`, `TimelineOppositeContent` plus all corresponding `*Props` types (FR-019)
 - [ ] T040 Run `npm test` across full suite — confirm 0 failures, all 100 pre-existing tests still pass (zero regressions), every new `*.test.tsx` passes independently (SC-002, SC-006, FR-022)
+- [ ] T041 [P] Token compliance check — `grep -rn '#[0-9A-Fa-f]' src/components/CircularProgress src/components/LinearProgress src/components/Popover src/components/Fade src/components/Grow src/components/Slide src/components/Zoom src/components/Collapse src/components/Popper src/components/Masonry src/components/Timeline` MUST return zero hits (DoD gate 5 / Principle II)
+- [ ] T042 [P] Bundle size check — build the library and verify each new component group adds ≤10 kB to the minified bundle; document any group approaching the limit in `specs/003-add-missing-mui-components/plan.md` (DoD gate 6 / Principle VI)
+- [ ] T043 [P] Create Storybook stories for all 7 component groups — one story file per group covering all major prop variants, runnable on both iOS and Android via Expo Go — `src/components/CircularProgress/CircularProgress.stories.tsx`, `src/components/LinearProgress/LinearProgress.stories.tsx`, `src/components/Popover/Popover.stories.tsx`, `src/components/Fade/Fade.stories.tsx`, `src/components/Popper/Popper.stories.tsx`, `src/components/Masonry/Masonry.stories.tsx`, `src/components/Timeline/Timeline.stories.tsx` (DoD gate 4 / Principle IV)
+- [ ] T044 Visual spec review — compare each of the 17 new components against MD3 reference at https://m3.material.io; record any visual deviation not already listed as `// RN-DEVIATION:` in source; obtain reviewer sign-off before merge (DoD gate 1 / Principle I)
 
-**Checkpoint**: `npm test` exits 0 — feature accepted ✅
+**Checkpoint**: All 6 DoD gates pass (visual review ✅ / test suite ✅ / a11y ✅ / Storybook ✅ / token compliance ✅ / bundle size ✅) + `npm test` exits 0 — feature accepted ✅
 
 ---
 
@@ -249,7 +253,7 @@ Implement **Phase 1 → Phase 2 → Phase 3** first. This delivers the two most-
 - **Timeline**: `TimelineContext` carries `{ position: 'left'|'right'|'alternate', itemIndex: number }`. Only `Timeline` writes context; sub-components read it.
 - **No new dependencies**: zero `package.json` changes required across all 7 groups.
 
-### Total Task Count: 40 tasks across 9 phases
+### Total Task Count: 44 tasks across 9 phases
 | Phase | Story | Tasks | Parallelizable |
 |-------|-------|-------|---------------|
 | 1 Setup | — | 1 | — |
@@ -260,5 +264,5 @@ Implement **Phase 1 → Phase 2 → Phase 3** first. This delivers the two most-
 | 6 US4 Popper | P2 | 3 | 0 |
 | 7 US5 Masonry | P3 | 3 | 0 |
 | 8 US6 Timeline | P3 | 5 | 3 |
-| 9 Polish | — | 2 | 0 |
-| **Total** | | **40** | **24** |
+| 9 Polish | — | 6 | 3 |
+| **Total** | | **44** | **27** |
