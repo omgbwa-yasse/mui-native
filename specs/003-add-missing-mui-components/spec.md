@@ -23,6 +23,18 @@ Web-only MUI utilities (CSS Baseline, No SSR, Textarea Autosize, useMediaQuery, 
 
 ---
 
+## Clarifications
+
+### Session 2026-04-03
+
+- Q: What should the default animation `timeout` be for Fade, Grow, Slide, and Zoom when no `timeout` prop is provided? → A: 300ms for both enter and exit (React Native mobile convention).
+- Q: When a Transition component is rendered with `in={false}` and neither `mountOnEnter` nor `unmountOnExit` is set, what is the default state of the child? → A: Mounted-but-hidden (child is rendered, visibility suppressed via opacity/scale); children are only unmounted when `unmountOnExit={true}` is explicitly provided.
+- Q: Should progress components expose accessibility roles/values by default? → A: Yes — `CircularProgress` and `LinearProgress` must set `accessibilityRole="progressbar"` automatically; determinate variants must also expose `accessibilityValue={{ min: 0, max: 100, now: value }}`.
+- Q: Should new components follow the existing mui-native `style` prop pattern or introduce an `sx`-style API? → A: Follow existing pattern — all new components accept a `style` prop (React Native `StyleSheet`-compatible); no `sx` prop (web-only).
+- Q: Should `Masonry`'s `columns` prop accept responsive breakpoint objects (like MUI web) or integers only? → A: Integers only — React Native targets mobile-only form factors; breakpoint objects are out of scope.
+
+---
+
 ## User Scenarios & Testing
 
 ### User Story 1 - Progress Indicators (Priority: P1)
@@ -74,7 +86,7 @@ As a developer, I can wrap any child element with `Fade`, `Grow`, `Slide`, `Zoom
 
 **Acceptance Scenarios**:
 
-1. **Given** `<Fade in={false}><View /></Fade>` is rendered, **When** the component mounts, **Then** the child is not visible (opacity 0 or unmounted if `unmountOnExit` is true).
+1. **Given** `<Fade in={false}><View /></Fade>` is rendered with no `unmountOnExit` prop, **When** the component mounts, **Then** the child is mounted but not visible (opacity 0); it is not unmounted.
 2. **Given** `<Fade in={true}><View /></Fade>` is rendered, **When** `in` transitions to true, **Then** the child fades in to full opacity.
 3. **Given** `<Grow in={true}><View /></Grow>` with a `timeout` of 300ms, **When** `in` transitions to true, **Then** the child scales from a small size to full size over 300ms.
 4. **Given** `<Slide in={true} direction="up"><View /></Slide>`, **When** `in` transitions to true, **Then** the child slides in from the bottom toward its final position.
@@ -183,12 +195,12 @@ As a developer, I can run `npm test` after all components are implemented and se
 - **FR-007**: Package MUST export five transition components: `Fade`, `Grow`, `Slide`, `Zoom`, and `Collapse`.
 - **FR-008**: Each transition component MUST accept an `in` boolean prop that controls the visible / hidden state.
 - **FR-009**: Each transition component MUST accept `mountOnEnter` and `unmountOnExit` boolean props controlling child lifecycle.
-- **FR-010**: Each transition component MUST accept a `timeout` prop that is either a single number (ms) or an object `{ enter: number; exit: number }`.
+- **FR-010**: Each transition component MUST accept a `timeout` prop that is either a single number (ms) or an object `{ enter: number; exit: number }` (default: 300ms for both enter and exit when not provided).
 - **FR-011**: `Slide` MUST accept a `direction` prop with values `up` | `down` | `left` | `right`.
 - **FR-012**: `Collapse` MUST accept an `orientation` prop (`horizontal` | `vertical`) and a `collapsedSize` number prop (default 0).
 - **FR-013**: Package MUST export a `Popper` component accepting `open`, `anchorRef`, `placement`, and `disablePortal` props.
 - **FR-014**: `Popper` MUST NOT render a backdrop; all touches outside the popper content MUST pass through to elements beneath it.
-- **FR-015**: Package MUST export a `Masonry` component accepting `columns`, `spacing`, and `defaultColumns` props.
+- **FR-015**: Package MUST export a `Masonry` component accepting `columns` (integer), `spacing`, and `defaultColumns` (integer) props. Responsive breakpoint objects are not supported.
 - **FR-016**: Package MUST export all seven `Timeline` composable components: `Timeline`, `TimelineItem`, `TimelineSeparator`, `TimelineDot`, `TimelineConnector`, `TimelineContent`, and `TimelineOppositeContent`.
 - **FR-017**: `Timeline` MUST accept a `position` prop with values `left` | `right` | `alternate`.
 - **FR-018**: `TimelineDot` MUST accept a `variant` prop (`filled` | `outlined`) and a `color` prop.
@@ -196,6 +208,8 @@ As a developer, I can run `npm test` after all components are implemented and se
 - **FR-020**: Each new component MUST have a `types.ts` file defining its props interface in TypeScript strict mode with no use of `any` in public APIs.
 - **FR-021**: Each new component MUST have a `*.test.tsx` file containing at minimum: a render test, a primary props / variants test, and one edge case test.
 - **FR-022**: The full test suite MUST pass at 100% (zero failures, zero regressions on pre-existing tests) after all components are implemented.
+- **FR-023**: `CircularProgress` and `LinearProgress` MUST set `accessibilityRole="progressbar"` by default. When `variant="determinate"`, both MUST additionally set `accessibilityValue={{ min: 0, max: 100, now: value }}` to expose progress to assistive technologies.
+- **FR-024**: All new components MUST accept a `style` prop compatible with React Native's `StyleSheet` API, consistent with the existing 55 mui-native components. No `sx` prop is exposed.
 
 ### Key Entities
 
@@ -204,7 +218,7 @@ As a developer, I can run `npm test` after all components are implemented and se
 - **Popover**: An anchored overlay container. Key attributes: `open`, `anchorRef`, `onClose`, `anchorOrigin`, `transformOrigin`. Depends on screen coordinates derived from the anchor view.
 - **Transition (shared concept)**: A visibility-animation wrapper. Key attributes: `in`, `timeout`, `mountOnEnter`, `unmountOnExit`. Concrete subtypes: Fade, Grow, Slide, Zoom, Collapse. Collapse adds `orientation` and `collapsedSize`; Slide adds `direction`.
 - **Popper**: A non-blocking anchored overlay primitive. Key attributes: `open`, `anchorRef`, `placement`, `disablePortal`. Subset of Popover behavior without modal backdrop.
-- **Masonry**: A multi-column staggered layout container. Key attributes: `columns`, `spacing`, `defaultColumns`. Distributes children to the shortest available column on each layout pass.
+- **Masonry**: A multi-column staggered layout container. Key attributes: `columns` (integer), `spacing`, `defaultColumns` (integer). Distributes children to the shortest available column on each layout pass. Responsive breakpoint objects are not supported.
 - **Timeline (composable set)**: A vertical event-sequence display. Root: `Timeline` (`position`). Item: `TimelineItem`. Separator: `TimelineSeparator`. Marker: `TimelineDot` (`variant`, `color`). Line: `TimelineConnector`. Body: `TimelineContent`. Mirror body: `TimelineOppositeContent`.
 
 ---
@@ -233,3 +247,7 @@ As a developer, I can run `npm test` after all components are implemented and se
 - No `react-transition-group` is used; it is a web-only library.
 - AvatarGroup and incremental API enhancements to existing components (e.g., Button loading state, TextField multiline improvements) are out of scope for this feature.
 - The test runner environment and test utilities (jest + @testing-library/react-native) remain unchanged from the current setup.
+- The default animation `timeout` for all Transition components (`Fade`, `Grow`, `Slide`, `Zoom`, `Collapse`) is 300ms for both enter and exit when the `timeout` prop is not supplied by the consumer.
+- Transition components render children as mounted-but-hidden by default when `in={false}` (e.g., opacity 0, scale 0). Children are only removed from the render tree when `unmountOnExit={true}` is explicitly set.
+- All new components accept a `style` prop (React Native `StyleSheet`-compatible) for style overrides. No `sx` prop is introduced, consistent with the existing component library pattern.
+- `Masonry`'s `columns` and `defaultColumns` props accept plain integers only; responsive breakpoint objects are out of scope for the mobile-only React Native target.
