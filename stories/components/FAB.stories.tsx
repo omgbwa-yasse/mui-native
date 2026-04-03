@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-native';
-import { FAB } from 'rn-material/components/FAB';
+import { FAB } from 'mui-native/components/FAB';
 
 const meta: Meta<typeof FAB> = {
   title: 'Components/FAB',

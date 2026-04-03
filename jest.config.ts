@@ -11,7 +11,7 @@ const config: Config = {
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
   moduleNameMapper: {
-    '^rn-material/(.*)$': '<rootDir>/src/$1',
+    '^mui-native/(.*)$': '<rootDir>/src/$1',
   },
   setupFilesAfterEnv: [
     '@testing-library/jest-native/extend-expect',

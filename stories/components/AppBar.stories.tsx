@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-native';
-import { AppBar } from 'rn-material/components/AppBar';
+import { AppBar } from 'mui-native/components/AppBar';
 
 const meta: Meta<typeof AppBar> = {
   title: 'Components/AppBar',

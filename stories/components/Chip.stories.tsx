@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-native';
-import { Chip } from 'rn-material/components/Chip';
+import { Chip } from 'mui-native/components/Chip';
 
 const meta: Meta<typeof Chip> = {
   title: 'Components/Chip',

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Text, View } from 'react-native';
 import type { Meta, StoryObj } from '@storybook/react-native';
-import { BottomSheet } from 'rn-material/components/BottomSheet';
+import { BottomSheet } from 'mui-native/components/BottomSheet';
 
 function BottomSheetDemo(): React.ReactElement {
   const [visible, setVisible] = useState(false);

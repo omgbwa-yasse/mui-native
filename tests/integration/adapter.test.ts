@@ -5,7 +5,7 @@ import { createTheme } from '../../src/theme/createTheme';
 import { buildRnmCoreTheme } from '../../src/adapters/rnm-core-adapter';
 
 describe('US4 – rnm-core adapter', () => {
-  it('maps rn-material light theme colors to rnm-core palette', () => {
+  it('maps mui-native light theme colors to rnm-core palette', () => {
     const theme = createTheme({ mode: 'light' });
     const rnmTheme = buildRnmCoreTheme(theme);
 
@@ -17,7 +17,7 @@ describe('US4 – rnm-core adapter', () => {
     expect(rnmTheme.palette.error).toBe(theme.colorScheme.error);
   });
 
-  it('maps rn-material dark theme colors to rnm-core palette', () => {
+  it('maps mui-native dark theme colors to rnm-core palette', () => {
     const theme = createTheme({ mode: 'dark' });
     const rnmTheme = buildRnmCoreTheme(theme);
 
@@ -25,7 +25,7 @@ describe('US4 – rnm-core adapter', () => {
     expect(rnmTheme.palette.background).toBe(theme.colorScheme.background);
   });
 
-  it('preserves rn-material typography in rnm-core theme', () => {
+  it('preserves mui-native typography in rnm-core theme', () => {
     const theme = createTheme();
     const rnmTheme = buildRnmCoreTheme(theme);
 

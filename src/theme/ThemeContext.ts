@@ -19,7 +19,7 @@ export function useTheme(): ThemeContextValue {
   const ctx = useContext(ThemeContext);
   if (ctx === null) {
     throw new Error(
-      '[rn-material] useTheme() must be called inside a <ThemeProvider>. ' +
+      '[mui-native] useTheme() must be called inside a <ThemeProvider>. ' +
         'Wrap your component tree with <ThemeProvider>.</ThemeProvider>.',
     );
   }

@@ -1,17 +1,17 @@
 /**
  * Optional adapter layer for `@react-native-material/core` (rnm-core) consumers.
  *
- * This module lets teams already using rnm-core pass rn-material `Theme` tokens
+ * This module lets teams already using rnm-core pass mui-native `Theme` tokens
  * into rnm-core's styling system without a full migration.  The adapter is
- * deliberately thin — it maps rn-material's MD3 color-scheme to the flat
- * color-palette shape that rnm-core expects, and re-exports rn-material's
+ * deliberately thin — it maps mui-native's MD3 color-scheme to the flat
+ * color-palette shape that rnm-core expects, and re-exports mui-native's
  * typography/spacing values unchanged.
  *
  * **Usage:**
  * ```tsx
- * import { buildRnmCoreTheme } from 'rn-material/adapters';
+ * import { buildRnmCoreTheme } from 'mui-native/adapters';
  * import { Provider } from '@react-native-material/core';
- * import { ThemeProvider, createTheme } from 'rn-material';
+ * import { ThemeProvider, createTheme } from 'mui-native';
  *
  * const rnMaterialTheme = createTheme();
  * const rnmTheme = buildRnmCoreTheme(rnMaterialTheme);
@@ -57,9 +57,9 @@ export interface RnmCoreTheme {
 }
 
 /**
- * Build an rnm-core-compatible theme object from a rn-material `Theme`.
+ * Build an rnm-core-compatible theme object from a mui-native `Theme`.
  * Only the color roles that rnm-core's Provider consumes are mapped; all other
- * MD3 roles remain available directly through `useTheme()` in rn-material.
+ * MD3 roles remain available directly through `useTheme()` in mui-native.
  */
 export function buildRnmCoreTheme(theme: Theme): RnmCoreTheme {
   const { colorScheme, typography } = theme;

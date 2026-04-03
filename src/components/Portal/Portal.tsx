@@ -29,7 +29,7 @@ export function Portal({ children }: PortalProps): null {
   if (ctx === null) {
     if (__DEV__) {
       console.warn(
-        '[rn-material] <Portal> was rendered outside a <PortalHost>. ' +
+        '[mui-native] <Portal> was rendered outside a <PortalHost>. ' +
           'Wrap your root with <PortalHost> so portals have a mount target.',
       );
     }

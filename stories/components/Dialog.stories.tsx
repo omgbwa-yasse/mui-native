@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, View } from 'react-native';
 import type { Meta, StoryObj } from '@storybook/react-native';
-import { Dialog } from 'rn-material/components/Dialog';
+import { Dialog } from 'mui-native/components/Dialog';
 
 function DialogDemo(): React.ReactElement {
   const [visible, setVisible] = useState(false);

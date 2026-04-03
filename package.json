@@ -1,7 +1,7 @@
 {
-  "name": "rn-material",
+  "name": "mui-native",
   "version": "0.1.0",
-  "description": "React Native Material Design 3 component library",
+  "description": "mui-native — Material Design 3 component library for React Native",
   "main": "lib/index.js",
   "module": "lib/index.js",
   "types": "lib/index.d.ts",

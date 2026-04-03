@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text } from 'react-native';
 import type { Meta, StoryObj } from '@storybook/react-native';
-import { NavigationBar } from 'rn-material/components/NavigationBar';
+import { NavigationBar } from 'mui-native/components/NavigationBar';
 
 const items = [
   { icon: <Text>🏠</Text>, label: 'Home', onPress: () => {} },
