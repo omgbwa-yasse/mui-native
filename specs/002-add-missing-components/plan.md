@@ -7,7 +7,7 @@
 
 Extend the **RN-Material** component library — which currently ships 9 components
 (AppBar, BottomSheet, Button, Card, Chip, Dialog, FAB, NavigationBar, TextField) —
-with the 46 additional components required to reach parity with Material Design 3, MUI v6,
+with the 47 additional components required to reach parity with Material Design 3, MUI v6,
 and React Native Paper.
 
 Implementation is organized into 7 sequenced phases with explicit dependency ordering:
@@ -27,7 +27,7 @@ Every component follows the same three-file convention (`types.ts`, `Component.t
 **Project Type**: npm library (published package)
 **Performance Goals**: All animations at 60 fps via Reanimated worklets; component bundle budget ≤ 10 kB minified per new component
 **Constraints**: Zero hardcoded hex/size literals in component files; no JS-thread animations; RTL-compatible logical properties only; `reduceMotion` respected; no new peer deps beyond what `001` already establishes
-**Scale/Scope**: 46 new components × ~4 files (types.ts + Component.tsx + index.ts + story) ≈ 185 new files; barrel (`src/index.ts`) receives 46 new export lines
+**Scale/Scope**: 47 new components × ~4 files (types.ts + Component.tsx + index.ts + story) ≈ 189 new files; barrel (`src/index.ts`) receives 47 new export lines
 
 ## Constitution Check
 
@@ -94,6 +94,7 @@ src/
 │   ├── Backdrop/
 │   ├── Snackbar/
 │   ├── Modal/
+│   ├── Menu/                      # Phase 2 — P1 Feedback & Overlay
 │   ├── Checkbox/                 # Phase 3 — P1 Form Controls
 │   ├── RadioButton/
 │   ├── Switch/
@@ -129,17 +130,16 @@ src/
 │   ├── ButtonGroup/              # Phase 7 — Utilities
 │   ├── HelperText/
 │   ├── Link/
-│   ├── Menu/
 │   └── TransferList/
 │
-└── index.ts                      # Public barrel — +46 new export blocks
+└── index.ts                      # Public barrel — +47 new export blocks
 
 tests/
 └── unit/
-    └── components/               # +46 component test files
+    └── components/               # +47 component test files
 
 stories/
-└── components/                   # +46 story files (one per component)
+└── components/                   # +47 story files (one per component)
 ```
 
 **Structure Decision**: Extends the single-package structure established in
@@ -169,7 +169,7 @@ inheriting the design system and conventions of `001-rn-material-core`.
 
 ### Phase 2 — P1 Feedback & Overlay
 
-**Components**: ActivityIndicator, Skeleton, Alert, Backdrop, Snackbar, Modal  
+**Components**: ActivityIndicator, Skeleton, Alert, Backdrop, Snackbar, Modal, Menu  
 **Why P1**: Required on virtually every screen that performs network calls or user actions.  
 **Prerequisite**: Phase 1 complete (Portal required by Backdrop/Snackbar/Modal)  
 **Key decisions**: See R-01 (Portal host), R-02 (Snackbar queue), R-05 (Skeleton shimmer)
@@ -214,18 +214,18 @@ inheriting the design system and conventions of `001-rn-material-core`.
 
 ### Phase 7 — Specialized Utilities
 
-**Components**: ButtonGroup, HelperText, Link, Menu, TransferList  
+**Components**: ButtonGroup, HelperText, Link, TransferList  
 **Why last**: These compose existing components with specialized behaviour.  
-**Prerequisite**: All prior phases (ButtonGroup composes Button; HelperText uses Text/Icon; Link extends Text; Menu uses Portal + TouchableRipple; TransferList composes List + Button)
+**Prerequisite**: All prior phases (ButtonGroup composes Button; HelperText uses Text/Icon; Link extends Text; TransferList composes List + Button)
 
 ---
 
 ### Phase 8 — Final Gate
 
 **Tasks**:
-1. Update `src/index.ts` barrel with all 46 new exports
+1. Update `src/index.ts` barrel with all 47 new exports
 2. Run `tsc --noEmit` → exit 0
 3. Run `npm run lint` → exit 0 (zero errors)
 4. Run `jest --coverage` → all tests pass
-5. Verify `SC-001` (all 46 present in `src/components/` and exported)
-6. Verify `SC-007` (all 46 stories load without console errors)
+5. Verify `SC-001` (all 47 present in `src/components/` and exported)
+6. Verify `SC-007` (all 47 stories load without console errors)

@@ -101,6 +101,11 @@ A developer building forms needs a complete set of input controls: checkboxes, r
 5. **Given** a Select with options, **When** the user taps and picks an option, **Then** the selected label is displayed and `onValueChange` fires.
 6. **Given** a Searchbar, **When** the user types, **Then** `onChangeText` fires with each keystroke and a clear button appears when the field is non-empty.
 7. **Given** `<SegmentedButtons>` with 3 options, **When** one is selected, **Then** it receives the active visual state and `onValueChange` is called.
+8. **Given** an `<Autocomplete>` with a list of options, **When** the user types a partial string, **Then** the dropdown filters to matching options and `onValueChange` fires when one is selected.
+9. **Given** a `<NumberField min={0} max={10} step={1} value={5} />`, **When** the increment button is tapped, **Then** `onValueChange(6)` is called and the displayed value updates.
+10. **Given** `<HelperText type="error">Required</HelperText>`, **When** rendered, **Then** the text appears in the theme's error color.
+11. **Given** `<ButtonGroup>` wrapping 3 `Button` children, **When** rendered, **Then** adjacent borders collapse and outer corners retain the button's border radius.
+12. **Given** a `<TransferList>` with items in the left panel, **When** some items are checked and "→" is pressed, **Then** those items move to the right panel and `onTransfer` fires with updated lists.
 
 ---
 
@@ -139,6 +144,10 @@ A developer needs components for showing avatars, badges, lists of items, data t
 5. **Given** `<DataTable>` with headers and rows, **When** rendered, **Then** each cell is aligned and sortable column headers fire `onSort`.
 6. **Given** `<Tooltip title="Info">`, **When** the wrapped element is long-pressed, **Then** the tooltip label appears near the element.
 7. **Given** `<Divider />`, **When** rendered, **Then** a thin separator line appears that adapts its color to the current theme.
+8. **Given** `<Rating value={3} max={5} />`, **When** rendered, **Then** 3 filled stars and 2 empty stars appear using theme color tokens; tapping a star calls `onValueChange`.
+9. **Given** `<Banner>` with a message and two actions, **When** rendered, **Then** the message and action buttons are visible and each action's `onPress` fires when tapped.
+10. **Given** `<IconButton icon={...} />`, **When** tapped, **Then** `onPress` fires and the button's touch target measures at least 48 × 48 dp.
+11. **Given** `<Link onPress={...}>Go to settings</Link>`, **When** rendered, **Then** the text has the theme's primary color and `onPress` fires when tapped.
 
 ---
 
@@ -157,12 +166,14 @@ A developer needs layout abstractions (Box, Container, Grid, Stack, Paper), imag
 3. **Given** `<Paper elevation={2}>`, **When** rendered, **Then** content appears inside a surface with appropriate shadow matching the elevation token.
 4. **Given** `<Accordion>` with a summary and details, **When** the summary is tapped, **Then** the details panel toggles open/closed with animation.
 5. **Given** `<ImageList>` with 6 images, **When** rendered, **Then** images appear in a masonry or fixed-column grid.
+6. **Given** `<Box mt={2} p={1}>` wrapping a child, **When** rendered, **Then** the applied margin and padding correspond to theme spacing tokens, not literal pixel values.
+7. **Given** `<Container maxWidth="sm">` on a wide screen, **When** rendered, **Then** content is horizontally capped at the `sm` breakpoint width and centered.
 
 ---
 
 ### Edge Cases
 
-- What happens when a controlled component receives `undefined` for its value — it should silently fall back to an uncontrolled state or documented default.
+- What happens when a controlled component receives `undefined` for its value — in development mode it MUST log a `console.warn` and initialise from the `defaultValue` prop; in production it must fail silently using an empty/initial state.
 - How does Snackbar behave when multiple messages are queued in rapid succession — only one should be visible at a time; subsequent ones should queue.
 - How does Modal render when the keyboard is open — it must not be obscured by the software keyboard.
 - What happens when Badge receives a count > 99 — it should display "99+" or a configurable maximum string.
@@ -179,18 +190,18 @@ A developer needs layout abstractions (Box, Container, Grid, Stack, Paper), imag
 - **FR-001**: Each component MUST accept and forward a `testID` prop for test targeting.
 - **FR-002**: Each component MUST support light and dark mode via the existing ThemeProvider context.
 - **FR-003**: Each interactive component MUST expose an accessible `accessibilityRole`, `accessibilityLabel`, and `accessibilityState` where applicable.
-- **FR-004**: Each component MUST be exported from the library barrel (`src/index.ts`).
+- **FR-004**: Each component MUST be exported from the library barrel (`src/index.ts`). Companion sub-components (PortalHost, SnackbarHost, TabPanel, RadioGroup, ToggleButtonGroup) are also exported alongside their parent component.
 - **FR-005**: Each component MUST have a corresponding Storybook story demonstrating its primary variants.
 - **FR-006**: Controlled components MUST accept a `value`/`onValueChange` (or equivalent) pair and work as both controlled and uncontrolled.
 - **FR-007**: All color, spacing, typography, shape, and elevation values MUST be sourced from theme tokens — no hard-coded style literals.
 - **FR-008**: Animated components MUST respect the `reduceMotion` accessibility setting.
 - **FR-009**: Components that render above other content (Modal, Backdrop, Snackbar, Tooltip, Menu) MUST use the Portal pattern for correct z-ordering.
 - **FR-010**: Each component MUST have a TypeScript `Props` interface exported from its `types.ts` file, with all required and optional props documented.
-- **FR-011**: Layout primitives (Box, Container, Grid, Stack) MUST compose cleanly with existing components without imposing visual side-effects.
+- **FR-011**: Layout primitives (Box, Container, Grid, Stack) MUST NOT apply a default margin, padding, background color, or border unless explicitly passed as a prop; they MUST compose cleanly with existing components without imposing visual side-effects.
 - **FR-012**: The DataTable MUST support sortable columns, row selection, and pagination via controlled props.
 - **FR-013**: The Drawer MUST support both left and right anchors and a modal (overlay) mode.
 - **FR-014**: The Tabs component MUST support scrollable tab bars when the number of tabs exceeds the viewport width.
-- **FR-015**: Form controls (Checkbox, RadioButton, Switch, Slider, Select, SegmentedButtons, ToggleButton) MUST support a `disabled` state.
+- **FR-015**: Form controls (Checkbox, RadioButton, Switch, Slider, Select, Searchbar, SegmentedButtons, ToggleButton, NumberField) MUST support a `disabled` state.
 
 ### Key Entities
 
