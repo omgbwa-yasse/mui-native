@@ -45,8 +45,8 @@
 - [ ] T005 [P] [US1] Create `LinearProgressProps` interface (variant, value, valueBuffer, color, style) + barrel export in `src/components/LinearProgress/types.ts` and `src/components/LinearProgress/index.ts`
 - [ ] T006 [P] [US1] Implement `CircularProgress` — `React.memo`, indeterminate spinning `withRepeat` worklet, determinate arc via two-half-circle View clipping technique (`// RN-DEVIATION: no SVG`), value clamped to [0,100], `accessibilityRole="progressbar"`, `accessibilityValue` for determinate — in `src/components/CircularProgress/CircularProgress.tsx`
 - [ ] T007 [P] [US1] Implement `LinearProgress` — `React.memo`, three-layer absolute-positioned Views (track → buffer → fill), indeterminate two-staggered-bar animation (2100 ms loop + 715 ms delay), value/valueBuffer clamped, `accessibilityRole="progressbar"`, `accessibilityValue` for determinate — in `src/components/LinearProgress/LinearProgress.tsx`
-- [ ] T008 [P] [US1] Write `CircularProgress` test suite — render test, indeterminate variant, determinate variant at `value={75}`, `color` prop, `size` prop, out-of-range value clamping, accessibility roles — in `src/components/CircularProgress/CircularProgress.test.tsx`
-- [ ] T009 [P] [US1] Write `LinearProgress` test suite — render test, indeterminate variant, determinate variant at `value={40}`, buffer variant with `value={60} valueBuffer={80}`, `valueBuffer < value` edge case, accessibility roles — in `src/components/LinearProgress/LinearProgress.test.tsx`
+- [ ] T008 [P] [US1] Write `CircularProgress` test suite — render test, indeterminate variant, determinate variant at `value={75}`, `color` prop, `size` prop, out-of-range value clamping, accessibility roles, `toBeAccessible` assertion on the `progressbar` element (Principle V) — in `src/components/CircularProgress/CircularProgress.test.tsx`
+- [ ] T009 [P] [US1] Write `LinearProgress` test suite — render test, indeterminate variant, determinate variant at `value={40}`, buffer variant with `value={60} valueBuffer={80}`, `valueBuffer < value` edge case, accessibility roles, `toBeAccessible` assertion on the `progressbar` element (Principle V) — in `src/components/LinearProgress/LinearProgress.test.tsx`
 
 **Checkpoint**: `npm test -- --testPathPattern=CircularProgress|LinearProgress` passes — US1 independently verified
 
@@ -104,7 +104,7 @@
 
 **Depends on**: T003 (`useAnchorPosition`)
 
-- [ ] T028 [US4] Create `PopperProps` interface + `PopperPlacement` enum (12 values: top/bottom/left/right + `-start`/`-end` variants) + barrel in `src/components/Popper/types.ts` and `src/components/Popper/index.ts`
+- [ ] T028 [US4] Create `PopperProps` interface (open, anchorRef, placement, disablePortal, children, style) + `PopperPlacement` enum (12 values: top/bottom/left/right + `-start`/`-end` variants) + barrel in `src/components/Popper/types.ts` and `src/components/Popper/index.ts`
 - [ ] T029 [US4] Implement `Popper` — `useAnchorPosition`, 12-placement → origin mapping table (see `contracts/Popper.md`), `<Portal>` unless `disablePortal={true}`, NO backdrop Pressable — in `src/components/Popper/Popper.tsx`
 - [ ] T030 [US4] Write `Popper` test suite — hidden when `open={false}`, visible when `open={true}`, `placement="bottom"` positions below anchor, `placement="top"` positions above, `disablePortal={true}` renders inline, null `anchorRef` does not throw, `toBeAccessible` assertion on popper content container (Principle V) — in `src/components/Popper/Popper.test.tsx`
 
@@ -119,8 +119,8 @@
 **Independent Test**: Render `<Masonry columns={3}>` with 9 children — each column gets 3 children; with varying heights, next child goes to shortest column.
 
 - [ ] T031 [US5] Create `MasonryProps` interface (columns: number, spacing: number, defaultColumns: number, children, style) + barrel in `src/components/Masonry/types.ts` and `src/components/Masonry/index.ts`
-- [ ] T032 [US5] Implement `Masonry` — `defaultColumns` initial layout, `onLayout` per child to update column heights, argmin pick for placement (`// RN-DEVIATION: no CSS column-count`), `spacing` applied as gap — in `src/components/Masonry/Masonry.tsx`
-- [ ] T033 [US5] Write `Masonry` test suite — renders empty container for zero children, 9 equal-height children in 3 columns, `spacing` prop, `defaultColumns` fallback — in `src/components/Masonry/Masonry.test.tsx`
+- [ ] T032 [US5] Implement `Masonry` — `React.memo`, `defaultColumns` initial layout, `onLayout` per child to update column heights, argmin pick for placement (`// RN-DEVIATION: no CSS column-count`), `spacing` applied as gap — in `src/components/Masonry/Masonry.tsx`
+- [ ] T033 [US5] Write `Masonry` test suite — renders empty container for zero children, 9 equal-height children in 3 columns, varying-height children each placed in the shortest column (argmin algorithm verification), `spacing` prop, `defaultColumns` fallback — in `src/components/Masonry/Masonry.test.tsx`
 
 **Checkpoint**: `npm test -- --testPathPattern=Masonry` passes — US5 independently verified
 
@@ -147,13 +147,13 @@
 **Purpose**: Wire all new components into the public package API; run all six DoD quality gates (token compliance, bundle size, Storybook stories, visual review); confirm zero regressions across the full suite.
 
 - [ ] T039 Add all new component exports and type exports to `src/index.ts` — `CircularProgress`, `LinearProgress`, `Popover`, `Fade`, `Grow`, `Slide`, `Zoom`, `Collapse`, `Popper`, `Masonry`, `Timeline`, `TimelineItem`, `TimelineSeparator`, `TimelineDot`, `TimelineConnector`, `TimelineContent`, `TimelineOppositeContent` plus all corresponding `*Props` types (FR-019)
-- [ ] T040 Run `npm test` across full suite — confirm 0 failures, all 100 pre-existing tests still pass (zero regressions), every new `*.test.tsx` passes independently (SC-002, SC-006, FR-022)
+- [ ] T040 Run `npm test` across full suite — confirm 0 failures, all 100 pre-existing tests still pass (zero regressions), every new `*.test.tsx` passes independently (SC-002, SC-006, FR-022); worklet audit: confirm all animation calls in `src/components/**/**.tsx` use `withTiming`/`withRepeat`/`withDelay` worklets — zero `Animated.timing` or `setInterval` calls (DoD gate 6 / Principle VI)
 - [ ] T041 [P] Token compliance check — `grep -rn '#[0-9A-Fa-f]' src/components/CircularProgress src/components/LinearProgress src/components/Popover src/components/Fade src/components/Grow src/components/Slide src/components/Zoom src/components/Collapse src/components/Popper src/components/Masonry src/components/Timeline` MUST return zero hits (DoD gate 5 / Principle II)
-- [ ] T042 [P] Bundle size check — build the library and verify each new component group adds ≤10 kB to the minified bundle; document any group approaching the limit in `specs/003-add-missing-mui-components/plan.md` (DoD gate 6 / Principle VI)
-- [ ] T043 [P] Create Storybook stories for all 7 component groups — one story file per group covering all major prop variants, runnable on both iOS and Android via Expo Go — `src/components/CircularProgress/CircularProgress.stories.tsx`, `src/components/LinearProgress/LinearProgress.stories.tsx`, `src/components/Popover/Popover.stories.tsx`, `src/components/Fade/Fade.stories.tsx`, `src/components/Popper/Popper.stories.tsx`, `src/components/Masonry/Masonry.stories.tsx`, `src/components/Timeline/Timeline.stories.tsx` (DoD gate 4 / Principle IV)
+- [ ] T042 [P] Bundle size check — build the library and verify each new component group adds ≤10 kB to the minified bundle; document any group approaching the limit in `specs/003-add-missing-mui-components/plan.md` (Principle VI)
+- [ ] T043 [P] Create Storybook stories for all 7 component groups — one story file per group covering all major prop variants, runnable on both iOS and Android via Expo Go — `src/components/CircularProgress/CircularProgress.stories.tsx`, `src/components/LinearProgress/LinearProgress.stories.tsx`, `src/components/Popover/Popover.stories.tsx`, `src/components/Fade/Fade.stories.tsx` (must include sections for `Grow`, `Slide`, `Zoom`, and `Collapse` — all 5 transitions in one file), `src/components/Popper/Popper.stories.tsx`, `src/components/Masonry/Masonry.stories.tsx`, `src/components/Timeline/Timeline.stories.tsx` (DoD gate 4 / Principle IV)
 - [ ] T044 Visual spec review — compare each of the 17 new components against MD3 reference at https://m3.material.io; record any visual deviation not already listed as `// RN-DEVIATION:` in source; obtain reviewer sign-off before merge (DoD gate 1 / Principle I)
 
-**Checkpoint**: All 6 DoD gates pass (visual review ✅ / test suite ✅ / a11y ✅ / Storybook ✅ / token compliance ✅ / bundle size ✅) + `npm test` exits 0 — feature accepted ✅
+**Checkpoint**: DoD gates 1–6 verified in-repo (visual review ✅ / test suite ✅ / a11y ✅ / Storybook ✅ / token compliance ✅ / worklet audit ✅) + `npm test` exits 0; gate 7 (PR approval by ≥1 contributor) required before merge — feature accepted ✅
 
 ---
 
