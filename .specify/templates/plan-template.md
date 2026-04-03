@@ -31,7 +31,14 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+Verify compliance with the six RN-Material principles from `.specify/memory/constitution.md`:
+
+- [ ] **I. Component Fidelity** — MD3 spec reference identified; deviations documented with `// RN-DEVIATION:`
+- [ ] **II. Design Token Supremacy** — no hardcoded color/spacing literals planned; all values trace to `src/tokens/`
+- [ ] **III. Theme-First Architecture** — component consumes `useTheme()`; no static palette imports in render path
+- [ ] **IV. Cross-Platform Parity** — acceptance tests planned for both iOS and Android
+- [ ] **V. Accessibility by Default** — `accessibilityLabel/Role/State` and 48dp touch targets planned; `reduceMotion` handled
+- [ ] **VI. Performance Contract** — animations use Reanimated worklets; `React.memo` applied where warranted
 
 ## Project Structure
 

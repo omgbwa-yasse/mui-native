@@ -148,7 +148,8 @@ Examples of foundational tasks (adjust based on your project):
 
 ## Phase N: Polish & Cross-Cutting Concerns
 
-**Purpose**: Improvements that affect multiple user stories
+**Purpose**: Improvements that affect multiple user stories — also serves as the
+constitution compliance validation phase for RN-Material components.
 
 - [ ] TXXX [P] Documentation updates in docs/
 - [ ] TXXX Code cleanup and refactoring
@@ -156,6 +157,14 @@ Examples of foundational tasks (adjust based on your project):
 - [ ] TXXX [P] Additional unit tests (if requested) in tests/unit/
 - [ ] TXXX Security hardening
 - [ ] TXXX Run quickstart.md validation
+
+### RN-Material Constitution Compliance Tasks (add to every component feature)
+
+- [ ] TXXX Token audit: `grep -r '#[0-9A-Fa-f]' src/components/<name>` must return zero hits (Principle II)
+- [ ] TXXX Accessibility audit: all `toBeAccessible` assertions passing; touch targets ≥ 48dp (Principle V)
+- [ ] TXXX Reanimated worklet audit: confirm no JS-thread animations (Principle VI)
+- [ ] TXXX Cross-platform visual review: screenshots compared on iOS simulator + Android emulator (Principle IV)
+- [ ] TXXX Storybook story created and verified on both platforms (Principle IV)
 
 ---
 
