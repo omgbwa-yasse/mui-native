@@ -6,7 +6,7 @@ const config: Config = {
     '^.+\\.(ts|tsx|js|jsx)$': 'babel-jest',
   },
   transformIgnorePatterns: [
-    'node_modules/(?!(@material/material-color-utilities|react-native|@react-native|react-native-reanimated|react-native-gesture-handler|@testing-library)/)',
+    'node_modules/(?!(@material/material-color-utilities|react-native|@react-native|react-native-reanimated|react-native-gesture-handler|react-native-vector-icons|@react-native-vector-icons|@testing-library)/)',
   ],
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],

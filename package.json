@@ -22,6 +22,7 @@
   ],
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
+    "generate:icon-names": "ts-node scripts/generate-material-icon-names.ts",
     "test": "jest",
     "lint": "eslint src tests",
     "typecheck": "tsc --noEmit",
@@ -32,13 +33,24 @@
     "react": ">=18.0.0",
     "react-native": ">=0.73.0",
     "react-native-gesture-handler": ">=2.0.0",
-    "react-native-reanimated": ">=3.0.0"
+    "react-native-reanimated": ">=3.0.0",
+    "@react-native-community/datetimepicker": ">=8.0.0",
+    "react-native-gifted-charts": ">=1.4.0",
+    "react-native-svg": ">=15.0.0",
+    "react-native-vector-icons": ">=10.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@react-native-community/datetimepicker": { "optional": true },
+    "react-native-gifted-charts": { "optional": true },
+    "react-native-svg": { "optional": true },
+    "react-native-vector-icons": { "optional": false }
   },
   "optionalDependencies": {
     "@react-native-material/core": ">=1.0.0"
   },
   "dependencies": {
-    "@material/material-color-utilities": "^0.3.0"
+    "@material/material-color-utilities": "^0.3.0",
+    "design-api": "file:api"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",
@@ -46,10 +58,14 @@
     "@babel/preset-react": "^7.24.0",
     "@babel/preset-typescript": "^7.24.0",
     "@chromatic-com/storybook": "^1.0.0",
+    "@react-native-async-storage/async-storage": "^3.0.2",
+    "@react-navigation/native": "^7.2.2",
+    "@react-navigation/native-stack": "^7.14.10",
     "@storybook/addon-essentials": "^8.0.0",
     "@storybook/react-native": "^7.6.0",
     "@testing-library/jest-native": "^5.4.3",
     "@testing-library/react-native": "^12.4.0",
+    "@types/jest": "^29.5.14",
     "@types/react": "^18.2.0",
     "@types/react-native": "^0.73.0",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
@@ -70,6 +86,7 @@
     "react-test-renderer": "^18.2.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.0",
-    "typescript-eslint": "^8.58.0"
+    "typescript-eslint": "^8.58.0",
+    "react-native-vector-icons": "^10.2.0"
   }
 }

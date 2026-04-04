@@ -16,7 +16,7 @@
 
 **Purpose**: Establish folder scaffolding so every subsequent task has a valid target path.
 
-- [ ] T001 Create all 11 component subdirectories and the `src/hooks/` directory: `src/components/CircularProgress/`, `src/components/LinearProgress/`, `src/components/Popover/`, `src/components/Fade/`, `src/components/Grow/`, `src/components/Slide/`, `src/components/Zoom/`, `src/components/Collapse/`, `src/components/Popper/`, `src/components/Masonry/`, `src/components/Timeline/`, `src/hooks/`
+- [X] T001 Create all 11 component subdirectories and the `src/hooks/` directory: `src/components/CircularProgress/`, `src/components/LinearProgress/`, `src/components/Popover/`, `src/components/Fade/`, `src/components/Grow/`, `src/components/Slide/`, `src/components/Zoom/`, `src/components/Collapse/`, `src/components/Popper/`, `src/components/Masonry/`, `src/components/Timeline/`, `src/hooks/`
 
 **Checkpoint**: `src/hooks/` and all 11 component subdirectories exist — implementation can begin
 
@@ -28,8 +28,8 @@
 
 **⚠️ CRITICAL**: `useTransition` must be complete before US3 (Transitions). `useAnchorPosition` must be complete before US2 (Popover) and US4 (Popper).
 
-- [ ] T002 [P] Implement `useTransition` hook — ENTERING/ENTERED/EXITING/EXITED state machine, `withTiming` worklet, `reduceMotion` short-circuit, returns `{ state: TransitionState; animatedStyle: AnimatedStyle }` — in `src/hooks/useTransition.ts`
-- [ ] T003 [P] Implement `useAnchorPosition` hook — `ref.measure()` pattern (see `src/components/Menu/Menu.tsx`), returns `{ top, left, width, height }` — in `src/hooks/useAnchorPosition.ts`
+- [X] T002 [P] Implement `useTransition` hook — ENTERING/ENTERED/EXITING/EXITED state machine, `withTiming` worklet, `reduceMotion` short-circuit, returns `{ state: TransitionState; animatedStyle: AnimatedStyle }` — in `src/hooks/useTransition.ts`
+- [X] T003 [P] Implement `useAnchorPosition` hook — `ref.measure()` pattern (see `src/components/Menu/Menu.tsx`), returns `{ top, left, width, height }` — in `src/hooks/useAnchorPosition.ts`
 
 **Checkpoint**: Both hooks exported and TypeScript-strict-clean — US2, US3, US4 can now proceed
 
@@ -41,12 +41,12 @@
 
 **Independent Test**: Mount `<CircularProgress variant="indeterminate" />`, `<CircularProgress variant="determinate" value={75} />`, `<LinearProgress variant="buffer" value={60} valueBuffer={80} />` in isolation — all render without error, accessibility roles are set, no other new component needed.
 
-- [ ] T004 [P] [US1] Create `CircularProgressProps` interface (variant, value, size, color, style) + barrel export in `src/components/CircularProgress/types.ts` and `src/components/CircularProgress/index.ts`
-- [ ] T005 [P] [US1] Create `LinearProgressProps` interface (variant, value, valueBuffer, color, style) + barrel export in `src/components/LinearProgress/types.ts` and `src/components/LinearProgress/index.ts`
-- [ ] T006 [P] [US1] Implement `CircularProgress` — `React.memo`, indeterminate spinning `withRepeat` worklet, determinate arc via two-half-circle View clipping technique (`// RN-DEVIATION: no SVG`), value clamped to [0,100], `accessibilityRole="progressbar"`, `accessibilityValue` for determinate — in `src/components/CircularProgress/CircularProgress.tsx`
-- [ ] T007 [P] [US1] Implement `LinearProgress` — `React.memo`, three-layer absolute-positioned Views (track → buffer → fill), indeterminate two-staggered-bar animation (2100 ms loop + 715 ms delay), value/valueBuffer clamped, `accessibilityRole="progressbar"`, `accessibilityValue` for determinate — in `src/components/LinearProgress/LinearProgress.tsx`
-- [ ] T008 [P] [US1] Write `CircularProgress` test suite — render test, indeterminate variant, determinate variant at `value={75}`, `color` prop, `size` prop, out-of-range value clamping, accessibility roles, `toBeAccessible` assertion on the `progressbar` element (Principle V) — in `src/components/CircularProgress/CircularProgress.test.tsx`
-- [ ] T009 [P] [US1] Write `LinearProgress` test suite — render test, indeterminate variant, determinate variant at `value={40}`, buffer variant with `value={60} valueBuffer={80}`, `valueBuffer < value` edge case, accessibility roles, `toBeAccessible` assertion on the `progressbar` element (Principle V) — in `src/components/LinearProgress/LinearProgress.test.tsx`
+- [X] T004 [P] [US1] Create `CircularProgressProps` interface (variant, value, size, color, style) + barrel export in `src/components/CircularProgress/types.ts` and `src/components/CircularProgress/index.ts`
+- [X] T005 [P] [US1] Create `LinearProgressProps` interface (variant, value, valueBuffer, color, style) + barrel export in `src/components/LinearProgress/types.ts` and `src/components/LinearProgress/index.ts`
+- [X] T006 [P] [US1] Implement `CircularProgress` — `React.memo`, indeterminate spinning `withRepeat` worklet, determinate arc via two-half-circle View clipping technique (`// RN-DEVIATION: no SVG`), value clamped to [0,100], `accessibilityRole="progressbar"`, `accessibilityValue` for determinate — in `src/components/CircularProgress/CircularProgress.tsx`
+- [X] T007 [P] [US1] Implement `LinearProgress` — `React.memo`, three-layer absolute-positioned Views (track → buffer → fill), indeterminate two-staggered-bar animation (2100 ms loop + 715 ms delay), value/valueBuffer clamped, `accessibilityRole="progressbar"`, `accessibilityValue` for determinate — in `src/components/LinearProgress/LinearProgress.tsx`
+- [X] T008 [P] [US1] Write `CircularProgress` test suite — render test, indeterminate variant, determinate variant at `value={75}`, `color` prop, `size` prop, out-of-range value clamping, accessibility roles, `toBeAccessible` assertion on the `progressbar` element (Principle V) — in `src/components/CircularProgress/CircularProgress.test.tsx`
+- [X] T009 [P] [US1] Write `LinearProgress` test suite — render test, indeterminate variant, determinate variant at `value={40}`, buffer variant with `value={60} valueBuffer={80}`, `valueBuffer < value` edge case, accessibility roles, `toBeAccessible` assertion on the `progressbar` element (Principle V) — in `src/components/LinearProgress/LinearProgress.test.tsx`
 
 **Checkpoint**: `npm test -- --testPathPattern=CircularProgress|LinearProgress` passes — US1 independently verified
 
@@ -60,9 +60,9 @@
 
 **Depends on**: T003 (`useAnchorPosition`)
 
-- [ ] T010 [US2] Create `PopoverProps` interface (open, anchorRef, onClose, anchorOrigin, transformOrigin, children, style) + barrel export in `src/components/Popover/types.ts` and `src/components/Popover/index.ts`
-- [ ] T011 [US2] Implement `Popover` — `useAnchorPosition` for coordinates, `<Portal>` via `PortalContext`, backdrop `Pressable` calling `onClose`, `anchorOrigin`/`transformOrigin` positioning formula (vFactor/hFactor), inline `withTiming` opacity animation (do NOT import from `Fade`/T018 — prevents circular dependency) — in `src/components/Popover/Popover.tsx`
-- [ ] T012 [US2] Write `Popover` test suite — renders nothing when `open={false}`, renders content when `open={true}`, `onClose` called on outside tap, null `anchorRef` does not throw, `anchorOrigin` bottom-left alignment, `toBeAccessible` assertion on backdrop `Pressable` (Principle V) — in `src/components/Popover/Popover.test.tsx`
+- [X] T010 [US2] Create `PopoverProps` interface (open, anchorRef, onClose, anchorOrigin, transformOrigin, children, style) + barrel export in `src/components/Popover/types.ts` and `src/components/Popover/index.ts`
+- [X] T011 [US2] Implement `Popover` — `useAnchorPosition` for coordinates, `<Portal>` via `PortalContext`, backdrop `Pressable` calling `onClose`, `anchorOrigin`/`transformOrigin` positioning formula (vFactor/hFactor), inline `withTiming` opacity animation (do NOT import from `Fade`/T018 — prevents circular dependency) — in `src/components/Popover/Popover.tsx`
+- [X] T012 [US2] Write `Popover` test suite — renders nothing when `open={false}`, renders content when `open={true}`, `onClose` called on outside tap, null `anchorRef` does not throw, `anchorOrigin` bottom-left alignment, `toBeAccessible` assertion on backdrop `Pressable` (Principle V) — in `src/components/Popover/Popover.test.tsx`
 
 **Checkpoint**: `npm test -- --testPathPattern=Popover` passes — US2 independently verified
 

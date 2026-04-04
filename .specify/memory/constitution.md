@@ -43,6 +43,21 @@ MUST be derived from design tokens defined in `src/tokens/`. Hardcoded values (e
   consumed via the `useTheme()` hook; never accessed through static imports in render paths.
 - Adding a new token MUST go through a spec review before implementation.
 
+**Documented exceptions** (require explicit spec-level justification):
+
+- **No-provider fallback color** (C2): A component whose spec mandates graceful standalone
+  rendering outside `ThemeProvider` (e.g., FR-009) MAY use `'#000000'` as a literal fallback
+  color. The literal MUST be isolated in a named constant (e.g., `FALLBACK_COLOR`), annotated
+  with `// CONSTITUTION-EXCEPTION: no-provider fallback — see <FR-ref>`, and a `__DEV__`
+  warning MUST be emitted to alert developers. The exception MUST be documented in the feature
+  spec, research decisions, and the plan's constitution check.
+
+- **`useContext(ThemeContext)` instead of `useTheme()`** (C1): When a component must not throw
+  outside `ThemeProvider`, it MAY call `useContext(ThemeContext)` directly (which returns `null`
+  safely) rather than `useTheme()`. The null branch MUST implement the no-provider fallback above.
+  This is not an exemption from Theme-First Architecture (Principle III); the theme is still
+  consumed when present.
+
 ### III. Theme-First Architecture
 
 Every component MUST consume the framework's `ThemeProvider` context. Static light/dark

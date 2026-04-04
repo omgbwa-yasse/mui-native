@@ -117,6 +117,10 @@ export type { ImageListProps, ImageListItemProps, ImageListVariant } from './com
 export { Link } from './components/Link';
 export type { LinkProps } from './components/Link';
 
+export { MaterialIcon } from './components/MaterialIcon';
+export { materialIconSource } from './components/MaterialIcon';
+export type { MaterialIconProps, IconVariant, MaterialIconName } from './components/MaterialIcon';
+
 export { List, ListItem, ListSection, ListAccordion } from './components/List';
 export type { ListProps, ListItemProps, ListSectionProps, ListAccordionProps } from './components/List';
 
@@ -191,3 +195,62 @@ export type { TouchableRippleProps } from './components/TouchableRipple';
 
 export { TransferList } from './components/TransferList';
 export type { TransferListProps, TransferItem } from './components/TransferList';
+
+// Progress indicators
+export { CircularProgress } from './components/CircularProgress';
+export type { CircularProgressProps, CircularProgressVariant } from './components/CircularProgress';
+
+export { LinearProgress } from './components/LinearProgress';
+export type { LinearProgressProps, LinearProgressVariant } from './components/LinearProgress';
+
+// Popover
+export { Popover } from './components/Popover';
+export type { PopoverProps, AnchorOrigin } from './components/Popover';
+
+// Transition components
+export { Fade } from './components/Fade';
+export type { FadeProps } from './components/Fade';
+
+export { Grow } from './components/Grow';
+export type { GrowProps } from './components/Grow';
+
+export { Slide } from './components/Slide';
+export type { SlideProps, SlideDirection } from './components/Slide';
+
+export { Zoom } from './components/Zoom';
+export type { ZoomProps } from './components/Zoom';
+
+export { Collapse } from './components/Collapse';
+export type { CollapseProps } from './components/Collapse';
+
+// Popper
+export { Popper } from './components/Popper';
+export type { PopperProps, PopperPlacement } from './components/Popper';
+
+// Masonry
+export { Masonry } from './components/Masonry';
+export type { MasonryProps } from './components/Masonry';
+
+// Timeline
+export { Timeline, TimelineItem, TimelineSeparator, TimelineDot, TimelineConnector, TimelineContent, TimelineOppositeContent } from './components/Timeline';
+export type { TimelineProps, TimelinePosition, TimelineItemProps, TimelineSeparatorProps, TimelineDotProps, TimelineDotVariant, TimelineDotColor, TimelineConnectorProps, TimelineContentProps, TimelineOppositeContentProps } from './components/Timeline';
+
+// Feature 005 — Advanced MUI Components
+export { DatePicker, LocalizationProvider, useLocalization, IntlDateAdapter } from './components/DatePicker';
+export type { DatePickerProps, DateAdapter, LocalizationProviderProps, PickerBaseProps, PickerValidationProps, PickerSlots, MaybeDate } from './components/DatePicker';
+
+export { TimePicker } from './components/TimePicker';
+export type { TimePickerProps } from './components/TimePicker';
+
+export { DateTimePicker } from './components/DateTimePicker';
+export type { DateTimePickerProps } from './components/DateTimePicker';
+
+export { DataGrid, useGridApiRef } from './components/DataGrid';
+export type { DataGridProps, GridColDef, GridRowData, GridRowId, GridSortItem, GridSortModel, GridFilterItem, GridFilterModel, GridPaginationModel, GridSelectionModel, GridApiRef, GridDensity, GridEditMode } from './components/DataGrid';
+
+export { BarChart, LineChart, ChartLegend, ChartLoadingOverlay } from './components/Charts';
+export * as seriesAdapter from './components/Charts';
+export type { BarChartProps, LineChartProps, ChartSeries, ChartDataPoint, ChartAxisConfig, ChartBaseProps } from './components/Charts';
+
+export { SimpleTreeView, TreeItem } from './components/TreeView';
+export type { SimpleTreeViewProps, TreeItemProps, TreeViewItemId, TreeViewContextValue } from './components/TreeView';
