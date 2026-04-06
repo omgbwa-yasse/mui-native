@@ -12,7 +12,7 @@ import {
 } from '../../src/context/LayoutPreferenceContext';
 import type { ExampleConfig } from '../../src/catalogue/types';
 
-const EXAMPLES: [ExampleConfig, ExampleConfig, ExampleConfig] = [
+const EXAMPLES: ExampleConfig[] = [
   { label: 'Alpha', render: () => <Text>Alpha content</Text> },
   { label: 'Beta', render: () => <Text>Beta content</Text> },
   { label: 'Gamma', render: () => <Text>Gamma content</Text> },

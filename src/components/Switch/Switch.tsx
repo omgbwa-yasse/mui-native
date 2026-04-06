@@ -5,10 +5,13 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
   interpolateColor,
+  runOnJS,
 } from 'react-native-reanimated';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
+import { useSx } from '../../hooks/useSx';
 import type { SwitchProps } from './types';
 
 const TRACK_WIDTH = 52;
@@ -19,15 +22,20 @@ const THUMB_OFF_X = THUMB_PADDING;
 const THUMB_ON_X = TRACK_WIDTH - THUMB_SIZE - THUMB_PADDING;
 const ANIM_DURATION = 150;
 
-const Switch = memo(function Switch({
-  value,
-  onValueChange,
-  disabled = false,
-  color,
-  testID,
-  accessibilityLabel,
-}: SwitchProps) {
+const Switch = memo(function Switch(rawProps: SwitchProps) {
+  const props = useComponentDefaults('Switch', rawProps);
+  const {
+    value,
+    onValueChange,
+    disabled = false,
+    color,
+    testID,
+    accessibilityLabel,
+    sx,
+    style,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
   const reduceMotion = useReducedMotionValue();
 
   const progress = useSharedValue(value ? 1 : 0);
@@ -64,7 +72,7 @@ const Switch = memo(function Switch({
   const tap = Gesture.Tap()
     .enabled(!disabled)
     .onEnd(() => {
-      onValueChange(!value);
+      runOnJS(onValueChange)(!value);
     });
 
   const styles = StyleSheet.create({
@@ -92,7 +100,7 @@ const Switch = memo(function Switch({
   return (
     <GestureDetector gesture={tap}>
       <Animated.View
-        style={styles.hitSlop}
+        style={[styles.hitSlop, sxStyle, style]}
         accessibilityRole="switch"
         accessible
         accessibilityLabel={accessibilityLabel}

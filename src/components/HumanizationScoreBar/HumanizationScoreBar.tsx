@@ -1,24 +1,30 @@
 import React, { memo } from 'react';
 import { View, Text, StyleSheet, useWindowDimensions } from 'react-native';
 import Animated, { useAnimatedStyle, withTiming, useReducedMotion } from 'react-native-reanimated';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
+import type { HumanizationScoreBarProps } from './types';
 
-export interface HumanizationScoreBarProps {
-  fleschKincaidBefore: number;
-  fleschKincaidAfter: number;
-  /** Max score for bar scaling (default 100). */
-  maxScore?: number;
-}
+export type { HumanizationScoreBarProps } from './types';
 
 const BAR_HEIGHT = 20;
 const MAX_DEFAULT = 100;
 
-const HumanizationScoreBar = memo(function HumanizationScoreBar({
-  fleschKincaidBefore,
-  fleschKincaidAfter,
-  maxScore = MAX_DEFAULT,
-}: HumanizationScoreBarProps) {
+const HumanizationScoreBar = memo(function HumanizationScoreBar(rawProps: HumanizationScoreBarProps) {
+  const props = useComponentDefaults('HumanizationScoreBar', rawProps);
+  const {
+    fleschKincaidBefore,
+    fleschKincaidAfter,
+    maxScore = MAX_DEFAULT,
+    color,
+    sx,
+    style,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const cs = theme.colorScheme;
   const { width } = useWindowDimensions();
   const reduceMotion = useReducedMotion();
@@ -47,7 +53,7 @@ const HumanizationScoreBar = memo(function HumanizationScoreBar({
   }, [afterPct, trackWidth, reduceMotion]);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, sxStyle, style]}>
       {/* Before */}
       <View style={styles.row}>
         <Text style={[styles.rowLabel, { color: cs.onSurfaceVariant }]}>Before</Text>

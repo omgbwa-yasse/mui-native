@@ -8,7 +8,10 @@ import {
   type StyleProp,
   type ViewStyle,
 } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import { useLocalizationOptional } from '../DatePicker/useLocalization';
 import { createDatePickerStyles } from '../DatePicker/DatePicker.styles';
 import type { TimePickerProps } from './types';
@@ -38,28 +41,34 @@ try {
  * TimePicker — modal time selection backed by the native OS time picker.
  * Requires the optional peer dependency `@react-native-community/datetimepicker`.
  */
-export const TimePicker = React.memo(function TimePicker({
-  value,
-  defaultValue,
-  onChange,
-  onAccept,
-  label,
-  disabled = false,
-  readOnly = false,
-  minTime,
-  maxTime,
-  ampm,
-  views: _views,
-  format,
-  open: controlledOpen,
-  onOpen,
-  onClose,
-  slotProps,
-  testID,
-  style,
-  accessibilityLabel,
-}: TimePickerProps) {
+export const TimePicker = React.memo(function TimePicker(rawProps: TimePickerProps) {
+  const props = useComponentDefaults('TimePicker', rawProps);
+  const {
+    value,
+    defaultValue,
+    onChange,
+    onAccept,
+    label,
+    disabled = false,
+    readOnly = false,
+    minTime,
+    maxTime,
+    ampm,
+    views: _views,
+    format,
+    open: controlledOpen,
+    onOpen,
+    onClose,
+    slotProps,
+    testID,
+    style,
+    accessibilityLabel,
+    color,
+    sx,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const localization = useLocalizationOptional();
   const styles = useMemo(() => createDatePickerStyles(theme), [theme]);
 
@@ -124,7 +133,7 @@ export const TimePicker = React.memo(function TimePicker({
   const slotError = slotProps?.textField?.error ?? false;
 
   return (
-    <View style={[style]} testID={testID}>
+    <View style={[sxStyle, style]} testID={testID}>
       <Pressable
         onPress={openPicker}
         disabled={disabled}
@@ -210,7 +219,7 @@ export const TimePicker = React.memo(function TimePicker({
                   <Text
                     style={{
                       ...theme.typography.labelLarge,
-                      color: theme.colorScheme.primary,
+                      color: bg,
                     }}
                   >
                     OK

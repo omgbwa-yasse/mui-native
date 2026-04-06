@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { Checkbox } from '../Checkbox';
-import { useTheme } from '../../theme/ThemeContext';
+import { useTheme } from '../../theme';
 import { DataGridCell } from './DataGridCell';
 import { DataGridCellEditor } from './DataGridCellEditor';
 import type {

@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
+import type { SizeProp } from '../../tokens/size';
+import type { ColorProp, SxProps } from '../../types/shared';
 
 /**
  * Unique identifier for a tree item.
@@ -40,6 +42,9 @@ export interface TreeItemProps {
   disabled?: boolean;
   /** Nested `<TreeItem>` children expand/collapse inside this item. */
   children?: ReactNode;
+  size?: SizeProp;
+  color?: ColorProp;
+  sx?: SxProps;
   /** Override styles for the item's root container. */
   style?: StyleProp<ViewStyle>;
   /** Test ID forwarded to the root container. */
@@ -83,6 +88,9 @@ export interface SimpleTreeViewProps {
    * Disabled items show at 38 % opacity and ignore press events.
    */
   disabledItems?: TreeViewItemId[];
+  size?: SizeProp;
+  color?: ColorProp;
+  sx?: SxProps;
   /** Override styles for the `ScrollView` wrapper. */
   style?: StyleProp<ViewStyle>;
   /** Test ID forwarded to the root `ScrollView`. */

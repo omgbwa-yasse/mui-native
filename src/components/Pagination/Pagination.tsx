@@ -1,6 +1,9 @@
 import React, { memo, useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import { Text } from '../Text/Text';
 import type { PaginationProps } from './types';
@@ -50,19 +53,26 @@ function buildPageRange(
   });
 }
 
-const Pagination = memo(function Pagination({
-  count,
-  page,
-  onPageChange,
-  siblingCount = 1,
-  boundaryCount = 1,
-  showFirstButton = false,
-  showLastButton = false,
-  disabled = false,
-  size = 'medium',
-  testID,
-}: PaginationProps) {
+const Pagination = memo(function Pagination(rawProps: PaginationProps) {
+  const props = useComponentDefaults('Pagination', rawProps);
+  const {
+    count,
+    page,
+    onPageChange,
+    siblingCount = 1,
+    boundaryCount = 1,
+    showFirstButton = false,
+    showLastButton = false,
+    disabled = false,
+    size = 'medium',
+    testID,
+    color,
+    sx,
+    style,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
 
   const btnSize = size === 'small' ? 32 : size === 'large' ? 48 : 40;
   const fontSize = size === 'small' ? ('labelSmall' as const) : ('labelMedium' as const);
@@ -81,9 +91,9 @@ const Pagination = memo(function Pagination({
 
   const renderButton = (label: string, targetPage: number, isCurrentPage: boolean, key: string | number) => {
     const isDisabled = disabled || targetPage < 1 || targetPage > count;
-    const bg = isCurrentPage ? theme.colorScheme.primary : 'transparent';
+    const btnBg = isCurrentPage ? bg : 'transparent';
     const textColor = isCurrentPage
-      ? theme.colorScheme.onPrimary
+      ? fg
       : isDisabled
       ? `${theme.colorScheme.onSurface}61`
       : theme.colorScheme.onSurface;
@@ -99,7 +109,7 @@ const Pagination = memo(function Pagination({
         accessibilityLabel={label}
         style={styles.btn}
       >
-        <View style={[styles.btnInner, { width: btnSize, height: btnSize, backgroundColor: bg, borderRadius: btnSize / 2 }]}>
+        <View style={[styles.btnInner, { width: btnSize, height: btnSize, backgroundColor: btnBg, borderRadius: btnSize / 2 }]}>
           <Text variant={fontSize} color={textColor}>{label}</Text>
         </View>
       </TouchableRipple>
@@ -108,7 +118,7 @@ const Pagination = memo(function Pagination({
 
   return (
     <View
-      style={styles.root}
+      style={[styles.root, sxStyle, style]}
       accessibilityRole="none"
       accessibilityLabel="pagination"
       testID={testID}

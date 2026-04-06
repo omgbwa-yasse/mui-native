@@ -11,6 +11,7 @@
 
 import { argbFromHex, themeFromSourceColor } from '@material/material-color-utilities';
 import type { ColorScheme } from '../tokens/colors';
+import { baseLightColors, baseDarkColors } from '../tokens/colors';
 
 function argbToHex(argb: number): string {
   // ARGB: 0xAARRGGBB → '#RRGGBB'
@@ -24,6 +25,7 @@ export function generatePalette(seedHex: string, dark = false): ColorScheme {
   const argb = argbFromHex(seedHex);
   const { schemes } = themeFromSourceColor(argb);
   const scheme = dark ? schemes.dark : schemes.light;
+  const semanticBase = dark ? baseDarkColors : baseLightColors;
 
   return {
     primary: argbToHex(scheme.primary),
@@ -56,5 +58,19 @@ export function generatePalette(seedHex: string, dark = false): ColorScheme {
     inverseOnSurface: argbToHex(scheme.inverseOnSurface),
     inversePrimary: argbToHex(scheme.inversePrimary),
     surfaceTint: argbToHex(scheme.primary),
+    // Extended semantic roles — not in MD3 scheme; use baseline values
+    // (theme consumers can override these via createTheme)
+    success: semanticBase.success,
+    onSuccess: semanticBase.onSuccess,
+    successContainer: semanticBase.successContainer,
+    onSuccessContainer: semanticBase.onSuccessContainer,
+    warning: semanticBase.warning,
+    onWarning: semanticBase.onWarning,
+    warningContainer: semanticBase.warningContainer,
+    onWarningContainer: semanticBase.onWarningContainer,
+    info: semanticBase.info,
+    onInfo: semanticBase.onInfo,
+    infoContainer: semanticBase.infoContainer,
+    onInfoContainer: semanticBase.onInfoContainer,
   };
 }

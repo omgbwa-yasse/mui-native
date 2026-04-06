@@ -15,7 +15,7 @@ whose layout (vertical/horizontal) is user-controlled via a session-level toggle
 The app consumes the `mui-native` package from the local workspace. Source code for each
 component is injected at build time by a Node.js generator script that reads
 `src/components/*/index.tsx` and writes a typed `registry.generated.ts` map. V1 delivers
-full examples for 15 priority components (3 per category); all 77 components appear in the
+full examples for 15 priority components (3 per category); all 78 components appear in the
 catalogue with at minimum a placeholder.
 
 ---
@@ -37,7 +37,7 @@ catalogue with at minimum a placeholder.
 **Project Type**: Mobile application (React Native CLI) — companion demo app, not a library  
 **Performance Goals**: Home screen loads in < 3 s; layout toggle animates in < 300 ms; code block renders in < 100 ms  
 **Constraints**: No network calls; no native modules beyond autolinking; no Expo toolchain; TypeScript strict mode  
-**Scale/Scope**: 77 components, 5 categories, 15 fully-authored example sets, 1 app entry point, ~25 source files
+**Scale/Scope**: 78 components, 5 categories, 15 fully-authored example sets, 1 app entry point, ~25 source files
 
 ---
 
@@ -176,7 +176,7 @@ apps/
 | Task | Description | Files |
 |------|-------------|-------|
 | T007 | Write `catalogue/types.ts` from `contracts/catalogue.contract.ts` | `src/catalogue/types.ts` |
-| T008 | Write `catalogue/registry.ts` skeleton — all 77 components in 5 categories; 62 with `examples: null`; 15 priority with stub `examples` array | `src/catalogue/registry.ts` |
+| T008 | Write `catalogue/registry.ts` skeleton — all 78 components in 5 categories (`INPUTS` 22, `DATA_DISPLAY` 18, `FEEDBACK` 11, `NAVIGATION` 10, `LAYOUT` 17); 63 with `examples: null`; 15 priority with stub `examples` array | `src/catalogue/registry.ts` |
 
 ### Phase 4 — Navigation & App Root
 
@@ -204,23 +204,27 @@ apps/
 
 ### Phase 7 — Priority Examples (15 components, 3 per category)
 
-| Task | Category | Components |
-|------|----------|------------|
-| T019 | Inputs | Button (contained / outlined / disabled) |
-| T020 | Inputs | TextField (filled / outlined / error) |
-| T021 | Inputs | Select (single / multiple / disabled) |
-| T022 | Data Display | Text (h4 / body1 / caption) |
-| T023 | Data Display | Avatar (image / initials / icon) |
-| T024 | Data Display | Chip (filled / outlined / deletable) |
-| T025 | Feedback | Alert (success / warning / error) |
-| T026 | Feedback | CircularProgress (indeterminate / determinate / coloured) |
-| T027 | Feedback | Snackbar (info / action / long-message) |
-| T028 | Navigation | AppBar (default / with actions / elevated) |
-| T029 | Navigation | Tabs (basic / scrollable / icon+label) |
-| T030 | Navigation | Drawer (modal / permanent / with header) |
-| T031 | Layout | Card (basic / outlined / with actions) |
-| T032 | Layout | Stack (vertical / horizontal / with gap) |
-| T033 | Layout | Divider (horizontal / vertical / with label) |
+> **Task ID note**: Task IDs in this table (T019–T033) are plan-internal reference numbers.
+> The authoritative execution IDs are **T023–T037** in `tasks.md`. When cross-referencing,
+> use the tasks.md IDs: T019 here = T023 in tasks.md, through T033 here = T037 in tasks.md.
+
+| Task (plan) | tasks.md | Category | Components |
+|-------------|----------|----------|------------|
+| T019 | T023 | Inputs | Button (contained / outlined / disabled) |
+| T020 | T024 | Inputs | TextField (filled / outlined / error) |
+| T021 | T025 | Inputs | Select (single / multiple / disabled) |
+| T022 | T026 | Data Display | Text (h4 / body1 / caption) |
+| T023 | T027 | Data Display | Avatar (image / initials / icon) |
+| T024 | T028 | Data Display | Chip (filled / outlined / deletable) |
+| T025 | T029 | Feedback | Alert (success / warning / error) |
+| T026 | T030 | Feedback | CircularProgress (indeterminate / determinate / coloured) |
+| T027 | T031 | Feedback | Snackbar (info / action / long-message) |
+| T028 | T032 | Navigation | AppBar (default / with actions / elevated) |
+| T029 | T033 | Navigation | Tabs (basic / scrollable / icon+label) |
+| T030 | T034 | Navigation | Drawer (modal / permanent / with header) |
+| T031 | T035 | Layout | Card (basic / outlined / with actions) |
+| T032 | T036 | Layout | Stack (vertical / horizontal / with gap) |
+| T033 | T037 | Layout | Divider (horizontal / vertical / with label) |
 
 ### Phase 8 — Tests
 
@@ -230,7 +234,7 @@ apps/
 | T035 | Unit: `ExampleGallery` renders 3 items vertically by default; switches to horizontal on toggle | `tests/unit/ExampleGallery.test.tsx` |
 | T036 | Unit: `LayoutToggle` calls `context.toggle()` on press; shows correct icon per direction | `tests/unit/LayoutToggle.test.tsx` |
 | T037 | Integration: navigation flow — HomeScreen → CategoryListScreen → ComponentDetailScreen → back | `tests/integration/navigation.test.tsx` |
-| T038 | Integration: registry completeness — all 77 `componentKey` values present; `examples` is null or length==3 | `tests/integration/registry-completeness.test.ts` |
+| T038 | Integration: registry completeness — all 78 `componentKey` values present; `examples` is null or length==3 | `tests/integration/registry-completeness.test.ts` |
 
 ### Phase 9 — Polish & Accessibility
 

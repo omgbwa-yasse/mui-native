@@ -5,24 +5,34 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import type { CheckboxProps } from './types';
 
-const BOX_SIZE = 20;
+const CONTROL_SIZES = { small: 16, medium: 20, large: 24 } as const;
 const ANIM_DURATION = 150;
 
-const Checkbox = memo(function Checkbox({
-  status,
-  onPress,
-  disabled = false,
-  color,
-  testID,
-  accessibilityLabel,
-}: CheckboxProps) {
+const Checkbox = memo(function Checkbox(rawProps: CheckboxProps) {
+  const props = useComponentDefaults('Checkbox', rawProps);
+  const {
+    status,
+    onPress,
+    disabled = false,
+    color,
+    size,
+    sx,
+    style,
+    testID,
+    accessibilityLabel,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
   const reduceMotion = useReducedMotionValue();
+
+  const boxSize = CONTROL_SIZES[size ?? 'medium'];
 
   const isChecked = status === 'checked';
   const isIndeterminate = status === 'indeterminate';
@@ -56,8 +66,8 @@ const Checkbox = memo(function Checkbox({
 
   const styles = StyleSheet.create({
     box: {
-      width: BOX_SIZE,
-      height: BOX_SIZE,
+      width: boxSize,
+      height: boxSize,
       borderWidth: 2,
       borderRadius: 3,
       alignItems: 'center',
@@ -94,7 +104,7 @@ const Checkbox = memo(function Checkbox({
       accessibilityState={{ checked: isChecked, disabled }}
       testID={testID}
     >
-      <View style={{ padding: 8 }}>
+      <View style={[{ padding: 8 }, sxStyle, style]}>
         <View style={styles.box}>
           <Animated.View style={[styles.checkmark, markStyle]} />
         </View>

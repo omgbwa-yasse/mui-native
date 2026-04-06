@@ -2,6 +2,7 @@ const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
 const path = require('path');
 
 const rootDir = path.resolve(__dirname, '../..');
+const showcaseNodeModules = path.resolve(__dirname, 'node_modules');
 
 /**
  * Metro configuration for MUI-Native showcase app.
@@ -19,9 +20,30 @@ const config = {
       '@mui-native': path.resolve(rootDir, 'src'),
     },
     nodeModulesPaths: [
-      path.resolve(__dirname, 'node_modules'),
+      showcaseNodeModules,
       path.resolve(rootDir, 'node_modules'),
     ],
+    resolveRequest: (context, moduleName, platform) => {
+      // Force singleton modules to always resolve from showcase's node_modules
+      // by pretending the import originates from metro.config.js (in showcase root)
+      if (
+        moduleName === 'react' ||
+        moduleName === 'react-native' ||
+        moduleName === 'react-native-reanimated' ||
+        moduleName === 'react-native-gesture-handler' ||
+        moduleName.startsWith('react/') ||
+        moduleName.startsWith('react-native/') ||
+        moduleName.startsWith('react-native-reanimated/') ||
+        moduleName.startsWith('react-native-gesture-handler/')
+      ) {
+        return context.resolveRequest(
+          { ...context, originModulePath: __filename },
+          moduleName,
+          platform,
+        );
+      }
+      return context.resolveRequest(context, moduleName, platform);
+    },
   },
 
   transformer: {

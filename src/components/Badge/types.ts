@@ -1,4 +1,7 @@
 import type { ReactNode } from 'react';
+import type { StyleProp, ViewStyle } from 'react-native';
+import type { SizeProp } from '../../tokens/size';
+import type { SxProps } from '../../types/shared';
 
 export interface BadgeAnchorOrigin {
   vertical: 'top' | 'bottom';
@@ -14,4 +17,7 @@ export interface BadgeProps {
   children?: ReactNode;
   anchorOrigin?: BadgeAnchorOrigin;
   testID?: string;
+  size?: SizeProp;
+  sx?: SxProps;
+  style?: StyleProp<ViewStyle>;
 }

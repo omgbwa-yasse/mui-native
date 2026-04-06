@@ -1,7 +1,11 @@
 import React from 'react';
 import Animated, { useAnimatedStyle, interpolate } from 'react-native-reanimated';
 import { useTransition } from '../../hooks/useTransition';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { GrowProps } from './types';
+import { useTheme } from '../../theme';
 
 const GROW_SCALE_MIN = 0.75;
 
@@ -11,19 +15,26 @@ const GROW_SCALE_MIN = 0.75;
  * // RN-DEVIATION: MUI Web also animates transform-origin to match anchor direction.
  * // React Native uses center pivot only (default transform-origin behavior).
  */
-export function Grow({
-  in: inProp = false,
-  timeout = 300,
-  mountOnEnter = false,
-  unmountOnExit = false,
-  children,
-  style,
-  onEnter,
-  onEntered,
-  onExit,
-  onExited,
-  testID,
-}: GrowProps): React.ReactElement | null {
+export function Grow(rawProps: GrowProps): React.ReactElement | null {
+  const props = useComponentDefaults('Grow', rawProps) as GrowProps;
+  const { theme } = useTheme();
+  const {
+    in: inProp = false,
+    timeout = 300,
+    mountOnEnter = false,
+    unmountOnExit = false,
+    children,
+    style,
+    onEnter,
+    onEntered,
+    onExit,
+    onExited,
+    testID,
+    color,
+    sx,
+  } = props;
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const { progress, shouldMount, state } = useTransition({
     in: inProp,
     timeout,
@@ -53,7 +64,7 @@ export function Grow({
   if (!shouldMount) return null;
 
   return (
-    <Animated.View testID={testID} style={[animatedStyle, style]}>
+    <Animated.View testID={testID} style={[animatedStyle, sxStyle, style]}>
       {children}
     </Animated.View>
   );

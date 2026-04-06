@@ -1,7 +1,11 @@
 import React from 'react';
 import Animated, { useAnimatedStyle } from 'react-native-reanimated';
 import { useTransition } from '../../hooks/useTransition';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { FadeProps } from './types';
+import { useTheme } from '../../theme';
 
 /**
  * Fade — animates opacity 0 ↔ 1.
@@ -9,19 +13,26 @@ import type { FadeProps } from './types';
  * Wraps a single child element in an Animated.View that fades in/out driven by
  * the shared `useTransition` hook.
  */
-export function Fade({
-  in: inProp = false,
-  timeout = 300,
-  mountOnEnter = false,
-  unmountOnExit = false,
-  children,
-  style,
-  onEnter,
-  onEntered,
-  onExit,
-  onExited,
-  testID,
-}: FadeProps): React.ReactElement | null {
+export function Fade(rawProps: FadeProps): React.ReactElement | null {
+  const props = useComponentDefaults('Fade', rawProps) as FadeProps;
+  const { theme } = useTheme();
+  const {
+    in: inProp = false,
+    timeout = 300,
+    mountOnEnter = false,
+    unmountOnExit = false,
+    children,
+    style,
+    onEnter,
+    onEntered,
+    onExit,
+    onExited,
+    testID,
+    color,
+    sx,
+  } = props;
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const { progress, shouldMount, state } = useTransition({
     in: inProp,
     timeout,
@@ -47,7 +58,7 @@ export function Fade({
   if (!shouldMount) return null;
 
   return (
-    <Animated.View testID={testID} style={[animatedStyle, style]}>
+    <Animated.View testID={testID} style={[animatedStyle, sxStyle, style]}>
       {children}
     </Animated.View>
   );

@@ -61,9 +61,9 @@ describe('Registry completeness', () => {
     }
   });
 
-  it('exactly 15 entries have hasFullExamples === true', () => {
+  it('exactly 78 entries have hasFullExamples === true', () => {
     const fullCount = allComponents.filter(e => e.hasFullExamples).length;
-    expect(fullCount).toBe(15);
+    expect(fullCount).toBe(78);
   });
 
   it('hasFullExamples is true only when examples is non-null', () => {

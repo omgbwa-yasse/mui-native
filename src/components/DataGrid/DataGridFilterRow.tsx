@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useTheme } from '../../theme';
 import type { GridColDef, GridDensity, GridFilterItem, GridFilterModel, GridRowData } from './types';
 
 interface DataGridFilterRowProps<TRow extends GridRowData = GridRowData> {

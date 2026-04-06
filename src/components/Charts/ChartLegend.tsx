@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useTheme } from '../../theme';
 import type { ChartSeries } from './types';
 
 interface ChartLegendProps {

@@ -1,8 +1,18 @@
 import type React from 'react';
+import type { StyleProp, ViewStyle, ViewProps } from 'react-native';
+import type { SizeProp } from '../../tokens/size';
+import type { ColorProp, SxProps, SlotPropsConfig } from '../../types/shared';
+
+export interface ChipSlots {
+  [key: string]: React.ComponentType<any>;
+  Root: React.ComponentType<ViewProps>;
+  Label: React.ComponentType<any>;
+  DeleteIcon: React.ComponentType<any>;
+}
 
 export type ChipVariant = 'assist' | 'filter' | 'input' | 'suggestion';
 
-export interface ChipProps {
+export interface ChipProps extends SlotPropsConfig<ChipSlots> {
   /** Chip label. */
   label: string;
   /** Chip variant. Defaults to 'assist'. */
@@ -21,4 +31,8 @@ export interface ChipProps {
   accessibilityLabel?: string;
   /** Test id. */
   testID?: string;
+  size?: SizeProp;
+  color?: ColorProp;
+  sx?: SxProps;
+  style?: StyleProp<ViewStyle>;
 }

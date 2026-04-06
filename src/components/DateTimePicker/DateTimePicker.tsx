@@ -8,7 +8,10 @@ import {
   type StyleProp,
   type ViewStyle,
 } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import { useLocalizationOptional } from '../DatePicker/useLocalization';
 import { createDatePickerStyles } from '../DatePicker/DatePicker.styles';
 import type { DateTimePickerProps } from './types';
@@ -41,32 +44,38 @@ try {
  *
  * Requires the optional peer dependency `@react-native-community/datetimepicker`.
  */
-export const DateTimePicker = React.memo(function DateTimePicker({
-  value,
-  defaultValue,
-  onChange,
-  onAccept,
-  label,
-  disabled = false,
-  readOnly = false,
-  minDate,
-  maxDate,
-  minDateTime,
-  maxDateTime,
-  disableFuture,
-  disablePast,
-  ampm,
-  views: _views,
-  format,
-  open: controlledOpen,
-  onOpen,
-  onClose,
-  slotProps,
-  testID,
-  style,
-  accessibilityLabel,
-}: DateTimePickerProps) {
+export const DateTimePicker = React.memo(function DateTimePicker(rawProps: DateTimePickerProps) {
+  const props = useComponentDefaults('DateTimePicker', rawProps);
+  const {
+    value,
+    defaultValue,
+    onChange,
+    onAccept,
+    label,
+    disabled = false,
+    readOnly = false,
+    minDate,
+    maxDate,
+    minDateTime,
+    maxDateTime,
+    disableFuture,
+    disablePast,
+    ampm,
+    views: _views,
+    format,
+    open: controlledOpen,
+    onOpen,
+    onClose,
+    slotProps,
+    testID,
+    style,
+    accessibilityLabel,
+    color,
+    sx,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const localization = useLocalizationOptional();
   const styles = useMemo(() => createDatePickerStyles(theme), [theme]);
 
@@ -173,7 +182,7 @@ export const DateTimePicker = React.memo(function DateTimePicker({
   const slotError = slotProps?.textField?.error ?? false;
 
   return (
-    <View style={[style]} testID={testID}>
+    <View style={[sxStyle, style]} testID={testID}>
       <Pressable
         onPress={openPicker}
         disabled={disabled}
@@ -259,7 +268,7 @@ export const DateTimePicker = React.memo(function DateTimePicker({
                   <Text
                     style={{
                       ...theme.typography.labelLarge,
-                      color: theme.colorScheme.primary,
+                      color: bg,
                     }}
                   >
                     OK

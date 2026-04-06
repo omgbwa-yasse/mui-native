@@ -6,7 +6,10 @@ import {
   StyleSheet,
 } from 'react-native';
 import { Text } from '../Text/Text';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { NumberFieldProps } from './types';
 
 function clamp(val: number, min?: number, max?: number): number {
@@ -21,22 +24,29 @@ function round(val: number, scale: number): number {
   return Math.round(val * factor) / factor;
 }
 
-export const NumberField = memo(function NumberField({
-  value,
-  onValueChange,
-  min,
-  max,
-  step = 1,
-  decimalScale = 0,
-  prefix,
-  suffix,
-  disabled = false,
-  label,
-  placeholder,
-  testID,
-  accessibilityLabel,
-}: NumberFieldProps) {
+export const NumberField = memo(function NumberField(rawProps: NumberFieldProps) {
+  const props = useComponentDefaults('NumberField', rawProps);
+  const {
+    value,
+    onValueChange,
+    min,
+    max,
+    step = 1,
+    decimalScale = 0,
+    prefix,
+    suffix,
+    disabled = false,
+    label,
+    placeholder,
+    testID,
+    accessibilityLabel,
+    color,
+    sx,
+    style,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const { colorScheme, shape, typography } = theme;
 
   const [inputText, setInputText] = useState<string>(
@@ -70,10 +80,10 @@ export const NumberField = memo(function NumberField({
   const canIncrement = max === undefined || value < max;
   const canDecrement = min === undefined || value > min;
 
-  const borderColor = focused ? colorScheme.primary : colorScheme.outline;
+  const borderColor = focused ? bg : colorScheme.outline;
 
   return (
-    <View testID={testID} style={[styles.wrapper, { opacity: disabled ? 0.38 : 1 }]}>
+    <View testID={testID} style={[styles.wrapper, { opacity: disabled ? 0.38 : 1 }, sxStyle, style]}>
       {label ? (
         <Text
           variant="bodySmall"

@@ -7,15 +7,25 @@ import Animated, {
   withTiming,
   runOnJS,
 } from 'react-native-reanimated';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { NavigationBarProps, NavigationBarItem } from './types';
+import type { ViewProps } from 'react-native';
 
 interface NavItemProps {
   item: NavigationBarItem;
   isActive: boolean;
+  ItemSlot?: React.ComponentType<ViewProps>;
+  IndicatorSlot?: React.ComponentType<ViewProps>;
+  itemSlotProps?: Partial<ViewProps>;
+  indicatorSlotProps?: Partial<ViewProps>;
 }
 
-function NavItem({ item, isActive }: NavItemProps): React.ReactElement {
+function NavItem({ item, isActive, ItemSlot, IndicatorSlot, itemSlotProps, indicatorSlotProps }: NavItemProps): React.ReactElement {
+  const ResolvedItemSlot = ItemSlot ?? Animated.View;
+  const ResolvedIndicatorSlot = IndicatorSlot ?? View;
   const { theme } = useTheme();
   const { colorScheme, typography, shape } = theme;
 
@@ -73,28 +83,40 @@ function NavItem({ item, isActive }: NavItemProps): React.ReactElement {
 
   return (
     <GestureDetector gesture={tap}>
-      <Animated.View
-        style={[styles.itemContainer, animatedStyle]}
+      <ResolvedItemSlot
+        {...itemSlotProps}
+        style={[styles.itemContainer, animatedStyle, itemSlotProps?.style]}
         accessible
         accessibilityRole="tab"
         accessibilityLabel={item.accessibilityLabel ?? item.label}
         accessibilityState={{ selected: isActive }}
       >
-        <View style={styles.indicator}>{item.icon}</View>
+        <ResolvedIndicatorSlot {...indicatorSlotProps} style={[styles.indicator, indicatorSlotProps?.style]}>{item.icon}</ResolvedIndicatorSlot>
         <Text style={styles.label} numberOfLines={1}>
           {item.label}
         </Text>
-      </Animated.View>
+      </ResolvedItemSlot>
     </GestureDetector>
   );
 }
 
-export function NavigationBar({
-  activeIndex,
-  items,
-  testID,
-}: NavigationBarProps): React.ReactElement {
+export function NavigationBar(rawProps: NavigationBarProps): React.ReactElement {
+  const props = useComponentDefaults('NavigationBar', rawProps);
+  const {
+    activeIndex,
+    items,
+    testID,
+    color,
+    sx,
+    style,
+    slots,
+    slotProps,
+  } = props;
+
+  const RootSlot = slots?.Root ?? View;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const { colorScheme, elevation: elev } = theme;
 
   const styles = useMemo(
@@ -114,14 +136,23 @@ export function NavigationBar({
   );
 
   return (
-    <View
-      style={styles.container}
+    <RootSlot
+      {...slotProps?.Root}
+      style={[styles.container, sxStyle, style, slotProps?.Root?.style]}
       testID={testID}
       accessibilityRole="tablist"
     >
       {items.map((item, idx) => (
-        <NavItem key={idx} item={item} isActive={idx === activeIndex} />
+        <NavItem
+          key={idx}
+          item={item}
+          isActive={idx === activeIndex}
+          ItemSlot={slots?.Item as React.ComponentType<any> | undefined}
+          IndicatorSlot={slots?.Indicator}
+          itemSlotProps={slotProps?.Item}
+          indicatorSlotProps={slotProps?.Indicator}
+        />
       ))}
-    </View>
+    </RootSlot>
   );
 }

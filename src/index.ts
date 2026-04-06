@@ -22,6 +22,12 @@ export { shape } from './tokens/shape';
 export { elevation } from './tokens/elevation';
 export { motion, motionDuration, motionEasing } from './tokens/motion';
 
+// New tokens / shared types (009-mui-config-sync)
+export type { SizeProp, SizeTokens } from './tokens/size';
+export { SIZE_SCALE } from './tokens/size';
+export type { ColorProp, SxObject, SxProps, SlotPropsConfig } from './types/shared';
+export { isColorProp, colorRoleMap } from './types/shared';
+
 // Components
 export { Button } from './components/Button';
 export type { ButtonProps, ButtonVariant } from './components/Button';
@@ -254,3 +260,16 @@ export type { BarChartProps, LineChartProps, ChartSeries, ChartDataPoint, ChartA
 
 export { SimpleTreeView, TreeItem } from './components/TreeView';
 export type { SimpleTreeViewProps, TreeItemProps, TreeViewItemId, TreeViewContextValue } from './components/TreeView';
+
+// Feature 008 — Domain components
+export { CodeInput } from './components/CodeInput/CodeInput';
+export type { CodeInputProps } from './components/CodeInput/CodeInput';
+
+export { default as HumanizationScoreBar } from './components/HumanizationScoreBar/HumanizationScoreBar';
+export type { HumanizationScoreBarProps } from './components/HumanizationScoreBar/HumanizationScoreBar';
+
+export { InvitationStatusBadge } from './components/InvitationStatusBadge/InvitationStatusBadge';
+export type { InvitationStatus } from './components/InvitationStatusBadge/InvitationStatusBadge';
+
+export { default as WorkerAgentRow } from './components/WorkerAgentRow/WorkerAgentRow';
+export type { WorkerAgentRowProps } from './components/WorkerAgentRow/WorkerAgentRow';

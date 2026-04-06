@@ -2,7 +2,11 @@ import React from 'react';
 import { Dimensions } from 'react-native';
 import Animated, { useAnimatedStyle, interpolate } from 'react-native-reanimated';
 import { useTransition } from '../../hooks/useTransition';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { SlideProps, SlideDirection } from './types';
+import { useTheme } from '../../theme';
 
 const { width: SCREEN_W, height: SCREEN_H } = Dimensions.get('screen');
 
@@ -29,20 +33,27 @@ function getTranslation(
 /**
  * Slide — translates the child in/out from an edge.
  */
-export function Slide({
-  in: inProp = false,
-  timeout = 300,
-  mountOnEnter = false,
-  unmountOnExit = false,
-  direction = 'down',
-  children,
-  style,
-  onEnter,
-  onEntered,
-  onExit,
-  onExited,
-  testID,
-}: SlideProps): React.ReactElement | null {
+export function Slide(rawProps: SlideProps): React.ReactElement | null {
+  const props = useComponentDefaults('Slide', rawProps) as SlideProps;
+  const { theme } = useTheme();
+  const {
+    in: inProp = false,
+    timeout = 300,
+    mountOnEnter = false,
+    unmountOnExit = false,
+    direction = 'down',
+    children,
+    style,
+    onEnter,
+    onEntered,
+    onExit,
+    onExited,
+    testID,
+    color,
+    sx,
+  } = props;
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const { progress, shouldMount, state } = useTransition({
     in: inProp,
     timeout,
@@ -76,7 +87,7 @@ export function Slide({
   if (!shouldMount) return null;
 
   return (
-    <Animated.View testID={testID} style={[animatedStyle, style]}>
+    <Animated.View testID={testID} style={[animatedStyle, sxStyle, style]}>
       {children}
     </Animated.View>
   );

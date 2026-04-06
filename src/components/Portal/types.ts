@@ -1,4 +1,7 @@
 import type React from 'react';
+import type { StyleProp, ViewStyle } from 'react-native';
+import type { SizeProp } from '../../tokens/size';
+import type { ColorProp, SxProps } from '../../types/shared';
 
 /**
  * Props for the Portal component.
@@ -6,6 +9,10 @@ import type React from 'react';
  */
 export interface PortalProps {
   children: React.ReactNode;
+  size?: SizeProp;
+  color?: ColorProp;
+  sx?: SxProps;
+  style?: StyleProp<ViewStyle>;
 }
 
 /**

@@ -40,6 +40,19 @@ export interface ColorScheme {
   inverseOnSurface: string;
   inversePrimary: string;
   surfaceTint: string;
+  // Extended semantic roles (MUI-parity: success / warning / info triads)
+  success: string;
+  onSuccess: string;
+  successContainer: string;
+  onSuccessContainer: string;
+  warning: string;
+  onWarning: string;
+  warningContainer: string;
+  onWarningContainer: string;
+  info: string;
+  onInfo: string;
+  infoContainer: string;
+  onInfoContainer: string;
 }
 
 /** Default MD3 light color scheme seeded from #1976D2 */
@@ -74,6 +87,19 @@ export const baseLightColors: ColorScheme = {
   inverseOnSurface: '#F1F0F4',
   inversePrimary: '#A0C9FF',
   surfaceTint: '#1976D2',
+  // Extended semantic roles — light mode (MUI v6-derived baseline)
+  success: '#2e7d32',
+  onSuccess: '#ffffff',
+  successContainer: '#c8e6c9',
+  onSuccessContainer: '#1b5e20',
+  warning: '#ed6c02',
+  onWarning: '#ffffff',
+  warningContainer: '#ffe0b2',
+  onWarningContainer: '#e65100',
+  info: '#0288d1',
+  onInfo: '#ffffff',
+  infoContainer: '#bbdefb',
+  onInfoContainer: '#01579b',
 };
 
 /** Default MD3 dark color scheme seeded from #1976D2 */
@@ -108,4 +134,17 @@ export const baseDarkColors: ColorScheme = {
   inverseOnSurface: '#2F3033',
   inversePrimary: '#1976D2',
   surfaceTint: '#A0C9FF',
+  // Extended semantic roles — dark mode (MUI v6-derived baseline)
+  success: '#81c784',
+  onSuccess: '#1b5e20',
+  successContainer: '#2e7d32',
+  onSuccessContainer: '#c8e6c9',
+  warning: '#ffb74d',
+  onWarning: '#e65100',
+  warningContainer: '#ed6c02',
+  onWarningContainer: '#ffe0b2',
+  info: '#64b5f6',
+  onInfo: '#01579b',
+  infoContainer: '#0288d1',
+  onInfoContainer: '#bbdefb',
 };

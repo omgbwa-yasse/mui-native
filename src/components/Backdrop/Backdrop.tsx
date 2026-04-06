@@ -6,8 +6,11 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { Portal } from '../Portal/Portal';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { BackdropProps } from './types';
 
 /**
@@ -16,13 +19,20 @@ import type { BackdropProps } from './types';
  * Fades in/out over 200 ms (motion short2). Mounted via Portal so it always
  * appears above the full view tree. Respects reduce-motion.
  */
-export function Backdrop({
-  visible,
-  onDismiss,
-  opacity = 0.5,
-  testID,
-}: BackdropProps): React.ReactElement | null {
+export function Backdrop(rawProps: BackdropProps): React.ReactElement | null {
+  const props = useComponentDefaults('Backdrop', rawProps);
+  const {
+    visible,
+    onDismiss,
+    opacity = 0.5,
+    testID,
+    color,
+    sx,
+    style,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const reduceMotion = useReducedMotionValue();
   const fadeAnim = useSharedValue(visible ? opacity : 0);
 
@@ -44,7 +54,7 @@ export function Backdrop({
 
   return (
     <Portal>
-      <Animated.View style={[StyleSheet.absoluteFill, styles.scrim, { backgroundColor: theme.colorScheme.scrim }, animatedStyle]}>
+      <Animated.View style={[StyleSheet.absoluteFill, styles.scrim, { backgroundColor: theme.colorScheme.scrim }, animatedStyle, sxStyle, style]}>
         <Pressable
           style={StyleSheet.absoluteFill}
           onPress={onDismiss}

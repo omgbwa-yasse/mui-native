@@ -1,5 +1,7 @@
 import type React from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
+import type { SizeProp } from '../../tokens/size';
+import type { ColorProp, SxProps } from '../../types/shared';
 
 // ─── Base ──────────────────────────────────────────────────────────────────────
 
@@ -12,6 +14,9 @@ export interface ChartBaseProps {
   /** Chart height in dp. Default: 220. */
   height?: number;
   loading?: boolean;
+  size?: SizeProp;
+  color?: ColorProp;
+  sx?: SxProps;
 }
 
 // ─── Data series ──────────────────────────────────────────────────────────────

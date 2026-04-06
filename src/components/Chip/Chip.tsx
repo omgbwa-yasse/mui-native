@@ -7,23 +7,42 @@ import Animated, {
   withTiming,
   runOnJS,
 } from 'react-native-reanimated';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
 import type { ChipProps } from './types';
 
-export function Chip({
-  label,
-  variant = 'assist',
-  selected = false,
-  icon,
-  onPress,
-  onRemove,
-  disabled = false,
-  accessibilityLabel,
-  testID,
-}: ChipProps): React.ReactElement {
+const DefaultLabel = Text;
+const DefaultDeleteIcon = Text;
+
+export function Chip(rawProps: ChipProps): React.ReactElement {
+  const props = useComponentDefaults('Chip', rawProps);
+  const {
+    label,
+    variant = 'assist',
+    selected = false,
+    icon,
+    onPress,
+    onRemove,
+    disabled = false,
+    size,
+    color,
+    sx,
+    style,
+    accessibilityLabel,
+    testID,
+    slots,
+    slotProps,
+  } = props;
   const { theme } = useTheme();
   const { colorScheme, shape, typography } = theme;
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
+
+  const CHIP_HEIGHTS = { small: 24, medium: 32, large: 40 } as const;
+  const chipHeight = CHIP_HEIGHTS[size ?? 'medium'];
 
   const isSelected = variant === 'filter' && selected;
 
@@ -31,7 +50,7 @@ export function Chip({
     () =>
       StyleSheet.create({
         container: {
-          height: 32,
+          height: chipHeight,
           borderRadius: shape.small,
           paddingHorizontal: 16,
           borderWidth: 1,
@@ -77,10 +96,15 @@ export function Chip({
     [disabled, onPress],
   );
 
+  const Root = slots?.Root ?? Animated.View;
+  const LabelSlot = slots?.Label ?? DefaultLabel;
+  const DeleteIconSlot = slots?.DeleteIcon ?? DefaultDeleteIcon;
+
   return (
     <GestureDetector gesture={tapGesture}>
-      <Animated.View
-        style={[styles.container, animatedStyle]}
+      <Root
+        {...slotProps?.Root}
+        style={[styles.container, animatedStyle, sxStyle, style, slotProps?.Root?.style]}
         accessible
         accessibilityRole="button"
         accessibilityLabel={accessibilityLabel ?? label}
@@ -88,19 +112,20 @@ export function Chip({
         testID={testID}
       >
         {icon != null && <View style={styles.iconWrapper}>{icon}</View>}
-        <Text style={styles.label}>{label}</Text>
+        <LabelSlot {...slotProps?.Label} style={[styles.label, slotProps?.Label?.style]}>{label}</LabelSlot>
         {onRemove != null && (
           <View style={styles.removeWrapper}>
-            <Text
+            <DeleteIconSlot
+              {...slotProps?.DeleteIcon}
               onPress={disabled ? undefined : onRemove}
               accessibilityRole="button"
               accessibilityLabel={`Remove ${label}`}
             >
               ✕
-            </Text>
+            </DeleteIconSlot>
           </View>
         )}
-      </Animated.View>
+      </Root>
     </GestureDetector>
   );
 }

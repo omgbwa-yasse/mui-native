@@ -1,4 +1,7 @@
+import type { StyleProp, ViewStyle } from 'react-native';
 import type { IconSource } from '../Icon/types';
+import type { SizeProp } from '../../tokens/size';
+import type { ColorProp, SxProps } from '../../types/shared';
 
 export interface RatingProps {
   value?: number;
@@ -7,8 +10,11 @@ export interface RatingProps {
   precision?: 0.5 | 1;
   disabled?: boolean;
   readOnly?: boolean;
-  size?: 'small' | 'medium' | 'large';
+  size?: SizeProp;
   icon?: IconSource;
   emptyIcon?: IconSource;
+  color?: ColorProp;
+  sx?: SxProps;
+  style?: StyleProp<ViewStyle>;
   testID?: string;
 }

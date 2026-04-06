@@ -1,4 +1,7 @@
-import type { KeyboardTypeOptions, ReturnKeyTypeOptions } from 'react-native';
+import type React from 'react';
+import type { StyleProp, ViewStyle, ViewProps, TextInputProps, KeyboardTypeOptions, ReturnKeyTypeOptions } from 'react-native';
+import type { SizeProp } from '../../tokens/size';
+import type { ColorProp, SxProps, SlotPropsConfig } from '../../types/shared';
 
 /**
  * MD3 TextField variants.
@@ -6,7 +9,15 @@ import type { KeyboardTypeOptions, ReturnKeyTypeOptions } from 'react-native';
  */
 export type TextFieldVariant = 'filled' | 'outlined';
 
-export interface TextFieldProps {
+export interface TextFieldSlots {
+  [key: string]: React.ComponentType<any>;
+  Root: React.ComponentType<ViewProps>;
+  Input: React.ComponentType<TextInputProps>;
+  Label: React.ComponentType<any>;
+  SupportingText: React.ComponentType<any>;
+}
+
+export interface TextFieldProps extends SlotPropsConfig<TextFieldSlots> {
   /** Input label text. */
   label: string;
   /** Controlled value. */
@@ -41,4 +52,8 @@ export interface TextFieldProps {
   testID?: string;
   /** Accessibility label. */
   accessibilityLabel?: string;
+  size?: SizeProp;
+  color?: ColorProp;
+  sx?: SxProps;
+  style?: StyleProp<ViewStyle>;
 }

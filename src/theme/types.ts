@@ -1,4 +1,5 @@
 import type { ColorScheme, TypographyScale, ShapeScale, ElevationScale } from '../tokens';
+import type { ComponentsConfig } from './componentsDefs';
 
 /** Recursive deep-partial utility — allows partial theme overrides */
 export type DeepPartial<T> = {
@@ -19,6 +20,8 @@ export interface Theme {
   shape: ShapeScale;
   elevation: ElevationScale;
   mode: ColorMode;
+  /** Optional global component config — set via `createTheme({ components: { ... } })`. */
+  components?: ComponentsConfig;
 }
 
 /**

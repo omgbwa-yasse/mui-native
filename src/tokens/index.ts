@@ -15,3 +15,6 @@ export { elevation } from './elevation';
 
 export type { MotionDurationKey, MotionEasingKey } from './motion';
 export { motionDuration, motionEasing, motion } from './motion';
+
+export type { SizeProp, SizeTokens } from './size';
+export { SIZE_SCALE } from './size';

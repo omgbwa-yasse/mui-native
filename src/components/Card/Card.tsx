@@ -7,9 +7,14 @@ import Animated, {
   withTiming,
   runOnJS,
 } from 'react-native-reanimated';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { CardProps, CardVariant } from './types';
+
+const DefaultRoot = View;
 
 function createCardStyles(
   colorScheme: ReturnType<typeof useTheme>['theme']['colorScheme'],
@@ -47,14 +52,24 @@ function createCardStyles(
   return StyleSheet.create({ container: containerMap[variant] });
 }
 
-export function Card({
-  variant = 'elevated',
-  children,
-  onPress,
-  accessibilityLabel,
-  testID,
-}: CardProps): React.ReactElement {
+export function Card(rawProps: CardProps): React.ReactElement {
+  const props = useComponentDefaults('Card', rawProps);
+  const {
+    variant = 'elevated',
+    children,
+    onPress,
+    accessibilityLabel,
+    testID,
+    color,
+    sx,
+    style,
+    slots,
+    slotProps,
+  } = props;
+  const Root = slots?.Root ?? DefaultRoot;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const styles = useMemo(
     () => createCardStyles(theme.colorScheme, theme.shape, variant),
     [theme, variant],
@@ -103,8 +118,8 @@ export function Card({
   }
 
   return (
-    <View style={styles.container} testID={testID} accessible={accessibilityLabel != null} accessibilityLabel={accessibilityLabel}>
+    <Root {...slotProps?.Root} style={[styles.container, sxStyle, style, slotProps?.Root?.style]} testID={testID} accessible={accessibilityLabel != null} accessibilityLabel={accessibilityLabel}>
       {children}
-    </View>
+    </Root>
   );
 }

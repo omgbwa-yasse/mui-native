@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useTheme } from '../../theme';
 
 export function ChartLoadingOverlay(): React.ReactElement {
   const { theme } = useTheme();

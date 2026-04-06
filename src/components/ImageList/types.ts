@@ -1,4 +1,6 @@
 import type { ImageSourcePropType, ViewProps } from 'react-native';
+import type { SizeProp } from '../../tokens/size';
+import type { ColorProp, SxProps } from '../../types/shared';
 
 export type ImageListVariant = 'standard' | 'masonry' | 'quilted';
 
@@ -26,4 +28,7 @@ export interface ImageListProps extends Omit<ViewProps, 'children'> {
   variant?: ImageListVariant;
   /** Row height in dp, or 'auto' (default: 120) */
   rowHeight?: number | 'auto';
+  size?: SizeProp;
+  color?: ColorProp;
+  sx?: SxProps;
 }

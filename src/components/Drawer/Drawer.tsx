@@ -9,24 +9,34 @@ import {
   Gesture,
   GestureDetector,
 } from 'react-native-gesture-handler';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import { Portal } from '../Portal/Portal';
 import type { DrawerProps } from './types';
 
 const SPRING_CONFIG = { damping: 20, stiffness: 200 };
 const DEFAULT_DRAWER_WIDTH = 280;
 
-const Drawer = memo(function Drawer({
-  open,
-  onClose,
-  anchor = 'left',
-  variant = 'temporary',
-  children,
-  drawerWidth = DEFAULT_DRAWER_WIDTH,
-  testID,
-}: DrawerProps) {
+const Drawer = memo(function Drawer(rawProps: DrawerProps) {
+  const props = useComponentDefaults('Drawer', rawProps);
+  const {
+    open,
+    onClose,
+    anchor = 'left',
+    variant = 'temporary',
+    children,
+    drawerWidth = DEFAULT_DRAWER_WIDTH,
+    testID,
+    color,
+    sx,
+    style,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const reduceMotion = useReducedMotionValue();
 
   const offscreen = anchor === 'right' ? drawerWidth : -drawerWidth;
@@ -125,8 +135,10 @@ const Drawer = memo(function Drawer({
           styles.drawer,
           anchor === 'right' ? styles.anchorRight : styles.anchorLeft,
           { width: drawerWidth, backgroundColor: theme.colorScheme.surface, shadowColor: theme.colorScheme.shadow },
+          sxStyle,
+          style,
         ]}
-        accessibilityRole={"navigation" as AccessibilityRole}
+        accessibilityRole={"none" as AccessibilityRole}
         testID={testID}
       >
         {children}
@@ -144,8 +156,10 @@ const Drawer = memo(function Drawer({
           anchor === 'right' ? styles.anchorRight : styles.anchorLeft,
           { width: drawerWidth, backgroundColor: theme.colorScheme.surface, shadowColor: theme.colorScheme.shadow },
           drawerStyle,
+          sxStyle,
+          style,
         ]}
-        accessibilityRole={"navigation" as AccessibilityRole}
+        accessibilityRole={"none" as AccessibilityRole}
         accessibilityViewIsModal={variant === 'temporary'}
         testID={testID}
       >

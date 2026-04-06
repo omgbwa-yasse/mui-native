@@ -1,4 +1,6 @@
 import type { ViewProps } from 'react-native';
+import type { SizeProp } from '../../tokens/size';
+import type { ColorProp, SxProps } from '../../types/shared';
 
 export type ContainerMaxWidth = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false;
 
@@ -9,4 +11,7 @@ export interface ContainerProps extends ViewProps {
   disableGutters?: boolean;
   /** Fixed width (does not grow beyond maxWidth pixel value) */
   fixed?: boolean;
+  size?: SizeProp;
+  color?: ColorProp;
+  sx?: SxProps;
 }

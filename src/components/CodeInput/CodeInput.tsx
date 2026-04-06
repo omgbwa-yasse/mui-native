@@ -9,18 +9,22 @@ import {
   type TextInputKeyPressEventData,
   type NativeSyntheticEvent,
 } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
+import type { CodeInputProps } from './types';
 
-interface CodeInputProps {
-  value: string;
-  onChange: (value: string) => void;
-  disabled?: boolean;
-}
+export type { CodeInputProps } from './types';
 
 const SEGMENT_COUNT = 7;
 
-export function CodeInput({ value, onChange, disabled = false }: CodeInputProps) {
+export function CodeInput(rawProps: CodeInputProps) {
+  const props = useComponentDefaults('CodeInput', rawProps);
+  const { color, sx, style, value, onChange, disabled = false } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const inputRefs = useRef<Array<TextInput | null>>(
     Array.from({ length: SEGMENT_COUNT }, () => null),
   );
@@ -53,7 +57,7 @@ export function CodeInput({ value, onChange, disabled = false }: CodeInputProps)
   );
 
   return (
-    <View style={styles.row} accessibilityRole="none">
+    <View style={[styles.row, sxStyle, style]} accessibilityRole="none">
       {segments.map((digit, index) => (
         <TextInput
           key={index}
@@ -62,7 +66,7 @@ export function CodeInput({ value, onChange, disabled = false }: CodeInputProps)
             styles.cell,
             {
               borderColor: digit
-                ? theme.colorScheme.primary
+                ? bg
                 : theme.colorScheme.outline,
               color: theme.colorScheme.onSurface,
               backgroundColor: theme.colorScheme.surface,

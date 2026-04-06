@@ -1,6 +1,9 @@
 import React, { memo } from 'react';
 import { type AccessibilityRole, StyleSheet, View } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import { Text } from '../Text/Text';
 import type { StepperProps, StepState } from './types';
@@ -12,22 +15,37 @@ function getStepState(index: number, activeStep: number, explicitState?: StepSta
   return 'upcoming';
 }
 
-const Stepper = memo(function Stepper({
-  steps,
-  activeStep,
-  orientation = 'horizontal',
-  nonLinear = false,
-  onStepPress,
-  testID,
-}: StepperProps) {
+const Stepper = memo(function Stepper(rawProps: StepperProps) {
+  const props = useComponentDefaults('Stepper', rawProps);
+  const {
+    steps,
+    activeStep,
+    orientation = 'horizontal',
+    nonLinear = false,
+    onStepPress,
+    testID,
+    color,
+    sx,
+    style,
+    slots,
+    slotProps,
+  } = props;
+
+  const RootSlot = slots?.Root ?? View;
+  const StepIndicatorSlot = slots?.StepIndicator ?? View;
+  const StepLabelSlot = slots?.StepLabel ?? View;
+  const ConnectorSlot = slots?.Connector ?? View;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const isHorizontal = orientation === 'horizontal';
 
   const styles = styleSheet(isHorizontal);
 
   return (
-    <View
-      style={isHorizontal ? styles.rootH : styles.rootV}
+    <RootSlot
+      {...slotProps?.Root}
+      style={[isHorizontal ? styles.rootH : styles.rootV, sxStyle, style, slotProps?.Root?.style]}
       accessibilityRole="progressbar"
       accessible
       accessibilityValue={{ min: 0, max: steps.length - 1, now: activeStep }}
@@ -45,7 +63,7 @@ const Stepper = memo(function Stepper({
         const circleColor = isError
           ? theme.colorScheme.error
           : isCompleted || isActive
-          ? theme.colorScheme.primary
+          ? bg
           : theme.colorScheme.outline;
 
         const circleBg = isCompleted || isActive || isError
@@ -53,7 +71,7 @@ const Stepper = memo(function Stepper({
           : 'transparent';
 
         const circleTextColor = isCompleted || isActive || isError
-          ? theme.colorScheme.onPrimary
+          ? fg
           : theme.colorScheme.onSurfaceVariant;
 
         const labelColor = isActive
@@ -61,11 +79,12 @@ const Stepper = memo(function Stepper({
           : theme.colorScheme.onSurfaceVariant;
 
         const connectorColor = isCompleted
-          ? theme.colorScheme.primary
+          ? bg
           : theme.colorScheme.outlineVariant;
 
         const stepIndicator = (
-          <View
+          <StepIndicatorSlot
+            {...slotProps?.StepIndicator}
             style={[
               styles.circle,
               {
@@ -73,6 +92,7 @@ const Stepper = memo(function Stepper({
                 borderColor: circleColor,
                 borderWidth: isCompleted || isActive || isError ? 0 : 1.5,
               },
+              slotProps?.StepIndicator?.style,
             ]}
           >
             {isCompleted ? (
@@ -84,11 +104,11 @@ const Stepper = memo(function Stepper({
                 {String(index + 1)}
               </Text>
             )}
-          </View>
+          </StepIndicatorSlot>
         );
 
         const stepLabel = (
-          <View style={isHorizontal ? styles.labelH : styles.labelV}>
+          <StepLabelSlot {...slotProps?.StepLabel} style={[isHorizontal ? styles.labelH : styles.labelV, slotProps?.StepLabel?.style]}>
             <Text variant="labelMedium" color={labelColor}>{step.label}</Text>
             {step.optional && (
               <Text variant="labelSmall" color={theme.colorScheme.onSurfaceVariant}>
@@ -100,7 +120,7 @@ const Stepper = memo(function Stepper({
                 {step.description}
               </Text>
             )}
-          </View>
+          </StepLabelSlot>
         );
 
         const stepContent = (
@@ -115,7 +135,7 @@ const Stepper = memo(function Stepper({
                 <View style={styles.stepVLeft}>
                   {stepIndicator}
                   {!isLast && (
-                    <View style={[styles.connectorV, { backgroundColor: connectorColor }]} />
+                    <ConnectorSlot {...slotProps?.Connector} style={[styles.connectorV, { backgroundColor: connectorColor }, slotProps?.Connector?.style]} />
                   )}
                 </View>
                 {stepLabel}
@@ -142,13 +162,13 @@ const Stepper = memo(function Stepper({
             {/* Horizontal connector */}
             {isHorizontal && !isLast && (
               <View style={styles.connectorHWrapper}>
-                <View style={[styles.connectorH, { backgroundColor: connectorColor }]} />
+                <ConnectorSlot {...slotProps?.Connector} style={[styles.connectorH, { backgroundColor: connectorColor }, slotProps?.Connector?.style]} />
               </View>
             )}
           </React.Fragment>
         );
       })}
-    </View>
+    </RootSlot>
   );
 });
 

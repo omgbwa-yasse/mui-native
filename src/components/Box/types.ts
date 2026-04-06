@@ -1,5 +1,7 @@
 import type { ViewProps, ViewStyle } from 'react-native';
 import type { SpacingKey } from '../../tokens/spacing';
+import type { SizeProp } from '../../tokens/size';
+import type { ColorProp } from '../../types/shared';
 
 export interface BoxProps extends ViewProps {
   /** Padding all sides */
@@ -32,4 +34,6 @@ export interface BoxProps extends ViewProps {
   my?: SpacingKey;
   /** Escape hatch — merged last (highest specificity) */
   sx?: ViewStyle;
+  size?: SizeProp;
+  color?: ColorProp;
 }

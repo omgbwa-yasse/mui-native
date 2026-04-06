@@ -5,7 +5,7 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import { useTheme } from '../../theme/ThemeContext';
+import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
 import { Checkbox } from '../Checkbox/Checkbox';
 import { TreeViewContext } from './SimpleTreeView';

@@ -1,5 +1,7 @@
 import type React from 'react';
 import type { AccessibilityRole, AccessibilityState, StyleProp, ViewStyle } from 'react-native';
+import type { SizeProp } from '../../tokens/size';
+import type { ColorProp, SxProps } from '../../types/shared';
 
 /**
  * Props for TouchableRipple — the MD3 press primitive.
@@ -15,6 +17,9 @@ export interface TouchableRippleProps {
   disabled?: boolean;
   /** Clip ripple to bounds (false = borderless overflow). */
   borderless?: boolean;
+  size?: SizeProp;
+  color?: ColorProp;
+  sx?: SxProps;
   children: React.ReactNode;
   testID?: string;
   accessibilityRole?: AccessibilityRole;

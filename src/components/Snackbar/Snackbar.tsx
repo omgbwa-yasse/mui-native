@@ -6,8 +6,11 @@ import Animated, {
   withTiming,
   runOnJS,
 } from 'react-native-reanimated';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import { Portal } from '../Portal/Portal';
 import { Text } from '../Text/Text';
 import type { SnackbarProps } from './types';
@@ -16,12 +19,21 @@ const ANIM_DURATION = 300;
 const BOTTOM_OFFSET = 16;
 const SLIDE_DISTANCE = 80;
 
-const Snackbar = memo(function Snackbar({
-  item,
-  onDismiss,
-  testID,
-}: SnackbarProps) {
+const Snackbar = memo(function Snackbar(rawProps: SnackbarProps) {
+  const props = useComponentDefaults('Snackbar', rawProps);
+  const {
+    item,
+    onDismiss,
+    testID,
+    color,
+    sx,
+    style,
+    slots,
+    slotProps,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const reduceMotion = useReducedMotionValue();
 
   const opacity = useSharedValue(0);
@@ -86,24 +98,31 @@ const Snackbar = memo(function Snackbar({
     },
   });
 
+  const SlotRoot = slots?.Root ?? Animated.View;
+  const SlotMessage = slots?.Message ?? Text;
+  const SlotAction = slots?.Action ?? Pressable;
+
   return (
     <Portal>
-      <Animated.View
-        style={[styles.container, animatedStyle]}
+      <SlotRoot
+        {...slotProps?.Root}
+        style={[styles.container, animatedStyle, sxStyle, style, slotProps?.Root?.style]}
         accessibilityLiveRegion="polite"
         testID={testID}
       >
         <View style={styles.message}>
-          <Text
+          <SlotMessage
+            {...slotProps?.Message}
             variant="bodyMedium"
             color={theme.colorScheme.inverseOnSurface}
           >
             {item.message}
-          </Text>
+          </SlotMessage>
         </View>
         {item.action != null && (
-          <Pressable
-            style={styles.action}
+          <SlotAction
+            {...slotProps?.Action}
+            style={[styles.action, slotProps?.Action?.style]}
             onPress={() => {
               item.action?.onPress();
               handleDismiss();
@@ -117,9 +136,9 @@ const Snackbar = memo(function Snackbar({
             >
               {item.action.label}
             </Text>
-          </Pressable>
+          </SlotAction>
         )}
-      </Animated.View>
+      </SlotRoot>
     </Portal>
   );
 });

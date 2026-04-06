@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useTheme } from '../../theme';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import { Text } from '../Text/Text';
 import type { MenuItemProps } from './types';

@@ -12,22 +12,32 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import { Portal } from '../Portal/Portal';
 import type { ModalProps } from './types';
 
 const SPRING_CONFIG = { damping: 20, stiffness: 200 };
 const FADE_DURATION = 200;
 
-const Modal = memo(function Modal({
-  visible,
-  onDismiss,
-  dismissible = true,
-  children,
-  testID,
-}: ModalProps) {
+const Modal = memo(function Modal(rawProps: ModalProps) {
+  const props = useComponentDefaults('Modal', rawProps);
+  const {
+    visible,
+    onDismiss,
+    dismissible = true,
+    children,
+    testID,
+    color,
+    sx,
+    style,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const reduceMotion = useReducedMotionValue();
 
   /**
@@ -117,7 +127,7 @@ const Modal = memo(function Modal({
           style={{ width: '100%', alignItems: 'center' }}
         >
           <Animated.View
-            style={[styles.surface, surfaceStyle]}
+            style={[styles.surface, surfaceStyle, sxStyle, style]}
             accessibilityViewIsModal
             accessibilityRole="none"
           >

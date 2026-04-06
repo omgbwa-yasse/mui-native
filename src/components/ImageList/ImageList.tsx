@@ -1,6 +1,10 @@
 import React, { memo, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { ImageListItemProps, ImageListProps } from './types';
+import { useTheme } from '../../theme';
 
 /**
  * Returns the `cols` and `rows` span of a child by reading its props.
@@ -12,15 +16,22 @@ function getItemSpan(child: React.ReactElement<ImageListItemProps>) {
   return { colSpan, rowSpan };
 }
 
-const ImageList = memo<ImageListProps>(function ImageList({
-  children,
-  cols = 2,
-  gap = 4,
-  variant = 'standard',
-  rowHeight = 120,
-  style,
-  ...rest
-}) {
+const ImageList = memo<ImageListProps>(function ImageList(rawProps: ImageListProps) {
+  const props = useComponentDefaults('ImageList', rawProps as unknown as ImageListItemProps) as unknown as ImageListProps;
+  const { theme } = useTheme();
+  const {
+    children,
+    cols = 2,
+    gap = 4,
+    variant = 'standard',
+    rowHeight = 120,
+    style,
+    color,
+    sx,
+    ...rest
+  } = props;
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const [containerWidth, setContainerWidth] = useState(0);
 
   const items = React.Children.toArray(children) as React.ReactElement<ImageListItemProps>[];
@@ -28,7 +39,7 @@ const ImageList = memo<ImageListProps>(function ImageList({
   if (containerWidth === 0) {
     return (
       <View
-        style={[styles.root, style]}
+        style={[styles.root, sxStyle, style]}
         onLayout={(e) => setContainerWidth(e.nativeEvent.layout.width)}
         {...rest}
       />

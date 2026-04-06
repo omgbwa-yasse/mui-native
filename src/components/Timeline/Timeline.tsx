@@ -1,10 +1,20 @@
 import React, { useRef } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { TimelineContextProvider } from './TimelineContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { TimelineProps } from './types';
+import { useTheme } from '../../theme';
 
-export function Timeline({ position = 'right', children, style }: TimelineProps) {
+export function Timeline(rawProps: TimelineProps) {
+  const props = useComponentDefaults('Timeline', rawProps);
+  const { color, sx, position = 'right', children, style, slots, slotProps } = props;
+  const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const counterRef = useRef(0);
+  const Root = slots?.Root ?? View;
 
   const registerItem = () => {
     const index = counterRef.current;
@@ -14,7 +24,7 @@ export function Timeline({ position = 'right', children, style }: TimelineProps)
 
   return (
     <TimelineContextProvider value={{ position, registerItem }}>
-      <View style={[styles.root, style]}>{children}</View>
+      <Root {...slotProps?.Root} style={[styles.root, sxStyle, style, slotProps?.Root?.style]}>{children}</Root>
     </TimelineContextProvider>
   );
 }

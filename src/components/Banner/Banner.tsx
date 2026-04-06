@@ -2,7 +2,10 @@ import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import type { AccessibilityRole, LayoutChangeEvent } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import { Icon } from '../Icon/Icon';
 import { Text } from '../Text/Text';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
@@ -10,14 +13,21 @@ import type { BannerProps } from './types';
 
 const ANIMATION_DURATION = 300;
 
-const Banner = memo(function Banner({
-  visible,
-  children,
-  actions,
-  icon,
-  testID,
-}: BannerProps) {
+const Banner = memo(function Banner(rawProps: BannerProps) {
+  const props = useComponentDefaults('Banner', rawProps);
+  const {
+    visible,
+    children,
+    actions,
+    icon,
+    testID,
+    color,
+    sx,
+    style,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const height = useSharedValue(0);
   const measuredHeight = useRef(0);
   const [mounted, setMounted] = useState(visible);
@@ -69,7 +79,7 @@ const Banner = memo(function Banner({
 
   return (
     <Animated.View
-      style={[containerStyle, { backgroundColor: theme.colorScheme.surface }]}
+      style={[containerStyle, { backgroundColor: theme.colorScheme.surface }, sxStyle, style]}
       testID={testID}
     >
       <View
@@ -103,7 +113,7 @@ const Banner = memo(function Banner({
               >
                 <Text
                   variant="labelLarge"
-                  color={theme.colorScheme.primary}
+                  color={bg}
                 >
                   {action.label}
                 </Text>

@@ -5,8 +5,9 @@ import type { Theme } from '../../theme/types';
  * Returns a StyleSheet for the DatePicker component.
  * Called inside the component and memoized on theme changes.
  */
-export function createDatePickerStyles(theme: Theme) {
+export function createDatePickerStyles(theme: Theme, primaryColor?: string) {
   const { colorScheme, shape, typography } = theme;
+  const primary = primaryColor ?? colorScheme.primary;
 
   return StyleSheet.create({
     triggerContainer: {
@@ -21,7 +22,7 @@ export function createDatePickerStyles(theme: Theme) {
       minHeight: 56,
     },
     triggerContainerFocused: {
-      borderColor: colorScheme.primary,
+      borderColor: primary,
       borderWidth: 2,
     },
     triggerContainerError: {
@@ -37,7 +38,7 @@ export function createDatePickerStyles(theme: Theme) {
       marginBottom: 2,
     },
     labelFloatingFocused: {
-      color: colorScheme.primary,
+      color: primary,
     },
     labelFloatingError: {
       color: colorScheme.error,

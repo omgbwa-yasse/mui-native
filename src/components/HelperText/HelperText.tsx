@@ -1,17 +1,25 @@
 import React, { memo } from 'react';
 import { StyleSheet } from 'react-native';
 import { Text } from '../Text/Text';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { HelperTextProps } from './types';
 
-export const HelperText = memo(function HelperText({
-  type,
-  visible = true,
-  padding = 'normal',
-  children,
-  testID,
-}: HelperTextProps) {
+export const HelperText = memo(function HelperText(rawProps: HelperTextProps) {
+  const props = useComponentDefaults('HelperText', rawProps);
+  const {
+    type,
+    visible = true,
+    padding = 'normal',
+    children,
+    testID,
+    sx,
+    style,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
 
   if (!visible) {
     return null;
@@ -35,6 +43,8 @@ export const HelperText = memo(function HelperText({
         styles.base,
         padding === 'normal' ? styles.paddingNormal : undefined,
         { color },
+        sxStyle,
+        style,
       ]}
     >
       {children}

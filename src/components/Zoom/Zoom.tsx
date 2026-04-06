@@ -1,24 +1,35 @@
 import React from 'react';
 import Animated, { useAnimatedStyle } from 'react-native-reanimated';
 import { useTransition } from '../../hooks/useTransition';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { ZoomProps } from './types';
+import { useTheme } from '../../theme';
 
 /**
  * Zoom — scales the child from 0 to 1.
  */
-export function Zoom({
-  in: inProp = false,
-  timeout = 300,
-  mountOnEnter = false,
-  unmountOnExit = false,
-  children,
-  style,
-  onEnter,
-  onEntered,
-  onExit,
-  onExited,
-  testID,
-}: ZoomProps): React.ReactElement | null {
+export function Zoom(rawProps: ZoomProps): React.ReactElement | null {
+  const props = useComponentDefaults('Zoom', rawProps) as ZoomProps;
+  const { theme } = useTheme();
+  const {
+    in: inProp = false,
+    timeout = 300,
+    mountOnEnter = false,
+    unmountOnExit = false,
+    children,
+    style,
+    onEnter,
+    onEntered,
+    onExit,
+    onExited,
+    testID,
+    color,
+    sx,
+  } = props;
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const { progress, shouldMount, state } = useTransition({
     in: inProp,
     timeout,
@@ -43,7 +54,7 @@ export function Zoom({
   if (!shouldMount) return null;
 
   return (
-    <Animated.View testID={testID} style={[animatedStyle, style]}>
+    <Animated.View testID={testID} style={[animatedStyle, sxStyle, style]}>
       {children}
     </Animated.View>
   );

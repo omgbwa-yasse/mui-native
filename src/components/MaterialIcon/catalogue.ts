@@ -1109,7 +1109,6 @@ export const materialIconsGlyphMap: Record<string, number> = {
   'flip_to_back': 0xe882,
   'flip_to_front': 0xe883,
   'flood': 0xebe6,
-  'flourescent': 0xec31,
   'flourescent': 0xf00d,
   'fluorescent': 0xec31,
   'flutter_dash': 0xe00b,

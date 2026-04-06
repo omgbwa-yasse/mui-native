@@ -4,12 +4,14 @@ import {
   Pressable,
   StyleSheet,
   Text,
+  View,
   ListRenderItemInfo,
 } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { ComponentEntry, RootStackParamList } from '../catalogue/types';
 import { registry } from '../catalogue/registry';
-import { useTheme, spacing } from '@mui-native';
+import { useTheme, spacing, MaterialIcon } from '@mui-native';
+import type { MaterialIconName } from '@mui-native';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CategoryList'>;
 
@@ -32,6 +34,8 @@ export default function CategoryListScreen({ navigation, route }: Props) {
           borderRadius: spacing[2],
           padding: spacing[4],
           minHeight: 56,
+          flexDirection: 'row',
+          alignItems: 'center',
           elevation: 1,
           shadowColor: colors.shadow,
           shadowOffset: { width: 0, height: 0 },
@@ -47,6 +51,18 @@ export default function CategoryListScreen({ navigation, route }: Props) {
           fontSize: 13,
           color: colors.onSurfaceVariant,
           marginTop: spacing[1],
+        },
+        iconContainer: {
+          width: 36,
+          height: 36,
+          borderRadius: 18,
+          backgroundColor: colors.secondaryContainer,
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginRight: spacing[3],
+        },
+        textContainer: {
+          flex: 1,
         },
       }),
     [colors],
@@ -65,12 +81,21 @@ export default function CategoryListScreen({ navigation, route }: Props) {
         accessibilityLabel={`${item.name}. ${item.description}`}
         accessibilityRole="button"
       >
-        <Text style={styles.name}>{item.name}</Text>
-        {item.description ? (
-          <Text style={styles.description} numberOfLines={2}>
-            {item.description}
-          </Text>
-        ) : null}
+        <View style={styles.iconContainer}>
+          <MaterialIcon
+            name={item.icon as MaterialIconName}
+            size={20}
+            color={colors.secondary}
+          />
+        </View>
+        <View style={styles.textContainer}>
+          <Text style={styles.name}>{item.name}</Text>
+          {item.description ? (
+            <Text style={styles.description} numberOfLines={2}>
+              {item.description}
+            </Text>
+          ) : null}
+        </View>
       </Pressable>
     );
   }

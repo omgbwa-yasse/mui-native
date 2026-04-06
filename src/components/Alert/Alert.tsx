@@ -1,6 +1,9 @@
 import React, { memo } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import { Text } from '../Text/Text';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import type { AlertProps, AlertSeverity } from './types';
@@ -28,20 +31,33 @@ function getSeverityColors(
  * Maps severity to MD3 color roles; renders an optional title, body content,
  * and optional close/action controls.
  */
-export const Alert = memo(function Alert({
-  severity,
-  title,
-  action,
-  onClose,
-  children,
-  testID,
-}: AlertProps): React.ReactElement {
+export const Alert = memo(function Alert(rawProps: AlertProps): React.ReactElement {
+  const props = useComponentDefaults('Alert', rawProps);
+  const {
+    severity,
+    title,
+    action,
+    onClose,
+    children,
+    color,
+    sx,
+    style,
+    testID,
+    slots,
+    slotProps,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const { iconColor, bgColor } = getSeverityColors(severity, theme.colorScheme as never);
 
+  const SlotRoot = slots?.Root ?? View;
+  const SlotCloseButton = slots?.CloseButton ?? TouchableRipple;
+
   return (
-    <View
-      style={[styles.container, { backgroundColor: bgColor, borderLeftColor: iconColor }]}
+    <SlotRoot
+      {...slotProps?.Root}
+      style={[styles.container, { backgroundColor: bgColor, borderLeftColor: iconColor }, sxStyle, style, slotProps?.Root?.style]}
       accessibilityRole="alert"
       accessible
       testID={testID}
@@ -60,7 +76,8 @@ export const Alert = memo(function Alert({
         <View style={styles.actions}>
           {action}
           {onClose != null && (
-            <TouchableRipple
+            <SlotCloseButton
+              {...slotProps?.CloseButton}
               onPress={onClose}
               borderless
               accessibilityRole="button"
@@ -69,11 +86,11 @@ export const Alert = memo(function Alert({
               <View style={styles.closeIcon}>
                 <Text variant="labelLarge" color={iconColor}>✕</Text>
               </View>
-            </TouchableRipple>
+            </SlotCloseButton>
           )}
         </View>
       </View>
-    </View>
+    </SlotRoot>
   );
 });
 

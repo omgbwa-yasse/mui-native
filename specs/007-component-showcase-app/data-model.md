@@ -20,12 +20,15 @@ session time (layout preference).
 Identifies one of the 5 canonical component categories.
 
 ```
-INPUTS         → 21 components
-DATA_DISPLAY   → 19 components
+INPUTS         → 22 components
+DATA_DISPLAY   → 18 components
 FEEDBACK       → 11 components
 NAVIGATION     → 10 components
-LAYOUT         → 16 components (17 incl. TouchableRipple)
+LAYOUT         → 17 components
 ```
+
+> **Verified**: counts reflect `src/components/` directory contents as of 2026-04-05 (78 total).
+> Note: `TouchableRipple` is categorised under `INPUTS`, not `LAYOUT`.
 
 **Invariants**:
 - Exactly 5 values — no additions or removals in v1

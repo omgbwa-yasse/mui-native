@@ -10,25 +10,44 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import { Text } from '../Text/Text';
 import { TabsContext } from './TabsContext';
+import { SizeProvider } from './SizeContext';
 import type { TabsProps } from './types';
 
 const INDICATOR_DURATION = 200;
 
-const Tabs = memo(function Tabs({
-  items,
-  value,
-  onValueChange,
-  variant = 'primary',
-  scrollable = false,
-  children,
-  testID,
-}: TabsProps) {
+const Tabs = memo(function Tabs(rawProps: TabsProps) {
+  const props = useComponentDefaults('Tabs', rawProps);
+  const {
+    items,
+    value,
+    onValueChange,
+    variant = 'primary',
+    scrollable = false,
+    size = 'medium',
+    children,
+    testID,
+    color,
+    sx,
+    style,
+    slots,
+    slotProps: slotPropsInput,
+  } = props;
+
+  const RootSlot = slots?.Root ?? View;
+  const TabBarSlot = slots?.TabBar ?? View;
+  const TabSlot = slots?.Tab ?? TouchableRipple;
+  const IndicatorSlot = slots?.Indicator ?? Animated.View;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const reduceMotion = useReducedMotionValue();
 
   const indicatorX = useSharedValue(0);
@@ -40,7 +59,7 @@ const Tabs = memo(function Tabs({
 
   const activeColor = variant === 'secondary'
     ? theme.colorScheme.secondary
-    : theme.colorScheme.primary;
+    : bg;
 
   const moveIndicator = useCallback(
     (index: number) => {
@@ -87,8 +106,9 @@ const Tabs = memo(function Tabs({
   }));
 
   const tabBar = (
-    <View
-      style={styles.tabBar}
+    <TabBarSlot
+      {...slotPropsInput?.TabBar}
+      style={[styles.tabBar, slotPropsInput?.TabBar?.style]}
       accessible
       accessibilityRole="tablist"
       testID={testID}
@@ -100,7 +120,7 @@ const Tabs = memo(function Tabs({
           : theme.colorScheme.onSurfaceVariant;
 
         return (
-          <TouchableRipple
+          <TabSlot
             key={item.value}
             onPress={() => handleTabPress(item.value, index)}
             disabled={item.disabled}
@@ -108,7 +128,8 @@ const Tabs = memo(function Tabs({
             accessibilityRole={'tab' as AccessibilityRole}
             accessibilityState={{ selected: isActive, disabled: item.disabled }}
             accessibilityLabel={item.label}
-            style={styles.tabTouchable}
+            {...slotPropsInput?.Tab}
+            style={[styles.tabTouchable, slotPropsInput?.Tab?.style]}
           >
             <View
               style={styles.tabContent}
@@ -127,26 +148,29 @@ const Tabs = memo(function Tabs({
                 {item.label}
               </Text>
             </View>
-          </TouchableRipple>
+          </TabSlot>
         );
       })}
 
       {/* Sliding indicator */}
       {tabsReady && (
-        <Animated.View
+        <IndicatorSlot
+          {...slotPropsInput?.Indicator}
           style={[
             styles.indicator,
             { backgroundColor: activeColor },
             indicatorStyle,
+            slotPropsInput?.Indicator?.style,
           ]}
         />
       )}
-    </View>
+    </TabBarSlot>
   );
 
   return (
     <TabsContext.Provider value={{ value, onValueChange }}>
-      <View style={styles.root}>
+      <SizeProvider value={size}>
+      <RootSlot {...slotPropsInput?.Root} style={[styles.root, sxStyle, style, slotPropsInput?.Root?.style]}>
         {scrollable ? (
           <ScrollView
             horizontal
@@ -159,7 +183,8 @@ const Tabs = memo(function Tabs({
           tabBar
         )}
         {children?.(value)}
-      </View>
+      </RootSlot>
+      </SizeProvider>
     </TabsContext.Provider>
   );
 });

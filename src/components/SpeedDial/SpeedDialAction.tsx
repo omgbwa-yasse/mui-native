@@ -6,7 +6,7 @@ import Animated, {
   withTiming,
   withDelay,
 } from 'react-native-reanimated';
-import { useTheme } from '../../theme/ThemeContext';
+import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
 import { Text } from '../Text/Text';
 import type { SpeedDialActionItem } from './types';

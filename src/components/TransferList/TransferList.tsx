@@ -7,20 +7,30 @@ import {
 } from 'react-native';
 import { Text } from '../Text/Text';
 import { Checkbox } from '../Checkbox/Checkbox';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { TransferItem, TransferListProps } from './types';
 
 const ITEM_HEIGHT = 48;
 
-export const TransferList = memo(function TransferList({
-  left,
-  right,
-  onTransfer,
-  leftTitle = 'Available',
-  rightTitle = 'Selected',
-  testID,
-}: TransferListProps) {
+export const TransferList = memo(function TransferList(rawProps: TransferListProps) {
+  const props = useComponentDefaults('TransferList', rawProps);
+  const {
+    left,
+    right,
+    onTransfer,
+    leftTitle = 'Available',
+    rightTitle = 'Selected',
+    testID,
+    color,
+    sx,
+    style,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const { colorScheme, shape } = theme;
 
   const [leftChecked, setLeftChecked] = useState<Set<string>>(new Set());
@@ -127,7 +137,7 @@ export const TransferList = memo(function TransferList({
   ];
 
   return (
-    <View style={styles.root} testID={testID}>
+    <View style={[styles.root, sxStyle, style]} testID={testID}>
       {/* Left panel */}
       <View style={panelStyle}>
         <Pressable

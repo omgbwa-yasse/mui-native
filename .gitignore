@@ -12,3 +12,17 @@ Thumbs.db
 .vscode/
 .idea/
 *.tsbuildinfo
+
+# React Native Android
+*.keystore
+!debug.keystore
+local.properties
+apps/showcase/android/.gradle/
+apps/showcase/android/app/build/
+apps/showcase/android/app/.cxx/
+apps/showcase/.gradle/
+
+# React Native iOS
+apps/showcase/ios/Pods/
+apps/showcase/ios/build/
+apps/showcase/ios/*.xcworkspace/xcuserdata/

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useTheme } from '../../theme';
 import type { GridCellParams, GridDensity, GridRowData } from './types';
 
 interface DataGridCellProps<TRow extends GridRowData = GridRowData> {

@@ -1,17 +1,32 @@
 import React, { memo, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import { Text } from '../Text/Text';
 import type { BreadcrumbsProps } from './types';
 
-const Breadcrumbs = memo(function Breadcrumbs({
-  items,
-  separator,
-  maxItems = 0,
-  testID,
-}: BreadcrumbsProps) {
+const Breadcrumbs = memo(function Breadcrumbs(rawProps: BreadcrumbsProps) {
+  const props = useComponentDefaults('Breadcrumbs', rawProps);
+  const {
+    items,
+    separator,
+    maxItems = 0,
+    testID,
+    color,
+    sx,
+    style,
+    slots,
+    slotProps,
+  } = props;
+
+  const RootSlot = slots?.Root ?? ScrollView;
+  const SeparatorSlot = slots?.Separator ?? View;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const [expanded, setExpanded] = useState(false);
 
   const separatorNode = separator ?? (
@@ -29,10 +44,11 @@ const Breadcrumbs = memo(function Breadcrumbs({
   }
 
   return (
-    <ScrollView
+    <RootSlot
       horizontal
       showsHorizontalScrollIndicator={false}
-      style={styles.scroll}
+      {...slotProps?.Root}
+      style={[styles.scroll, sxStyle, style, slotProps?.Root?.style]}
       contentContainerStyle={styles.container}
       accessibilityRole="none"
       accessibilityLabel="breadcrumb"
@@ -44,7 +60,7 @@ const Breadcrumbs = memo(function Breadcrumbs({
 
         const textColor = isLast
           ? theme.colorScheme.onSurface
-          : theme.colorScheme.primary;
+          : bg;
 
         const itemNode = isLast ? (
           <View key={index} style={styles.item}>
@@ -75,12 +91,12 @@ const Breadcrumbs = memo(function Breadcrumbs({
           <React.Fragment key={index}>
             {itemNode}
             {!isLast && (
-              <View style={styles.separator}>{separatorNode}</View>
+              <SeparatorSlot {...slotProps?.Separator} style={[styles.separator, slotProps?.Separator?.style]}>{separatorNode}</SeparatorSlot>
             )}
           </React.Fragment>
         );
       })}
-    </ScrollView>
+    </RootSlot>
   );
 });
 

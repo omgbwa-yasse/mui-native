@@ -7,37 +7,47 @@ import Animated, {
   withTiming,
   runOnJS,
 } from 'react-native-reanimated';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
 import type { FABProps, FABSize, FABVariant } from './types';
 
 const SIZE_MAP: Record<FABSize, number> = { small: 40, medium: 56, large: 96 };
 const ICON_SIZE_MAP: Record<FABSize, number> = { small: 24, medium: 24, large: 36 };
 
-export function FAB({
-  icon,
-  label,
-  variant = 'primary',
-  size = 'medium',
-  onPress,
-  accessibilityLabel,
-  testID,
-}: FABProps): React.ReactElement {
+export function FAB(rawProps: FABProps): React.ReactElement {
+  const props = useComponentDefaults('FAB', rawProps);
+  const {
+    icon,
+    label,
+    variant = 'primary',
+    size = 'medium',
+    onPress,
+    color,
+    sx,
+    style,
+    accessibilityLabel,
+    testID,
+  } = props;
   const { theme } = useTheme();
   const { colorScheme, shape, elevation: elev } = theme;
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
 
   const containerColor: Record<FABVariant, string> = {
-    primary: colorScheme.primaryContainer,
+    primary: container,
     secondary: colorScheme.secondaryContainer,
     tertiary: colorScheme.tertiaryContainer,
     surface: colorScheme.surface,
   };
 
   const iconColor: Record<FABVariant, string> = {
-    primary: colorScheme.onPrimaryContainer,
+    primary: onContainer,
     secondary: colorScheme.onSecondaryContainer,
     tertiary: colorScheme.onTertiaryContainer,
-    surface: colorScheme.primary,
+    surface: bg,
   };
 
   const dim = SIZE_MAP[size];
@@ -74,7 +84,7 @@ export function FAB({
           justifyContent: 'center',
         },
       }),
-    [theme, variant, size, isExtended],
+    [theme, variant, size, isExtended, container, onContainer, bg],
   );
 
   const scale = useSharedValue(1);
@@ -105,7 +115,7 @@ export function FAB({
   return (
     <GestureDetector gesture={tapGesture}>
       <Animated.View
-        style={[styles.container, animatedStyle]}
+        style={[styles.container, animatedStyle, sxStyle, style]}
         accessible
         accessibilityRole="button"
         accessibilityLabel={accessibilityLabel}

@@ -1,8 +1,20 @@
 import type { ReactNode } from 'react';
+import type { StyleProp, ViewStyle, ViewProps } from 'react-native';
+import type { SizeProp } from '../../tokens/size';
+import type { ColorProp, SxProps, SlotPropsConfig } from '../../types/shared';
 
-export interface ListProps {
+export interface ListSlots {
+  [key: string]: React.ComponentType<any>;
+  Root: React.ComponentType<ViewProps>;
+}
+
+export interface ListProps extends SlotPropsConfig<ListSlots> {
   children?: ReactNode;
   testID?: string;
+  size?: SizeProp;
+  color?: ColorProp;
+  sx?: SxProps;
+  style?: StyleProp<ViewStyle>;
 }
 
 export interface ListItemProps {

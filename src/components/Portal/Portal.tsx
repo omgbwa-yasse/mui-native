@@ -1,5 +1,6 @@
 import { useContext, useEffect, useId } from 'react';
 import { PortalContext } from './PortalContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import type { PortalProps } from './types';
 
 /**
@@ -13,7 +14,9 @@ import type { PortalProps } from './types';
  *   <View style={StyleSheet.absoluteFill}>{...}</View>
  * </Portal>
  */
-export function Portal({ children }: PortalProps): null {
+export function Portal(rawProps: PortalProps): null {
+  const props = useComponentDefaults('Portal', rawProps);
+  const { children } = props;
   const ctx = useContext(PortalContext);
   const key = useId();
 

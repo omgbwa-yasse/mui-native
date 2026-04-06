@@ -3,7 +3,10 @@ import { materialIconsGlyphMap } from './catalogue';
 
 /**
  * Pre-built icon set components for each Material Icons variant.
- * All sets share the same glyph map; only the font family/file differs.
+ * All sets share the same glyph map and the same bundled font file
+ * (MaterialIcons.ttf from react-native-vector-icons). Outlined/Round/Sharp/
+ * TwoTone variant OTF files are not included in the npm package, so we fall
+ * back to the filled font for all variants to ensure glyphs render correctly.
  */
 export const FilledIcons = createIconSet(
   materialIconsGlyphMap,
@@ -13,24 +16,24 @@ export const FilledIcons = createIconSet(
 
 export const OutlinedIcons = createIconSet(
   materialIconsGlyphMap,
-  'MaterialIconsOutlined-Regular',
-  'MaterialIconsOutlined-Regular.otf',
+  'MaterialIcons',
+  'MaterialIcons.ttf',
 );
 
 export const RoundedIcons = createIconSet(
   materialIconsGlyphMap,
-  'MaterialIconsRound-Regular',
-  'MaterialIconsRound-Regular.otf',
+  'MaterialIcons',
+  'MaterialIcons.ttf',
 );
 
 export const SharpIcons = createIconSet(
   materialIconsGlyphMap,
-  'MaterialIconsSharp-Regular',
-  'MaterialIconsSharp-Regular.otf',
+  'MaterialIcons',
+  'MaterialIcons.ttf',
 );
 
 export const TwoToneIcons = createIconSet(
   materialIconsGlyphMap,
-  'MaterialIconsTwoTone-Regular',
-  'MaterialIconsTwoTone-Regular.otf',
+  'MaterialIcons',
+  'MaterialIcons.ttf',
 );

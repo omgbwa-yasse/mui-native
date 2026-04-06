@@ -1,14 +1,24 @@
-import type { StyleProp, ViewStyle } from 'react-native';
+import type { StyleProp, ViewStyle, ViewProps } from 'react-native';
+import type { SizeProp } from '../../tokens/size';
+import type { ColorProp, SxProps, SlotPropsConfig } from '../../types/shared';
+
+export interface TimelineSlots {
+  [key: string]: React.ComponentType<any>;
+  Root: React.ComponentType<ViewProps>;
+}
 
 export type TimelinePosition = 'left' | 'right' | 'alternate';
 
-export interface TimelineProps {
+export interface TimelineProps extends SlotPropsConfig<TimelineSlots> {
   /**
    * Determines which side of the separator content appears.
    * 'alternate' flips layout for every other item.
    * @default 'right'
    */
   position?: TimelinePosition;
+  size?: SizeProp;
+  color?: ColorProp;
+  sx?: SxProps;
   children?: React.ReactNode;
   style?: StyleProp<ViewStyle>;
 }

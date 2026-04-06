@@ -7,8 +7,11 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import { Portal } from '../Portal/Portal';
 import { Text } from '../Text/Text';
 import type { TooltipProps } from './types';
@@ -19,14 +22,21 @@ const TOOLTIP_PADDING = 8;
 const SCREEN_EDGE_PADDING = 8;
 const TOOLTIP_OFFSET = 4;
 
-const Tooltip = memo(function Tooltip({
-  title,
-  children,
-  placement = 'top',
-  enterDelay = 0,
-  testID,
-}: TooltipProps) {
+const Tooltip = memo(function Tooltip(rawProps: TooltipProps) {
+  const props = useComponentDefaults('Tooltip', rawProps);
+  const {
+    title,
+    children,
+    placement = 'top',
+    enterDelay = 0,
+    testID,
+    color,
+    sx,
+    style,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const reduceMotion = useReducedMotionValue();
   const opacity = useSharedValue(0);
   const [visible, setVisible] = useState(false);
@@ -114,6 +124,8 @@ const Tooltip = memo(function Tooltip({
                 backgroundColor: theme.colorScheme.inverseSurface,
                 transform: [{ translateX: -50 }],
               },
+              sxStyle,
+              style,
             ]}
             accessibilityRole={'tooltip' as AccessibilityRole}
             testID={testID}

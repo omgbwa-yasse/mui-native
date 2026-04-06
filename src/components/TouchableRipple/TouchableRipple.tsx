@@ -10,8 +10,11 @@ import {
   GestureDetector,
   Gesture,
 } from 'react-native-gesture-handler';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { TouchableRippleProps } from './types';
 
 /**
@@ -26,20 +29,26 @@ import type { TouchableRippleProps } from './types';
  *   <Text variant="labelLarge">Press me</Text>
  * </TouchableRipple>
  */
-export function TouchableRipple({
-  onPress,
-  onLongPress,
-  rippleColor,
-  disabled = false,
-  borderless = false,
-  children,
-  testID,
-  accessibilityRole,
-  accessibilityLabel,
-  accessibilityState,
-  style,
-}: TouchableRippleProps): React.ReactElement {
+export function TouchableRipple(rawProps: TouchableRippleProps): React.ReactElement {
+  const props = useComponentDefaults('TouchableRipple', rawProps);
+  const {
+    onPress,
+    onLongPress,
+    rippleColor,
+    disabled = false,
+    borderless = false,
+    children,
+    testID,
+    accessibilityRole,
+    accessibilityLabel,
+    accessibilityState,
+    style,
+    color,
+    sx,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const reduceMotion = useReducedMotionValue();
 
   const resolvedRippleColor =
@@ -100,7 +109,7 @@ export function TouchableRipple({
     <GestureDetector gesture={composed}>
       <View
         ref={viewRef}
-        style={[styles.container, borderless ? styles.borderless : styles.clipped, style]}
+        style={[styles.container, borderless ? styles.borderless : styles.clipped, sxStyle, style]}
         accessible={true}
         accessibilityRole={accessibilityRole}
         accessibilityLabel={accessibilityLabel}

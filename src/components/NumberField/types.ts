@@ -1,3 +1,7 @@
+import type { StyleProp, ViewStyle } from 'react-native';
+import type { SizeProp } from '../../tokens/size';
+import type { ColorProp, SxProps } from '../../types/shared';
+
 export interface NumberFieldProps {
   value: number;
   onValueChange: (value: number) => void;
@@ -12,4 +16,8 @@ export interface NumberFieldProps {
   placeholder?: string;
   testID?: string;
   accessibilityLabel?: string;
+  size?: SizeProp;
+  color?: ColorProp;
+  sx?: SxProps;
+  style?: StyleProp<ViewStyle>;
 }

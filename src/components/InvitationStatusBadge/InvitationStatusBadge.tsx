@@ -1,13 +1,12 @@
 import React, { memo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
+import type { InvitationStatus, InvitationStatusBadgeProps } from './types';
 
-export type InvitationStatus = 'active' | 'expired' | 'revoked' | 'converted';
-
-interface InvitationStatusBadgeProps {
-  status: InvitationStatus;
-  testID?: string;
-}
+export type { InvitationStatus, InvitationStatusBadgeProps } from './types';
 
 const LABELS: Record<InvitationStatus, string> = {
   active: 'Active',
@@ -16,16 +15,23 @@ const LABELS: Record<InvitationStatus, string> = {
   converted: 'Converted',
 };
 
-const InvitationStatusBadge = memo(function InvitationStatusBadge({
-  status,
-  testID,
-}: InvitationStatusBadgeProps) {
+const InvitationStatusBadge = memo(function InvitationStatusBadge(rawProps: InvitationStatusBadgeProps) {
+  const props = useComponentDefaults('InvitationStatusBadge', rawProps);
+  const {
+    status,
+    testID,
+    color,
+    sx,
+    style,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
 
   const bgColor = (() => {
     switch (status) {
       case 'active':
-        return theme.colorScheme.primaryContainer;
+        return container;
       case 'expired':
         return theme.colorScheme.surfaceVariant;
       case 'revoked':
@@ -38,7 +44,7 @@ const InvitationStatusBadge = memo(function InvitationStatusBadge({
   const fgColor = (() => {
     switch (status) {
       case 'active':
-        return theme.colorScheme.onPrimaryContainer;
+        return onContainer;
       case 'expired':
         return theme.colorScheme.onSurfaceVariant;
       case 'revoked':
@@ -49,7 +55,7 @@ const InvitationStatusBadge = memo(function InvitationStatusBadge({
   })();
 
   return (
-    <View style={[styles.badge, { backgroundColor: bgColor }]} testID={testID}>
+    <View style={[styles.badge, { backgroundColor: bgColor }, sxStyle, style]} testID={testID}>
       <Text
         style={[styles.label, { color: fgColor }]}
         accessibilityLabel={`Status: ${LABELS[status]}`}

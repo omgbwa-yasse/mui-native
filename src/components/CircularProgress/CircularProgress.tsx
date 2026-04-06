@@ -7,8 +7,10 @@ import Animated, {
   withRepeat,
   withDelay,
 } from 'react-native-reanimated';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
+import { useSx } from '../../hooks/useSx';
 import type { CircularProgressProps } from './types';
 
 const STROKE_WIDTH = 4;
@@ -28,15 +30,19 @@ function clamp(value: number, min: number, max: number): number {
  *   // RN-DEVIATION: determinate arc implemented via two-half-circle View clipping
  *   // (no react-native-svg dependency).
  */
-const CircularProgress = memo(function CircularProgress({
-  variant = 'indeterminate',
-  value = 0,
-  size = 40,
-  color,
-  style,
-  testID,
-}: CircularProgressProps) {
+const CircularProgress = memo(function CircularProgress(rawProps: CircularProgressProps) {
+  const props = useComponentDefaults('CircularProgress', rawProps);
+  const {
+    variant = 'indeterminate',
+    value = 0,
+    size = 40,
+    color,
+    style,
+    testID,
+    sx,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
   const reduceMotion = useReducedMotionValue();
   const indicatorColor = color ?? theme.colorScheme.primary;
 
@@ -61,7 +67,8 @@ const CircularProgress = memo(function CircularProgress({
     transform: [{ rotate: `${rotation.value}deg` }],
   }));
 
-  const outerSize = size;
+  const PROGRESS_SEMANTIC_SIZES = { small: 32, medium: 40, large: 48 } as const;
+  const outerSize: number = typeof size === 'number' ? size : PROGRESS_SEMANTIC_SIZES[size];
   const halfSize = outerSize / 2;
   const innerSize = outerSize - STROKE_WIDTH * 2;
 
@@ -95,7 +102,7 @@ const CircularProgress = memo(function CircularProgress({
         accessible={true}
         accessibilityRole="progressbar"
         testID={testID}
-        style={[containerStyle, style]}
+        style={[containerStyle, sxStyle, style]}
       >
         <View style={trackStyle} />
         <Animated.View

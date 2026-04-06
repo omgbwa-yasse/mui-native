@@ -1,2 +1,2 @@
 export { NavigationBar } from './NavigationBar';
-export type { NavigationBarProps, NavigationBarItem } from './types';
+export type { NavigationBarProps, NavigationBarSlots, NavigationBarItem } from './types';

@@ -1,6 +1,10 @@
 import React, { Children, cloneElement, isValidElement, memo, useState } from 'react';
 import { useWindowDimensions, View } from 'react-native';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { GridItemProps, GridProps } from './types';
+import { useTheme } from '../../theme';
 
 /** Resolve active span for current screen width */
 function resolveSpan(
@@ -49,15 +53,22 @@ const GridItem = memo<GridItemProps>(function GridItem({
 
 // ── Grid ─────────────────────────────────────────────────────────────────────
 
-const Grid = memo<GridProps>(function Grid({
-  columns = 12,
-  spacing = 0,
-  columnSpacing,
-  rowSpacing,
-  style,
-  children,
-  ...rest
-}) {
+const Grid = memo<GridProps>(function Grid(rawProps: GridProps) {
+  const props = useComponentDefaults('Grid', rawProps);
+  const { theme } = useTheme();
+  const {
+    columns = 12,
+    spacing = 0,
+    columnSpacing,
+    rowSpacing,
+    style,
+    children,
+    color,
+    sx,
+    ...rest
+  } = props;
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const { width: screenWidth } = useWindowDimensions();
   const [containerWidth, setContainerWidth] = useState(screenWidth);
 
@@ -93,6 +104,7 @@ const Grid = memo<GridProps>(function Grid({
           columnGap: colGap,
           rowGap: rowGap,
         },
+        sxStyle,
         style,
       ]}
       {...rest}

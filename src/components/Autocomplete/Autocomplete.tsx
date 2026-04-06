@@ -12,7 +12,10 @@ import { Portal } from '../Portal/Portal';
 import { Text } from '../Text/Text';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import { ActivityIndicator } from '../ActivityIndicator/ActivityIndicator';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { AutocompleteOption, AutocompleteProps } from './types';
 
 const ITEM_HEIGHT = 48;
@@ -26,23 +29,32 @@ function defaultFilterOptions(
   return options.filter((o) => o.label.toLowerCase().includes(lower));
 }
 
-export const Autocomplete = memo(function Autocomplete({
-  value,
-  onValueChange,
-  options,
-  filterOptions = defaultFilterOptions,
-  getOptionLabel = (o) => o.label,
-  inputValue: controlledInputValue,
-  onInputChange,
-  multiple = false,
-  freeSolo = false,
-  loading = false,
-  disabled = false,
-  placeholder,
-  label,
-  testID,
-}: AutocompleteProps) {
+export const Autocomplete = memo(function Autocomplete(rawProps: AutocompleteProps) {
+  const props = useComponentDefaults('Autocomplete', rawProps);
+  const {
+    value,
+    onValueChange,
+    options,
+    filterOptions = defaultFilterOptions,
+    getOptionLabel = (o) => o.label,
+    inputValue: controlledInputValue,
+    onInputChange,
+    multiple = false,
+    freeSolo = false,
+    loading = false,
+    disabled = false,
+    placeholder,
+    label,
+    testID,
+    color,
+    sx,
+    style,
+    slots,
+    slotProps,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const triggerRef = useRef<View>(null);
   const [open, setOpen] = useState(false);
   const [internalInput, setInternalInput] = useState('');
@@ -53,6 +65,12 @@ export const Autocomplete = memo(function Autocomplete({
   } | null>(null);
 
   const { colorScheme, shape, elevation } = theme;
+  const SlotRoot = slots?.Root ?? View;
+  const SlotInput = slots?.Input ?? TextInput;
+  const SlotDropdown = slots?.Dropdown ?? View;
+  const SlotOption = slots?.Option ?? View;
+  const SlotLoading = slots?.Loading ?? View;
+  const SlotNoOptions = slots?.NoOptions ?? View;
   const inputVal =
     controlledInputValue !== undefined ? controlledInputValue : internalInput;
 
@@ -116,7 +134,8 @@ export const Autocomplete = memo(function Autocomplete({
 
   return (
     <>
-      <View ref={triggerRef} testID={testID}>
+      <View ref={triggerRef}>
+      <SlotRoot testID={testID} {...slotProps?.Root} style={[sxStyle, style, slotProps?.Root?.style]}>
         {label ? (
           <Text
             variant="bodySmall"
@@ -136,7 +155,7 @@ export const Autocomplete = memo(function Autocomplete({
             },
           ]}
         >
-          <TextInput
+          <SlotInput
             value={inputVal}
             onChangeText={updateInput}
             onFocus={openDropdown}
@@ -146,20 +165,23 @@ export const Autocomplete = memo(function Autocomplete({
             editable={!disabled}
             accessibilityRole="combobox"
             accessibilityState={{ expanded: open, disabled }}
+            {...slotProps?.Input}
             style={[
               styles.input,
               {
                 color: colorScheme.onSurface,
                 ...theme.typography.bodyLarge,
               },
+              slotProps?.Input?.style,
             ]}
           />
           {loading && (
-            <View style={styles.loadingWrap}>
+            <SlotLoading {...slotProps?.Loading} style={[styles.loadingWrap, slotProps?.Loading?.style]}>
               <ActivityIndicator size="small" />
-            </View>
+            </SlotLoading>
           )}
         </View>
+      </SlotRoot>
       </View>
 
       {open && dropdownStyle && (
@@ -170,7 +192,8 @@ export const Autocomplete = memo(function Autocomplete({
             accessibilityRole="button"
             accessibilityLabel="Close suggestions"
           />
-          <View
+          <SlotDropdown
+            {...slotProps?.Dropdown}
             style={[
               styles.dropdown,
               {
@@ -191,6 +214,7 @@ export const Autocomplete = memo(function Autocomplete({
                   },
                 }) as ViewStyle),
               },
+              slotProps?.Dropdown?.style,
             ]}
             accessibilityRole="list"
           >
@@ -209,39 +233,41 @@ export const Autocomplete = memo(function Autocomplete({
                   ? vals.includes(item.value)
                   : value === item.value;
                 return (
-                  <TouchableRipple
-                    onPress={() => handleSelect(item)}
-                    accessibilityRole={'option' as AccessibilityRole}
-                    accessibilityState={{ selected }}
-                    style={[
-                      styles.option,
-                      selected && {
-                        backgroundColor: colorScheme.primaryContainer,
-                      },
-                    ]}
-                  >
-                    <Text
-                      variant="bodyLarge"
-                      style={{
-                        color: selected
-                          ? colorScheme.onPrimaryContainer
-                          : colorScheme.onSurface,
-                      }}
+                  <SlotOption {...slotProps?.Option} style={[slotProps?.Option?.style]}>
+                    <TouchableRipple
+                      onPress={() => handleSelect(item)}
+                      accessibilityRole={'option' as AccessibilityRole}
+                      accessibilityState={{ selected }}
+                      style={[
+                        styles.option,
+                        selected && {
+                          backgroundColor: container,
+                        },
+                      ]}
                     >
-                      {getOptionLabel(item)}
-                    </Text>
-                  </TouchableRipple>
+                      <Text
+                        variant="bodyLarge"
+                        style={{
+                          color: selected
+                            ? onContainer
+                            : colorScheme.onSurface,
+                        }}
+                      >
+                        {getOptionLabel(item)}
+                      </Text>
+                    </TouchableRipple>
+                  </SlotOption>
                 );
               }}
               ListEmptyComponent={
-                <View style={styles.option}>
+                <SlotNoOptions {...slotProps?.NoOptions} style={[styles.option, slotProps?.NoOptions?.style]}>
                   <Text
                     variant="bodyMedium"
                     style={{ color: colorScheme.onSurfaceVariant }}
                   >
                     {loading ? 'Loading…' : 'No options'}
                   </Text>
-                </View>
+                </SlotNoOptions>
               }
               getItemLayout={(_data, index) => ({
                 length: ITEM_HEIGHT,
@@ -249,7 +275,7 @@ export const Autocomplete = memo(function Autocomplete({
                 index,
               })}
             />
-          </View>
+          </SlotDropdown>
         </Portal>
       )}
     </>

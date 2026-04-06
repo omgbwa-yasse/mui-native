@@ -1,16 +1,13 @@
 import React, { memo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
+import type { WorkerAgentRowProps } from './types';
 
-export interface WorkerAgentRowProps {
-  workerId: string;
-  sectionIndex: number;
-  status: string;
-  progressPercent: number;
-  /** Optional label for the section heading. */
-  label?: string;
-}
+export type { WorkerAgentRowProps } from './types';
 
 const STATUS_LABELS: Record<string, string> = {
   pending: 'Pending',
@@ -19,14 +16,21 @@ const STATUS_LABELS: Record<string, string> = {
   failed: 'Failed',
 };
 
-const WorkerAgentRow = memo(function WorkerAgentRow({
-  workerId,
-  sectionIndex,
-  status,
-  progressPercent,
-  label,
-}: WorkerAgentRowProps) {
+const WorkerAgentRow = memo(function WorkerAgentRow(rawProps: WorkerAgentRowProps) {
+  const props = useComponentDefaults('WorkerAgentRow', rawProps);
+  const {
+    workerId,
+    sectionIndex,
+    status,
+    progressPercent,
+    label,
+    color,
+    sx,
+    style,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const cs = theme.colorScheme;
 
   const clampedPct = Math.min(100, Math.max(0, progressPercent));
@@ -46,7 +50,7 @@ const WorkerAgentRow = memo(function WorkerAgentRow({
 
   return (
     <View
-      style={[styles.row, { backgroundColor: cs.surface }]}
+      style={[styles.row, { backgroundColor: cs.surface }, sxStyle, style]}
       accessibilityRole="progressbar"
       accessibilityLabel={`Section ${sectionIndex + 1} worker, ${STATUS_LABELS[status] ?? status}`}
       accessibilityValue={{ min: 0, max: 100, now: clampedPct }}

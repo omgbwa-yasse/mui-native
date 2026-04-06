@@ -1,19 +1,29 @@
 import React, { memo } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import { Text } from '../Text/Text';
 import type { SegmentedButtonsProps } from './types';
 
-const SegmentedButtons = memo(function SegmentedButtons({
-  value,
-  onValueChange,
-  buttons,
-  multiSelect = false,
-  density = 'regular',
-  testID,
-}: SegmentedButtonsProps) {
+const SegmentedButtons = memo(function SegmentedButtons(rawProps: SegmentedButtonsProps) {
+  const props = useComponentDefaults('SegmentedButtons', rawProps);
+  const {
+    value,
+    onValueChange,
+    buttons,
+    multiSelect = false,
+    density = 'regular',
+    testID,
+    color,
+    sx,
+    style,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
 
   const isSelected = (v: string) =>
     Array.isArray(value) ? value.includes(v) : value === v;
@@ -54,7 +64,7 @@ const SegmentedButtons = memo(function SegmentedButtons({
 
   return (
     <View
-      style={styles.container}
+      style={[styles.container, sxStyle, style]}
       accessibilityRole={multiSelect ? undefined : 'radiogroup'}
       accessible={!multiSelect}
       testID={testID}

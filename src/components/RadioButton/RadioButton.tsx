@@ -5,26 +5,36 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import { RadioButtonContext } from './RadioButtonContext';
-import type { RadioButtonProps } from './types';
+import type { RadioButtonProps, RadioGroupProps } from './types';
 
-const OUTER = 20;
-const INNER = 10;
+const CONTROL_SIZES = { small: 16, medium: 20, large: 24 } as const;
 const ANIM_DURATION = 150;
 
-const RadioButton = memo(function RadioButton({
-  value,
-  disabled: propDisabled = false,
-  color,
-  testID,
-  accessibilityLabel,
-}: RadioButtonProps) {
+const RadioButton = memo(function RadioButton(rawProps: RadioButtonProps) {
+  const props = useComponentDefaults('RadioButton', rawProps as unknown as RadioGroupProps) as RadioButtonProps;
+  const {
+    value,
+    disabled: propDisabled = false,
+    color,
+    size,
+    sx,
+    style,
+    testID,
+    accessibilityLabel,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
   const reduceMotion = useReducedMotionValue();
   const group = useContext(RadioButtonContext);
+
+  const outer = CONTROL_SIZES[size ?? 'medium'];
+  const inner = Math.round(outer / 2);
 
   const isSelected = group ? group.value === value : false;
   const disabled = propDisabled || (group?.disabled ?? false);
@@ -50,18 +60,18 @@ const RadioButton = memo(function RadioButton({
 
   const styles = StyleSheet.create({
     outer: {
-      width: OUTER,
-      height: OUTER,
-      borderRadius: OUTER / 2,
+      width: outer,
+      height: outer,
+      borderRadius: outer / 2,
       borderWidth: 2,
       borderColor: border,
       alignItems: 'center',
       justifyContent: 'center',
     },
     inner: {
-      width: INNER,
-      height: INNER,
-      borderRadius: INNER / 2,
+      width: inner,
+      height: inner,
+      borderRadius: inner / 2,
       backgroundColor: dot,
     },
   });
@@ -76,7 +86,7 @@ const RadioButton = memo(function RadioButton({
       accessibilityState={{ checked: isSelected, disabled }}
       testID={testID}
     >
-      <View style={{ padding: 8 }}>
+      <View style={[{ padding: 8 }, sxStyle, style]}>
         <View style={styles.outer}>
           <Animated.View style={[styles.inner, innerStyle]} />
         </View>

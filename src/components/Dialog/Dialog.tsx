@@ -5,19 +5,31 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { DialogProps } from './types';
 
-export function Dialog({
-  visible,
-  title,
-  children,
-  actions,
-  onDismiss,
-  testID,
-}: DialogProps): React.ReactElement {
+export function Dialog(rawProps: DialogProps): React.ReactElement {
+  const props = useComponentDefaults('Dialog', rawProps);
+  const {
+    visible,
+    title,
+    children,
+    actions,
+    onDismiss,
+    testID,
+    color,
+    sx,
+    style,
+    slots,
+    slotProps,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const { colorScheme, shape, typography } = theme;
 
   const opacity = useSharedValue(0);
@@ -39,6 +51,11 @@ export function Dialog({
     opacity: opacity.value,
     transform: [{ scale: scale.value }],
   }));
+
+  const SlotRoot = slots?.Root ?? Animated.View;
+  const SlotTitle = slots?.Title ?? Text;
+  const SlotContent = slots?.Content ?? View;
+  const SlotActions = slots?.Actions ?? View;
 
   const styles = useMemo(
     () =>
@@ -77,23 +94,23 @@ export function Dialog({
         },
         actionText: {
           ...typography.labelLarge,
-          color: colorScheme.primary,
+          color: bg,
           padding: 8,
           minWidth: 64,
           textAlign: 'center',
         },
         actionFilled: {
-          backgroundColor: colorScheme.primary,
+          backgroundColor: bg,
           borderRadius: shape.full,
           paddingHorizontal: 24,
           paddingVertical: 10,
         },
         actionFilledText: {
           ...typography.labelLarge,
-          color: colorScheme.onPrimary,
+          color: fg,
         },
       }),
-    [theme],
+    [theme, bg, fg],
   );
 
   return (
@@ -107,16 +124,17 @@ export function Dialog({
       <TouchableWithoutFeedback onPress={onDismiss} accessible={false}>
         <View style={styles.backdrop}>
           <TouchableWithoutFeedback accessible={false}>
-            <Animated.View
-              style={[styles.container, animatedStyle]}
+            <SlotRoot
+              {...slotProps?.Root}
+              style={[styles.container, animatedStyle, sxStyle, style, slotProps?.Root?.style]}
               testID={testID}
               accessibilityRole="alert"
               accessibilityViewIsModal
             >
-              <Text style={styles.title}>{title}</Text>
-              {children != null && <View style={styles.content}>{children}</View>}
+              <SlotTitle {...slotProps?.Title} style={[styles.title, slotProps?.Title?.style]}>{title}</SlotTitle>
+              {children != null && <SlotContent {...slotProps?.Content} style={[styles.content, slotProps?.Content?.style]}>{children}</SlotContent>}
               {actions != null && actions.length > 0 && (
-                <View style={styles.actionsRow}>
+                <SlotActions {...slotProps?.Actions} style={[styles.actionsRow, slotProps?.Actions?.style]}>
                   {actions.map((action, idx) =>
                     action.variant === 'filled' ? (
                       <View key={idx} style={styles.actionFilled}>
@@ -141,9 +159,9 @@ export function Dialog({
                       </Text>
                     ),
                   )}
-                </View>
+                </SlotActions>
               )}
-            </Animated.View>
+            </SlotRoot>
           </TouchableWithoutFeedback>
         </View>
       </TouchableWithoutFeedback>

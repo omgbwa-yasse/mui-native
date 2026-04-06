@@ -1,18 +1,29 @@
 import React, { Children } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import { ButtonGroupContext } from './ButtonGroupContext';
+import { SizeProvider } from './SizeContext';
 import type { ButtonGroupProps } from './types';
 
-export function ButtonGroup({
-  variant,
-  orientation = 'horizontal',
-  disabled = false,
-  size,
-  children,
-  testID,
-}: ButtonGroupProps) {
+export function ButtonGroup(rawProps: ButtonGroupProps) {
+  const props = useComponentDefaults('ButtonGroup', rawProps);
+  const {
+    variant,
+    orientation = 'horizontal',
+    disabled = false,
+    size,
+    children,
+    testID,
+    color,
+    sx,
+    style,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const isHorizontal = orientation === 'horizontal';
   const childArray = Children.toArray(children);
   const count = childArray.length;
@@ -21,10 +32,13 @@ export function ButtonGroup({
     <ButtonGroupContext.Provider
       value={{ variant, disabled, size, orientation, count }}
     >
+      <SizeProvider value={size ?? 'medium'}>
       <View
         style={[
           styles.container,
           isHorizontal ? styles.row : styles.column,
+          sxStyle,
+          style,
         ]}
         testID={testID}
       >
@@ -66,6 +80,7 @@ export function ButtonGroup({
           );
         })}
       </View>
+      </SizeProvider>
     </ButtonGroupContext.Provider>
   );
 }

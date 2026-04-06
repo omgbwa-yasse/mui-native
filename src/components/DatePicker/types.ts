@@ -1,11 +1,16 @@
 import type { StyleProp, ViewStyle } from 'react-native';
+import type { SizeProp } from '../../tokens/size';
+import type { ColorProp, SxProps } from '../../types/shared';
 
-// ─── Base ─────────────────────────────────────────────────────────────────────
+// ─── Base ──────────────────────────────────────────────────────────────────────
 
 export interface PickerBaseProps {
   testID?: string;
   style?: StyleProp<ViewStyle>;
   accessibilityLabel?: string;
+  size?: SizeProp;
+  color?: ColorProp;
+  sx?: SxProps;
 }
 
 // ─── DateAdapter ──────────────────────────────────────────────────────────────

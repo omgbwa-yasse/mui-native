@@ -9,8 +9,11 @@ import Animated, {
   Easing,
 } from 'react-native-reanimated';
 import type { DimensionValue } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { SkeletonProps } from './types';
 
 /**
@@ -18,14 +21,21 @@ import type { SkeletonProps } from './types';
  *
  * Uses Reanimated color interpolation worklet. Respects reduce-motion.
  */
-export const Skeleton = memo(function Skeleton({
-  width,
-  height,
-  variant = 'rectangular',
-  animation = 'wave',
-  testID,
-}: SkeletonProps): React.ReactElement {
+export const Skeleton = memo(function Skeleton(rawProps: SkeletonProps): React.ReactElement {
+  const props = useComponentDefaults('Skeleton', rawProps);
+  const {
+    width,
+    height,
+    variant = 'rectangular',
+    animation = 'wave',
+    testID,
+    color,
+    sx,
+    style,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const reduceMotion = useReducedMotionValue();
   const progress = useSharedValue(0);
 
@@ -70,6 +80,8 @@ export const Skeleton = memo(function Skeleton({
           borderRadius,
         },
         animatedStyle,
+        sxStyle,
+        style,
       ]}
       accessibilityElementsHidden={true}
       importantForAccessibility="no"

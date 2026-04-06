@@ -151,12 +151,12 @@ describe('ComponentDetailScreen', () => {
       wrap(
         <ComponentDetailScreen
           navigation={{ setOptions } as any}
-          route={{ params: { componentKey: 'Button' } } as any}
+          route={{ params: { componentKey: 'Accordion' } } as any}
         />,
       ),
     );
     expect(setOptions).toHaveBeenCalledWith(
-      expect.objectContaining({ title: 'Button' }),
+      expect.objectContaining({ title: 'Accordion' }),
     );
   });
 });

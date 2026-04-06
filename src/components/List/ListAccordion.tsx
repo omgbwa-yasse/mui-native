@@ -6,7 +6,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { useTheme } from '../../theme/ThemeContext';
+import { useTheme } from '../../theme';
 import { Text } from '../Text/Text';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import type { ListAccordionProps } from './types';

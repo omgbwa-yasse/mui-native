@@ -1,4 +1,6 @@
 import type { ViewProps } from 'react-native';
+import type { SizeProp } from '../../tokens/size';
+import type { ColorProp, SxProps } from '../../types/shared';
 
 export interface GridProps extends ViewProps {
   /** Number of columns in the grid. Default: 12 */
@@ -9,6 +11,9 @@ export interface GridProps extends ViewProps {
   columnSpacing?: number;
   /** Row gap override — raw dp */
   rowSpacing?: number;
+  size?: SizeProp;
+  color?: ColorProp;
+  sx?: SxProps;
 }
 
 export interface GridItemProps extends ViewProps {

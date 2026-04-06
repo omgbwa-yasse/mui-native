@@ -5,10 +5,13 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import { Portal } from '../Portal/Portal';
-import type { MenuProps } from './types';
+import type { MenuProps, MenuItemProps } from './types';
 
 const ANIM_DURATION = 150;
 
@@ -17,14 +20,21 @@ interface MenuPosition {
   left: number;
 }
 
-const Menu = memo(function Menu({
-  visible,
-  anchor,
-  onDismiss,
-  children,
-  testID,
-}: MenuProps) {
+const Menu = memo(function Menu(rawProps: MenuProps) {
+  const props = useComponentDefaults('Menu', rawProps as unknown as MenuItemProps) as unknown as MenuProps;
+  const {
+    visible,
+    anchor,
+    onDismiss,
+    children,
+    testID,
+    color,
+    sx,
+    style,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const reduceMotion = useReducedMotionValue();
 
   const [position, setPosition] = useState<MenuPosition | null>(null);
@@ -38,7 +48,7 @@ const Menu = memo(function Menu({
     if (!visible) return;
 
     setMounted(true);
-    anchor.current?.measure((_x, _y, _w, h, pageX, pageY) => {
+    anchor.current?.measure((_x: number, _y: number, _w: number, h: number, pageX: number, pageY: number) => {
       setPosition({ top: pageY + h, left: pageX });
     });
 
@@ -106,7 +116,7 @@ const Menu = memo(function Menu({
           accessibilityLabel="Close menu"
         />
         <Animated.View
-          style={[styles.menu, menuAnimStyle]}
+          style={[styles.menu, menuAnimStyle, sxStyle, style]}
           accessibilityRole="menu"
           accessible
           testID={testID}

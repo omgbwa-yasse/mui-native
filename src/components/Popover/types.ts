@@ -1,5 +1,7 @@
 import type React from 'react';
 import type { StyleProp, ViewStyle, View } from 'react-native';
+import type { SizeProp } from '../../tokens/size';
+import type { ColorProp, SxProps } from '../../types/shared';
 
 export type VerticalPosition = 'top' | 'center' | 'bottom';
 export type HorizontalPosition = 'left' | 'center' | 'right';
@@ -34,4 +36,7 @@ export interface PopoverProps {
   /** Style override applied to the popover surface. */
   style?: StyleProp<ViewStyle>;
   testID?: string;
+  size?: SizeProp;
+  color?: ColorProp;
+  sx?: SxProps;
 }

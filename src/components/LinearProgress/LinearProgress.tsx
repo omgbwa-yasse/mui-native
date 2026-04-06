@@ -8,7 +8,9 @@ import Animated, {
   withDelay,
   withSequence,
 } from 'react-native-reanimated';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
 import type { LinearProgressProps } from './types';
 
@@ -32,15 +34,19 @@ function clamp(value: number): number {
  * - `buffer`: primary + secondary (buffer) bars visible.
  * - `query`: reversed indeterminate animation.
  */
-const LinearProgress = memo(function LinearProgress({
-  variant = 'indeterminate',
-  value = 0,
-  valueBuffer = 0,
-  color,
-  style,
-  testID,
-}: LinearProgressProps) {
+const LinearProgress = memo(function LinearProgress(rawProps: LinearProgressProps) {
+  const props = useComponentDefaults('LinearProgress', rawProps);
+  const {
+    variant = 'indeterminate',
+    value = 0,
+    valueBuffer = 0,
+    color,
+    sx,
+    style,
+    testID,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
   const reduceMotion = useReducedMotionValue();
   const indicatorColor = color ?? theme.colorScheme.primary;
 
@@ -93,7 +99,7 @@ const LinearProgress = memo(function LinearProgress({
         isDeterminate ? { min: 0, max: 100, now: clampedValue } : undefined
       }
       testID={testID}
-      style={[styles.container, style]}
+      style={[styles.container, sxStyle, style]}
     >
       {/* Layer 1: track (background) */}
       <View

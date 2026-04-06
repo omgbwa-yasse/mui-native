@@ -5,26 +5,35 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import { Text } from '../Text/Text';
 import type { AccordionProps } from './types';
 
 const ANIMATION_DURATION = 300;
 
-const Accordion = memo<AccordionProps>(function Accordion({
-  title,
-  children,
-  expanded: expandedProp,
-  onToggle,
-  disabled = false,
-  left,
-  right,
-  style,
-  ...rest
-}) {
+const Accordion = memo<AccordionProps>(function Accordion(rawProps: AccordionProps) {
+  const props = useComponentDefaults('Accordion', rawProps);
+  const {
+    title,
+    children,
+    expanded: expandedProp,
+    onToggle,
+    disabled = false,
+    left,
+    right,
+    color,
+    sx,
+    style,
+    ...rest
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const reduceMotion = useReducedMotionValue();
   const isControlled = expandedProp !== undefined;
 
@@ -75,7 +84,7 @@ const Accordion = memo<AccordionProps>(function Accordion({
 
   return (
     <View
-      style={[styles.container, style]}
+      style={[styles.container, sxStyle, style]}
       {...rest}
     >
       <TouchableRipple

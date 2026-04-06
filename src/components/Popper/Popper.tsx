@@ -3,7 +3,11 @@ import type { LayoutChangeEvent } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { useAnchorPosition } from '../../hooks/useAnchorPosition';
 import { Portal } from '../Portal/Portal';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { PopperProps, PopperPlacement } from './types';
+import { useTheme } from '../../theme';
 
 type V = 'top' | 'center' | 'bottom';
 type H = 'left' | 'center' | 'right';
@@ -47,16 +51,23 @@ function hFactor(h: H): number {
  * Unlike Popover, Popper does NOT render a backdrop and touches behind the
  * popper content pass through freely (FR-014).
  */
-export function Popper({
-  open,
-  anchorRef,
-  placement = 'bottom',
-  disablePortal = false,
-  keepMounted = false,
-  children,
-  style,
-  testID,
-}: PopperProps): React.ReactElement | null {
+export function Popper(rawProps: PopperProps): React.ReactElement | null {
+  const props = useComponentDefaults('Popper', rawProps);
+  const { theme } = useTheme();
+  const {
+    open,
+    anchorRef,
+    placement = 'bottom',
+    disablePortal = false,
+    keepMounted = false,
+    children,
+    style,
+    testID,
+    color,
+    sx,
+  } = props;
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const anchorPos = useAnchorPosition(anchorRef, open);
   const [surfaceSize, setSurfaceSize] = useState<{ width: number; height: number } | null>(null);
 
@@ -109,7 +120,7 @@ export function Popper({
         { position: 'absolute', top, left },
         surfaceStyle,
         style,
-      ]}
+      , sxStyle, style]}
     >
       {children}
     </Animated.View>

@@ -1,5 +1,7 @@
 import type React from 'react';
 import type { ViewProps } from 'react-native';
+import type { SizeProp } from '../../tokens/size';
+import type { ColorProp, SxProps } from '../../types/shared';
 
 export interface AccordionProps extends ViewProps {
   /** Header label */
@@ -16,4 +18,7 @@ export interface AccordionProps extends ViewProps {
   left?: React.ReactNode;
   /** Trailing element — receives current expanded state */
   right?: (expanded: boolean) => React.ReactNode;
+  size?: SizeProp;
+  color?: ColorProp;
+  sx?: SxProps;
 }

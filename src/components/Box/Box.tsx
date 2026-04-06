@@ -2,20 +2,30 @@ import React, { memo } from 'react';
 import { View } from 'react-native';
 import { spacing } from '../../tokens/spacing';
 import type { SpacingKey } from '../../tokens/spacing';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { BoxProps } from './types';
 
 function resolveSpacing(key: SpacingKey | undefined): number | undefined {
   return key !== undefined ? spacing[key] : undefined;
 }
 
-const Box = memo<BoxProps>(function Box({
-  p, pt, pb, pl, pr, px, py,
-  m, mt, mb, ml, mr, mx, my,
-  sx,
-  style,
-  children,
-  ...rest
-}) {
+const Box = memo<BoxProps>(function Box(rawProps: BoxProps) {
+  const props = useComponentDefaults('Box', rawProps);
+  const {
+    p, pt, pb, pl, pr, px, py,
+    m, mt, mb, ml, mr, mx, my,
+    sx,
+    style,
+    color,
+    children,
+    ...rest
+  } = props;
+  const { theme } = useTheme();
+  const sxStyle = useSx(sx as never, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const spacingStyle = {
     ...(p  !== undefined && { padding:          resolveSpacing(p)  }),
     ...(pt !== undefined && { paddingTop:        resolveSpacing(pt) }),
@@ -34,7 +44,7 @@ const Box = memo<BoxProps>(function Box({
   };
 
   return (
-    <View style={[spacingStyle, style, sx]} {...rest}>
+    <View style={[spacingStyle, sxStyle, style]} {...rest}>
       {children}
     </View>
   );

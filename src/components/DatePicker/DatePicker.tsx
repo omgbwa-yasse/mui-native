@@ -8,7 +8,10 @@ import {
   type StyleProp,
   type ViewStyle,
 } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import { useLocalizationOptional } from './useLocalization';
 import { createDatePickerStyles } from './DatePicker.styles';
 import type { DatePickerProps } from './types';
@@ -46,33 +49,39 @@ function resolveEffectiveDate(
  * DatePicker — modal date selection backed by the native OS date picker.
  * Requires the optional peer dependency `@react-native-community/datetimepicker`.
  */
-export const DatePicker = React.memo(function DatePicker({
-  value,
-  defaultValue,
-  onChange,
-  onAccept,
-  label,
-  placeholder,
-  disabled = false,
-  readOnly = false,
-  minDate,
-  maxDate,
-  disableFuture,
-  disablePast,
-  views: _views,
-  format,
-  open: controlledOpen,
-  onOpen,
-  onClose,
-  display = 'default',
-  slotProps,
-  testID,
-  style,
-  accessibilityLabel,
-}: DatePickerProps) {
+export const DatePicker = React.memo(function DatePicker(rawProps: DatePickerProps) {
+  const props = useComponentDefaults('DatePicker', rawProps) as DatePickerProps;
+  const {
+    value,
+    defaultValue,
+    onChange,
+    onAccept,
+    label,
+    placeholder,
+    disabled = false,
+    readOnly = false,
+    minDate,
+    maxDate,
+    disableFuture,
+    disablePast,
+    views: _views,
+    format,
+    open: controlledOpen,
+    onOpen,
+    onClose,
+    display = 'default',
+    slotProps,
+    testID,
+    style,
+    accessibilityLabel,
+    color,
+    sx,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const localization = useLocalizationOptional();
-  const styles = useMemo(() => createDatePickerStyles(theme), [theme]);
+  const styles = useMemo(() => createDatePickerStyles(theme, bg), [theme, bg]);
 
   // Uncontrolled internal state for the date value
   const isControlled = value !== undefined;
@@ -156,7 +165,7 @@ export const DatePicker = React.memo(function DatePicker({
   const helperText = slotProps?.textField?.helperText;
 
   return (
-    <View style={[style]} testID={testID}>
+    <View style={[sxStyle, style]} testID={testID}>
       {/* Trigger */}
       <Pressable
         onPress={open}
@@ -254,7 +263,7 @@ export const DatePicker = React.memo(function DatePicker({
                   <Text
                     style={{
                       ...theme.typography.labelLarge,
-                      color: theme.colorScheme.primary,
+                      color: bg,
                     }}
                   >
                     OK

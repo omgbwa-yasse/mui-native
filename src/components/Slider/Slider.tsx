@@ -6,7 +6,10 @@ import Animated, {
   runOnJS,
 } from 'react-native-reanimated';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { SliderProps } from './types';
 
 const TRACK_HEIGHT = 4;
@@ -24,18 +27,25 @@ function snapToStep(v: number, min: number, step: number) {
   return Math.round((v - min) / step) * step + min;
 }
 
-const Slider = memo(function Slider({
-  value,
-  onValueChange,
-  onSlidingComplete,
-  min = 0,
-  max = 100,
-  step = 1,
-  disabled = false,
-  testID,
-  accessibilityLabel,
-}: SliderProps) {
+const Slider = memo(function Slider(rawProps: SliderProps) {
+  const props = useComponentDefaults('Slider', rawProps);
+  const {
+    value,
+    onValueChange,
+    onSlidingComplete,
+    min = 0,
+    max = 100,
+    step = 1,
+    disabled = false,
+    testID,
+    accessibilityLabel,
+    color,
+    sx,
+    style,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const trackWidthRef = useRef(TRACK_WIDTH);
 
   const thumbX = useSharedValue(((value - min) / (max - min)) * TRACK_WIDTH);
@@ -117,7 +127,7 @@ const Slider = memo(function Slider({
   return (
     <GestureDetector gesture={pan}>
       <View
-        style={styles.container}
+        style={[styles.container, sxStyle, style]}
         onLayout={(e) => {
           trackWidthRef.current = e.nativeEvent.layout.width;
           thumbX.value = ((value - min) / (max - min)) * e.nativeEvent.layout.width;

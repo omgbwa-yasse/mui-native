@@ -35,8 +35,9 @@ export interface ComponentEntry {
   componentKey: string;
   categoryId: CategoryId;
   description: string;
+  icon: string;
   sourceCode: string;
-  examples: [ExampleConfig, ExampleConfig, ExampleConfig] | null;
+  examples: ExampleConfig[] | null;
   hasFullExamples: boolean;
 }
 
@@ -47,6 +48,7 @@ export interface ComponentEntry {
 export interface ExampleConfig {
   label: string;
   description: string | null;
+  code: string;
   render: () => React.ReactElement;
 }
 

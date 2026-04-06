@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useTheme } from '../../theme';
 import type { TimelineDotProps, TimelineDotColor } from './types';
 
 function resolveDotColor(

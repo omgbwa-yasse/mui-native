@@ -1,24 +1,34 @@
 import React, { memo } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import { Icon } from '../Icon/Icon';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import type { IconButtonProps } from './types';
 
 const CONTAINER_SIZE = 40;
 
-const IconButton = memo(function IconButton({
-  icon,
-  onPress,
-  disabled = false,
-  selected = false,
-  variant = 'standard',
-  size = 24,
-  accessibilityLabel,
-  testID,
-}: IconButtonProps) {
+const IconButton = memo(function IconButton(rawProps: IconButtonProps) {
+  const props = useComponentDefaults('IconButton', rawProps);
+  const {
+    icon,
+    onPress,
+    disabled = false,
+    selected = false,
+    variant = 'standard',
+    size = 24,
+    color,
+    sx,
+    style,
+    accessibilityLabel,
+    testID,
+  } = props;
   const { theme } = useTheme();
   const cs = theme.colorScheme;
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
 
   let bgColor: string | undefined;
   let iconColor: string;
@@ -47,7 +57,9 @@ const IconButton = memo(function IconButton({
     iconColor = cs.onSurface;
   }
 
-  const icSize = Math.max(CONTAINER_SIZE, size + 16);
+  const ICON_SEMANTIC_SIZES = { small: 16, medium: 20, large: 24 } as const;
+  const numericSize: number = typeof size === 'number' ? size : ICON_SEMANTIC_SIZES[size];
+  const icSize = Math.max(CONTAINER_SIZE, numericSize + 16);
   // No explicit width/height — TouchableRipple guarantees minWidth/minHeight: 48dp.
   // borderRadius uses at least 24 so the container is a perfect circle at the 48dp minimum.
   const containerStyle = [
@@ -58,6 +70,8 @@ const IconButton = memo(function IconButton({
       borderWidth: borderColor ? 1 : 0,
       borderColor: borderColor ?? 'transparent',
     },
+    sxStyle,
+    style,
   ];
 
   return (
@@ -71,7 +85,7 @@ const IconButton = memo(function IconButton({
       testID={testID}
     >
       <View style={styles.content} pointerEvents="none">
-        <Icon source={icon} size={size} color={iconColor} />
+        <Icon source={icon} size={numericSize} color={iconColor} />
       </View>
     </TouchableRipple>
   );

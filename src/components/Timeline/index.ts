@@ -9,6 +9,7 @@ export { TimelineOppositeContent } from './TimelineOppositeContent';
 export type {
   TimelineProps,
   TimelinePosition,
+  TimelineSlots,
   TimelineItemProps,
   TimelineSeparatorProps,
   TimelineDotProps,

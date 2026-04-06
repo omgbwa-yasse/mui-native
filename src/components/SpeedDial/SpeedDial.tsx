@@ -9,8 +9,11 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import { Portal } from '../Portal/Portal';
 import { SpeedDialAction } from './SpeedDialAction';
 import type { SpeedDialProps } from './types';
@@ -18,17 +21,24 @@ import type { SpeedDialProps } from './types';
 const FAB_SIZE = 56;
 const SCRIM_DURATION = 150;
 
-const SpeedDial = memo(function SpeedDial({
-  actions,
-  icon,
-  openIcon,
-  open: controlledOpen,
-  onOpen,
-  onClose,
-  direction = 'up',
-  testID,
-}: SpeedDialProps) {
+const SpeedDial = memo(function SpeedDial(rawProps: SpeedDialProps) {
+  const props = useComponentDefaults('SpeedDial', rawProps);
+  const {
+    actions,
+    icon,
+    openIcon,
+    open: controlledOpen,
+    onOpen,
+    onClose,
+    direction = 'up',
+    testID,
+    color,
+    sx,
+    style,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const reduceMotion = useReducedMotionValue();
 
   const isControlled = controlledOpen !== undefined;
@@ -82,7 +92,7 @@ const SpeedDial = memo(function SpeedDial({
   const isVertical = direction === 'up' || direction === 'down';
 
   return (
-    <View style={styles.wrapper} testID={testID}>
+    <View style={[styles.wrapper, sxStyle, style]} testID={testID}>
       {mounted && (
         <Portal>
           <Animated.View
@@ -123,7 +133,7 @@ const SpeedDial = memo(function SpeedDial({
         {/* Main FAB */}
         <Pressable
           onPress={handleToggle}
-          style={[styles.fab, { backgroundColor: theme.colorScheme.primaryContainer }]}
+          style={[styles.fab, { backgroundColor: container }]}
           accessibilityRole="button"
           accessibilityLabel="Speed Dial"
           accessibilityState={{ expanded: open }}

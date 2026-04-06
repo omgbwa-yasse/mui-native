@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useTheme } from '../../theme';
 import type { GridCellParams, GridDensity, GridRowData } from './types';
 
 interface DataGridCellEditorProps<TRow extends GridRowData = GridRowData> {

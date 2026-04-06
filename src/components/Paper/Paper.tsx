@@ -1,6 +1,9 @@
 import React, { memo } from 'react';
 import { Platform, View } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { PaperProps, PaperElevation } from './types';
 
 type ElevationKey = `level${PaperElevation}`;
@@ -15,16 +18,22 @@ const TINT_OPACITIES: Record<PaperElevation, number> = {
   5: 0.14,
 };
 
-const Paper = memo<PaperProps>(function Paper({
-  elevation: elevationProp = 1,
-  mode = 'elevated',
-  square = false,
-  borderRadius: borderRadiusProp,
-  style,
-  children,
-  ...rest
-}) {
+const Paper = memo<PaperProps>(function Paper(rawProps: PaperProps) {
+  const props = useComponentDefaults('Paper', rawProps);
+  const {
+    elevation: elevationProp = 1,
+    mode = 'elevated',
+    square = false,
+    borderRadius: borderRadiusProp,
+    style,
+    children,
+    color,
+    sx,
+    ...rest
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const cs = theme.colorScheme;
   const elevLevel: ElevationKey = `level${elevationProp}`;
   const elevData = theme.elevation[elevLevel];
@@ -66,6 +75,7 @@ const Paper = memo<PaperProps>(function Paper({
         mode === 'flat' || !isElevated
           ? { borderWidth: 1, borderColor: cs.outline }
           : undefined,
+        sxStyle,
         style,
       ]}
       {...rest}

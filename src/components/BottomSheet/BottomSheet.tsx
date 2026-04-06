@@ -17,8 +17,11 @@ import Animated, {
   withTiming,
   runOnJS,
 } from 'react-native-reanimated';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { BottomSheetProps } from './types';
 
 /**
@@ -26,15 +29,22 @@ import type { BottomSheetProps } from './types';
  *
  * Replaces the deprecated useAnimatedGestureHandler + PanGestureHandler API.
  */
-export function BottomSheet({
-  visible,
-  children,
-  onDismiss,
-  snapPoints = [0.5],
-  showHandle = true,
-  testID,
-}: BottomSheetProps): React.ReactElement {
+export function BottomSheet(rawProps: BottomSheetProps): React.ReactElement {
+  const props = useComponentDefaults('BottomSheet', rawProps);
+  const {
+    visible,
+    children,
+    onDismiss,
+    snapPoints = [0.5],
+    showHandle = true,
+    testID,
+    color,
+    sx,
+    style,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const { colorScheme, shape } = theme;
   const { height: windowHeight } = useWindowDimensions();
 
@@ -154,7 +164,7 @@ export function BottomSheet({
       </TouchableWithoutFeedback>
 
       <GestureDetector gesture={panGesture}>
-        <Animated.View style={[styles.sheet, sheetAnimatedStyle]} testID={testID}>
+        <Animated.View style={[styles.sheet, sheetAnimatedStyle, sxStyle, style]} testID={testID}>
           {showHandle && <View style={styles.handle} accessibilityRole="none" />}
           {children}
         </Animated.View>

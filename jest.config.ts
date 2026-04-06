@@ -12,6 +12,7 @@ const config: Config = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
   moduleNameMapper: {
     '^mui-native/(.*)$': '<rootDir>/src/$1',
+    '^@mui-native(.*)$': '<rootDir>/src$1',
   },
   setupFilesAfterEnv: [
     '@testing-library/jest-native/extend-expect',

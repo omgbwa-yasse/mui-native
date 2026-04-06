@@ -10,23 +10,35 @@ import type { ViewStyle, AccessibilityRole } from 'react-native';
 import { Portal } from '../Portal/Portal';
 import { Text } from '../Text/Text';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { SelectOption, SelectProps } from './types';
 
 const ITEM_HEIGHT = 48;
 const MAX_DROPDOWN_HEIGHT = 256;
 
-export const Select = memo(function Select({
-  value,
-  onValueChange,
-  options,
-  label,
-  placeholder = 'Select…',
-  disabled = false,
-  multiple = false,
-  testID,
-}: SelectProps) {
+export const Select = memo(function Select(rawProps: SelectProps) {
+  const props = useComponentDefaults('Select', rawProps);
+  const {
+    value,
+    onValueChange,
+    options,
+    label,
+    placeholder = 'Select…',
+    disabled = false,
+    multiple = false,
+    testID,
+    color,
+    sx,
+    style,
+    slots,
+    slotProps,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const triggerRef = useRef<View>(null);
   const [open, setOpen] = useState(false);
   const [dropdownStyle, setDropdownStyle] = useState<{
@@ -36,6 +48,10 @@ export const Select = memo(function Select({
   } | null>(null);
 
   const { colorScheme, shape, elevation } = theme;
+  const SlotRoot = slots?.Root ?? View;
+  const SlotTrigger = slots?.Trigger ?? View;
+  const SlotDropdown = slots?.Dropdown ?? View;
+  const SlotOption = slots?.Option ?? View;
 
   function getLabel(): string {
     if (multiple) {
@@ -87,7 +103,8 @@ export const Select = memo(function Select({
 
   return (
     <>
-      <View ref={triggerRef} testID={testID}>
+      <View ref={triggerRef}>
+      <SlotRoot testID={testID} {...slotProps?.Root} style={[sxStyle, style, slotProps?.Root?.style]}>
         <TouchableRipple
           onPress={openDropdown}
           disabled={disabled}
@@ -104,7 +121,7 @@ export const Select = memo(function Select({
             },
           ]}
         >
-          <View style={styles.triggerInner}>
+          <SlotTrigger {...slotProps?.Trigger} style={[styles.triggerInner, slotProps?.Trigger?.style]}>
             {label ? (
               <Text
                 variant="bodySmall"
@@ -123,8 +140,9 @@ export const Select = memo(function Select({
             >
               {displayLabel || placeholder}
             </Text>
-          </View>
+          </SlotTrigger>
         </TouchableRipple>
+      </SlotRoot>
       </View>
 
       {open && dropdownStyle && (
@@ -136,7 +154,8 @@ export const Select = memo(function Select({
             accessibilityLabel="Close dropdown"
           />
           {/* Dropdown */}
-          <View
+          <SlotDropdown
+            {...slotProps?.Dropdown}
             style={[
               styles.dropdown,
               {
@@ -157,6 +176,7 @@ export const Select = memo(function Select({
                   },
                 }) as ViewStyle),
               },
+              slotProps?.Dropdown?.style,
             ]}
             accessibilityRole="list"
           >
@@ -166,34 +186,36 @@ export const Select = memo(function Select({
               renderItem={({ item }: { item: SelectOption }) => {
                 const selected = isSelected(item.value);
                 return (
-                  <TouchableRipple
-                    onPress={() => !item.disabled && handleSelect(item.value)}
-                    disabled={item.disabled}
-                    accessibilityRole={'option' as AccessibilityRole}
-                    accessibilityState={{
-                      selected,
-                      disabled: item.disabled,
-                    }}
-                    style={[
-                      styles.option,
-                      selected && {
-                        backgroundColor: colorScheme.primaryContainer,
-                      },
-                    ]}
-                  >
-                    <Text
-                      variant="bodyLarge"
-                      style={{
-                        color: item.disabled
-                          ? colorScheme.onSurface + '61'
-                          : selected
-                            ? colorScheme.onPrimaryContainer
-                            : colorScheme.onSurface,
+                  <SlotOption {...slotProps?.Option} style={[slotProps?.Option?.style]}>
+                    <TouchableRipple
+                      onPress={() => !item.disabled && handleSelect(item.value)}
+                      disabled={item.disabled}
+                      accessibilityRole={'option' as AccessibilityRole}
+                      accessibilityState={{
+                        selected,
+                        disabled: item.disabled,
                       }}
+                      style={[
+                        styles.option,
+                        selected && {
+                          backgroundColor: container,
+                        },
+                      ]}
                     >
-                      {item.label}
-                    </Text>
-                  </TouchableRipple>
+                      <Text
+                        variant="bodyLarge"
+                        style={{
+                          color: item.disabled
+                            ? colorScheme.onSurface + '61'
+                            : selected
+                              ? onContainer
+                              : colorScheme.onSurface,
+                        }}
+                      >
+                        {item.label}
+                      </Text>
+                    </TouchableRipple>
+                  </SlotOption>
                 );
               }}
               getItemLayout={(_data, index) => ({
@@ -202,7 +224,7 @@ export const Select = memo(function Select({
                 index,
               })}
             />
-          </View>
+          </SlotDropdown>
         </Portal>
       )}
     </>

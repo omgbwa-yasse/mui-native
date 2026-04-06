@@ -6,4 +6,5 @@ export type {
   SnackbarHostProps,
   SnackbarContextValue,
   SnackbarDuration,
+  SnackbarSlots,
 } from './types';

@@ -6,7 +6,11 @@ import {
   StyleSheet,
   Animated as RNAnimated,
 } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import type { TextProps } from 'react-native';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { TextFieldProps, TextFieldVariant } from './types';
 
 function createTextFieldStyles(
@@ -14,9 +18,10 @@ function createTextFieldStyles(
   shape: ReturnType<typeof useTheme>['theme']['shape'],
   variant: TextFieldVariant,
   hasError: boolean,
+  primaryColor: string,
 ) {
   const borderColor = hasError ? colorScheme.error : colorScheme.outline;
-  const focusBorderColor = hasError ? colorScheme.error : colorScheme.primary;
+  const focusBorderColor = hasError ? colorScheme.error : primaryColor;
 
   const containerBase = {
     borderRadius: variant === 'filled' ? 0 : shape.extraSmall,
@@ -86,33 +91,46 @@ function createTextFieldStyles(
   });
 }
 
-export function TextField({
-  label,
-  value,
-  onChangeText,
-  variant = 'filled',
-  placeholder,
-  supportingText,
-  error,
-  disabled = false,
-  trailingIcon,
-  leadingIcon,
-  secureTextEntry = false,
-  keyboardType,
-  returnKeyType,
-  onBlur,
-  onFocus,
-  testID,
-  accessibilityLabel,
-}: TextFieldProps): React.ReactElement {
+export function TextField(rawProps: TextFieldProps): React.ReactElement {
+  const props = useComponentDefaults('TextField', rawProps);
+  const {
+    label,
+    value,
+    onChangeText,
+    variant = 'filled',
+    placeholder,
+    supportingText,
+    error,
+    disabled = false,
+    trailingIcon,
+    leadingIcon,
+    secureTextEntry = false,
+    keyboardType,
+    returnKeyType,
+    onBlur,
+    onFocus,
+    testID,
+    accessibilityLabel,
+    color,
+    sx,
+    style,
+    slots,
+    slotProps,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const hasError = Boolean(error);
   const [focused, setFocused] = useState(false);
   const labelAnim = useRef(new RNAnimated.Value(value ? 1 : 0)).current;
+  const SlotRoot = slots?.Root ?? View;
+  const SlotInput = slots?.Input ?? TextInput;
+  const SlotLabel = slots?.Label ?? RNAnimated.Text;
+  const SlotSupportingText = (slots?.SupportingText ?? Text) as React.ComponentType<TextProps & { accessibilityRole?: string }>;
 
   const styles = useMemo(
-    () => createTextFieldStyles(theme.colorScheme, theme.shape, variant, hasError),
-    [theme, variant, hasError],
+    () => createTextFieldStyles(theme.colorScheme, theme.shape, variant, hasError, bg),
+    [theme, variant, hasError, bg],
   );
 
   const handleFocus = (): void => {
@@ -133,21 +151,21 @@ export function TextField({
   const labelSize = labelAnim.interpolate({ inputRange: [0, 1], outputRange: [16, 12] });
 
   return (
-    <View style={[styles.wrapper, disabled && styles.disabledOverlay]}>
+    <SlotRoot {...slotProps?.Root} style={[styles.wrapper, disabled && styles.disabledOverlay, sxStyle, style, slotProps?.Root?.style]}>
       <View style={[styles.container, focused && styles.containerFocused]}>
         <View style={styles.row}>
           {leadingIcon != null && <View style={styles.leadingIcon}>{leadingIcon}</View>}
           <View style={{ flex: 1 }}>
-            <RNAnimated.Text
-              style={[styles.label, { top: labelTop, fontSize: labelSize }]}
+            <SlotLabel
+              {...slotProps?.Label}
+              style={[styles.label, { top: labelTop, fontSize: labelSize }, slotProps?.Label?.style]}
               numberOfLines={1}
             >
               {label}
-            </RNAnimated.Text>
-            <TextInput
+            </SlotLabel>
+            <SlotInput
               value={value}
               onChangeText={onChangeText}
-              style={styles.input}
               placeholder={focused ? placeholder : undefined}
               placeholderTextColor={theme.colorScheme.onSurfaceVariant}
               editable={!disabled}
@@ -159,18 +177,20 @@ export function TextField({
               testID={testID}
               accessibilityLabel={accessibilityLabel ?? label}
               accessibilityState={{ disabled }}
+              {...slotProps?.Input}
+              style={[styles.input, slotProps?.Input?.style]}
             />
           </View>
           {trailingIcon != null && <View style={styles.iconWrapper}>{trailingIcon}</View>}
         </View>
       </View>
       {error != null && error.length > 0 ? (
-        <Text style={styles.errorText} accessibilityRole="alert">
+        <SlotSupportingText {...slotProps?.SupportingText} style={[styles.errorText, slotProps?.SupportingText?.style]} accessibilityRole="alert">
           {error}
-        </Text>
+        </SlotSupportingText>
       ) : supportingText != null ? (
-        <Text style={styles.supportingText}>{supportingText}</Text>
+        <SlotSupportingText {...slotProps?.SupportingText} style={[styles.supportingText, slotProps?.SupportingText?.style]}>{supportingText}</SlotSupportingText>
       ) : null}
-    </View>
+    </SlotRoot>
   );
 }

@@ -1,6 +1,8 @@
 import type { FlexStyle, ViewProps } from 'react-native';
 import type { SpacingKey } from '../../tokens/spacing';
 import type React from 'react';
+import type { SizeProp } from '../../tokens/size';
+import type { ColorProp, SxProps } from '../../types/shared';
 
 export interface StackProps extends ViewProps {
   /** Flex direction. Default: 'column' */
@@ -15,4 +17,10 @@ export interface StackProps extends ViewProps {
   alignItems?: FlexStyle['alignItems'];
   /** Justify content */
   justifyContent?: FlexStyle['justifyContent'];
+  /** Size variant. */
+  size?: SizeProp;
+  /** Color variant. */
+  color?: ColorProp;
+  /** Extended style system. */
+  sx?: SxProps;
 }

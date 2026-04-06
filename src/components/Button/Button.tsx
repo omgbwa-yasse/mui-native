@@ -10,23 +10,39 @@ import {
   GestureDetector,
   Gesture,
 } from 'react-native-gesture-handler';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
 import { createButtonStyles } from './Button.styles';
 import type { ButtonProps } from './types';
+import { SIZE_SCALE } from '../../tokens/size';
+import { useGroupSize } from '../ButtonGroup/SizeContext';
 
-export function Button({
-  label,
-  variant = 'filled',
-  disabled = false,
-  icon,
-  onPress,
-  accessibilityLabel,
-  accessibilityRole = 'button',
-  testID,
-}: ButtonProps): React.ReactElement {
+export function Button(rawProps: ButtonProps): React.ReactElement {
+  const props = useComponentDefaults('Button', rawProps);
+  const {
+    label,
+    variant = 'filled',
+    disabled = false,
+    icon,
+    onPress,
+    size,
+    color,
+    sx,
+    style,
+    accessibilityLabel,
+    accessibilityRole = 'button',
+    testID,
+  } = props;
   const { theme } = useTheme();
-  const styles = useMemo(() => createButtonStyles(theme, variant), [theme, variant]);
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
+  const styles = useMemo(() => createButtonStyles(theme, variant, bg, fg), [theme, variant, bg, fg]);
+  const groupSize = useGroupSize();
+  const resolvedSize = groupSize ?? size ?? 'medium';
+  const sz = SIZE_SCALE[resolvedSize];
   const reduceMotion = useReducedMotionValue();
 
   const scale = useSharedValue(1);
@@ -70,8 +86,11 @@ export function Button({
       <Animated.View
         style={[
           styles.container,
+          { minHeight: sz.height, paddingHorizontal: sz.paddingH, paddingVertical: sz.paddingV },
           disabled && styles.disabledContainer,
           animatedStyle,
+          sxStyle,
+          style,
         ]}
         accessible
         accessibilityRole={accessibilityRole}

@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import type { AccessibilityRole } from 'react-native';
 import { StyleSheet, View } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useTheme } from '../../theme';
 import { Text } from '../Text/Text';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import type { ListItemProps } from './types';

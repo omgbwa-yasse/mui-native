@@ -1,7 +1,10 @@
 import React, { memo, useCallback } from 'react';
 import type { AccessibilityRole } from 'react-native';
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import { Text } from '../Text/Text';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import type { DataTableColumn, DataTableProps } from './types';
@@ -61,21 +64,30 @@ function DataTableHeaderCell<T>({
   );
 }
 
-function DataTable<T = Record<string, unknown>>({
-  columns,
-  rows,
-  keyExtractor,
-  sortColumn,
-  sortDirection,
-  onSort,
-  selectedRows,
-  onRowSelect,
-  emptyState,
-  onEndReached,
-  testID,
-}: DataTableProps<T>) {
+function DataTable<T = Record<string, unknown>>(rawProps: DataTableProps<T>) {
+  const props = useComponentDefaults(
+    'DataTable',
+    rawProps as unknown as DataTableProps<Record<string, unknown>>,
+  ) as DataTableProps<T>;
+  const {
+    columns,
+    rows,
+    keyExtractor,
+    sortColumn,
+    sortDirection,
+    onSort,
+    selectedRows,
+    onRowSelect,
+    emptyState,
+    onEndReached,
+    testID,
+    color,
+    sx,
+    style,
+  } = props;
   const { theme } = useTheme();
-
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const selectedSet = new Set(selectedRows ?? []);
 
   const handleRowSelect = useCallback(
@@ -101,7 +113,7 @@ function DataTable<T = Record<string, unknown>>({
         <View
           style={[
             styles.row,
-            isSelected && { backgroundColor: theme.colorScheme.primaryContainer + '28' },
+            isSelected && { backgroundColor: container + '28' },
           ]}
           accessibilityRole={'row' as AccessibilityRole}
         >
@@ -146,7 +158,7 @@ function DataTable<T = Record<string, unknown>>({
   );
 
   return (
-    <View style={styles.container} accessibilityRole={'grid' as AccessibilityRole} accessible testID={testID}>
+    <View style={[styles.container, sxStyle, style]} accessibilityRole={'grid' as AccessibilityRole} accessible testID={testID}>
       {/* Non-virtualized header */}
       <View style={[styles.header, { backgroundColor: theme.colorScheme.surfaceVariant }]}>
         {columns.map((col) => (

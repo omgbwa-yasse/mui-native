@@ -8,8 +8,10 @@ import Animated, {
   cancelAnimation,
   Easing,
 } from 'react-native-reanimated';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
+import { useSx } from '../../hooks/useSx';
 import type { ActivityIndicatorProps } from './types';
 
 const SIZE_MAP = { small: 20, medium: 36, large: 48 };
@@ -20,15 +22,20 @@ const STROKE_MAP = { small: 2, medium: 3, large: 4 };
  *
  * Uses Reanimated rotation worklet for 60 fps animation with full reduce-motion support.
  */
-export const ActivityIndicator = memo(function ActivityIndicator({
-  size = 'medium',
-  color,
-  animating = true,
-  hidesWhenStopped = true,
-  testID,
-  accessibilityLabel,
-}: ActivityIndicatorProps): React.ReactElement | null {
+export const ActivityIndicator = memo(function ActivityIndicator(rawProps: ActivityIndicatorProps): React.ReactElement | null {
+  const props = useComponentDefaults('ActivityIndicator', rawProps);
+  const {
+    size = 'medium',
+    color,
+    animating = true,
+    hidesWhenStopped = true,
+    testID,
+    accessibilityLabel,
+    sx,
+    style,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
   const reduceMotion = useReducedMotionValue();
   const rotation = useSharedValue(0);
 
@@ -62,6 +69,7 @@ export const ActivityIndicator = memo(function ActivityIndicator({
       accessible
       accessibilityLabel={accessibilityLabel ?? 'Loading'}
       testID={testID}
+      style={[sxStyle, style]}
     >
       <Animated.View
         style={[

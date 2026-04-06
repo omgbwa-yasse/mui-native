@@ -1,4 +1,6 @@
 import type React from 'react';
+import type { StyleProp, ViewStyle } from 'react-native';
+import type { ColorProp, SxProps } from '../../types/shared';
 
 export type FABSize = 'small' | 'medium' | 'large';
 export type FABVariant = 'primary' | 'secondary' | 'tertiary' | 'surface';
@@ -18,4 +20,7 @@ export interface FABProps {
   accessibilityLabel: string;
   /** Test id. */
   testID?: string;
+  color?: ColorProp;
+  sx?: SxProps;
+  style?: StyleProp<ViewStyle>;
 }

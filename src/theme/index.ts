@@ -5,3 +5,4 @@ export { createTheme } from './createTheme';
 export type { CreateThemeOptions } from './createTheme';
 export { generatePalette } from './generatePalette';
 export { useReducedMotionValue } from './useReduceMotion';
+export type { ComponentsConfig, ComponentOverride, ComponentPropsMap } from './componentsDefs';

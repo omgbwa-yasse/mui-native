@@ -1,12 +1,22 @@
 import React, { memo } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { ListProps } from './types';
+import { useTheme } from '../../theme';
 
-const List = memo(function List({ children, testID }: ListProps) {
+const List = memo(function List(rawProps: ListProps) {
+  const props = useComponentDefaults('List', rawProps);
+  const { color, sx, style, children, testID, slots, slotProps } = props;
+  const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
+  const Root = slots?.Root ?? View;
   return (
-    <View style={styles.container} accessibilityRole="list" testID={testID}>
+    <Root {...slotProps?.Root} style={[styles.container, sxStyle, style, slotProps?.Root?.style]} accessibilityRole="list" testID={testID}>
       {children}
-    </View>
+    </Root>
   );
 });
 

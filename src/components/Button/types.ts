@@ -1,4 +1,7 @@
 import type { AccessibilityRole } from 'react-native';
+import type { StyleProp, ViewStyle } from 'react-native';
+import type { SizeProp } from '../../tokens/size';
+import type { ColorProp, SxProps } from '../../types/shared';
 
 /**
  * MD3 Button variants.
@@ -31,4 +34,8 @@ export interface ButtonProps {
   accessibilityRole?: AccessibilityRole;
   /** Test id for automated queries. */
   testID?: string;
+  size?: SizeProp;
+  color?: ColorProp;
+  sx?: SxProps;
+  style?: StyleProp<ViewStyle>;
 }

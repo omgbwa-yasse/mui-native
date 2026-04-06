@@ -1,10 +1,11 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import CodeBlock from './CodeBlock';
 import { useLayoutPreference } from '../context/LayoutPreferenceContext';
 import type { ExampleConfig } from '../catalogue/types';
 
 interface ExampleGalleryProps {
-  examples: [ExampleConfig, ExampleConfig, ExampleConfig];
+  examples: ExampleConfig[];
 }
 
 export default function ExampleGallery({ examples }: ExampleGalleryProps) {
@@ -30,6 +31,7 @@ export default function ExampleGallery({ examples }: ExampleGalleryProps) {
           {example.description ? (
             <Text style={styles.description}>{example.description}</Text>
           ) : null}
+          {example.code ? <CodeBlock code={example.code} language="tsx" /> : null}
           <View style={styles.preview}>{example.render()}</View>
         </View>
       ))}

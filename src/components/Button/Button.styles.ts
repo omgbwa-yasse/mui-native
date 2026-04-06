@@ -6,8 +6,15 @@ import type { ButtonVariant } from './types';
  * Returns a StyleSheet for the given variant and theme.
  * Called inside the Button component (recreated on theme change via useMemo).
  */
-export function createButtonStyles(theme: Theme, variant: ButtonVariant) {
+export function createButtonStyles(
+  theme: Theme,
+  variant: ButtonVariant,
+  bgRole?: string,
+  fgRole?: string,
+) {
   const { colorScheme, shape, typography } = theme;
+  const primary = bgRole ?? colorScheme.primary;
+  const onPrimary = fgRole ?? colorScheme.onPrimary;
 
   const base = {
     minHeight: 40,
@@ -23,7 +30,7 @@ export function createButtonStyles(theme: Theme, variant: ButtonVariant) {
   const containerStyles: Record<ButtonVariant, object> = {
     filled: {
       ...base,
-      backgroundColor: colorScheme.primary,
+      backgroundColor: primary,
     },
     tonal: {
       ...base,
@@ -49,7 +56,7 @@ export function createButtonStyles(theme: Theme, variant: ButtonVariant) {
   const labelStyles: Record<ButtonVariant, object> = {
     filled: {
       ...typography.labelLarge,
-      color: colorScheme.onPrimary,
+      color: onPrimary,
     },
     tonal: {
       ...typography.labelLarge,
@@ -57,15 +64,15 @@ export function createButtonStyles(theme: Theme, variant: ButtonVariant) {
     },
     outlined: {
       ...typography.labelLarge,
-      color: colorScheme.primary,
+      color: primary,
     },
     text: {
       ...typography.labelLarge,
-      color: colorScheme.primary,
+      color: primary,
     },
     elevated: {
       ...typography.labelLarge,
-      color: colorScheme.primary,
+      color: primary,
     },
   };
 

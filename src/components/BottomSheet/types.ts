@@ -1,4 +1,7 @@
 import type React from 'react';
+import type { StyleProp, ViewStyle } from 'react-native';
+import type { SizeProp } from '../../tokens/size';
+import type { ColorProp, SxProps } from '../../types/shared';
 
 export interface BottomSheetProps {
   /** Whether the sheet is open. */
@@ -13,4 +16,8 @@ export interface BottomSheetProps {
   showHandle?: boolean;
   /** Test id. */
   testID?: string;
+  size?: SizeProp;
+  color?: ColorProp;
+  sx?: SxProps;
+  style?: StyleProp<ViewStyle>;
 }

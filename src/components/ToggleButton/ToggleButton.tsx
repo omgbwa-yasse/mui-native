@@ -1,17 +1,25 @@
 import React, { memo, useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import { ToggleButtonGroupContext } from './ToggleButtonGroupContext';
-import type { ToggleButtonProps } from './types';
+import type { ToggleButtonProps, ToggleButtonGroupProps } from './types';
 
-export const ToggleButton = memo(function ToggleButton({
-  value,
-  disabled = false,
-  accessibilityLabel,
-  children,
-  testID,
-}: ToggleButtonProps) {
+export const ToggleButton = memo(function ToggleButton(rawProps: ToggleButtonProps) {
+  const props = useComponentDefaults('ToggleButton', rawProps as unknown as ToggleButtonGroupProps) as ToggleButtonProps;
+  const {
+    value,
+    disabled = false,
+    accessibilityLabel,
+    children,
+    color,
+    sx,
+    style,
+    testID,
+  } = props;
   const { theme } = useTheme();
   const group = useContext(ToggleButtonGroupContext);
 
@@ -30,6 +38,8 @@ export const ToggleButton = memo(function ToggleButton({
   }
 
   const { colorScheme } = theme;
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
 
   return (
     <TouchableRipple
@@ -48,6 +58,8 @@ export const ToggleButton = memo(function ToggleButton({
           borderRadius: theme.shape.small ?? 4,
           opacity: isDisabled ? 0.38 : 1,
         },
+        sxStyle,
+        style,
       ]}
     >
       <>{children}</>

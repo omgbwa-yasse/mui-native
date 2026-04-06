@@ -1,4 +1,6 @@
 import type { StyleProp, ViewStyle } from 'react-native';
+import type { SizeProp } from '../../tokens/size';
+import type { SxProps } from '../../types/shared';
 
 export type CircularProgressVariant = 'determinate' | 'indeterminate';
 
@@ -10,10 +12,11 @@ export interface CircularProgressProps {
    * Values outside [0, 100] are clamped.
    */
   value?: number;
-  /** Diameter of the circle in dp. Defaults to 40. */
-  size?: number;
+  /** Diameter: numeric dp or semantic token ('small'→32, 'medium'→40, 'large'→48). */
+  size?: SizeProp | number;
   /** Color of the progress indicator. Defaults to theme primary color. */
   color?: string;
   style?: StyleProp<ViewStyle>;
   testID?: string;
+  sx?: SxProps;
 }

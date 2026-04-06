@@ -1,6 +1,8 @@
 import React, { memo, useMemo } from 'react';
 import { Text as RNText } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
 import type { TextProps } from './types';
 
 /**
@@ -12,26 +14,31 @@ import type { TextProps } from './types';
  * @example
  * <Text variant="bodyLarge">Hello world</Text>
  */
-export const Text = memo(function Text({
-  variant,
-  color,
-  align,
-  children,
-  accessibilityRole = 'text',
-  testID,
-  style,
-  ...rest
-}: TextProps): React.ReactElement {
+export const Text = memo(function Text(rawProps: TextProps): React.ReactElement {
+  const props = useComponentDefaults('Text', rawProps);
+  const {
+    variant,
+    color,
+    align,
+    children,
+    accessibilityRole = 'text',
+    testID,
+    style,
+    sx,
+    ...rest
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
 
   const resolvedStyle = useMemo(
     () => [
       theme.typography[variant],
       { color: color ?? theme.colorScheme.onSurface },
       align != null ? { textAlign: align } : undefined,
+      sxStyle,
       style,
     ],
-    [theme, variant, color, align, style],
+    [theme, variant, color, align, style, sxStyle],
   );
 
   return (

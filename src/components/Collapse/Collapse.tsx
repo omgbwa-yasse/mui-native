@@ -3,7 +3,11 @@ import { View } from 'react-native';
 import type { LayoutChangeEvent } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, interpolate } from 'react-native-reanimated';
 import { useTransition } from '../../hooks/useTransition';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { CollapseProps } from './types';
+import { useTheme } from '../../theme';
 
 /**
  * Collapse — animates height (vertical) or width (horizontal) between
@@ -11,21 +15,28 @@ import type { CollapseProps } from './types';
  *
  * RN-DEVIATION: transitions use Reanimated worklets; react-transition-group is web-only
  */
-export function Collapse({
-  in: inProp = false,
-  timeout = 300,
-  mountOnEnter = false,
-  unmountOnExit = false,
-  orientation = 'vertical',
-  collapsedSize: collapsedSizeProp = 0,
-  children,
-  style,
-  onEnter,
-  onEntered,
-  onExit,
-  onExited,
-  testID,
-}: CollapseProps): React.ReactElement | null {
+export function Collapse(rawProps: CollapseProps): React.ReactElement | null {
+  const props = useComponentDefaults('Collapse', rawProps);
+  const { theme } = useTheme();
+  const {
+    in: inProp = false,
+    timeout = 300,
+    mountOnEnter = false,
+    unmountOnExit = false,
+    orientation = 'vertical',
+    collapsedSize: collapsedSizeProp = 0,
+    children,
+    style,
+    onEnter,
+    onEntered,
+    onExit,
+    onExited,
+    testID,
+    color,
+    sx,
+  } = props;
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const clampedCollapsedSize = Math.max(0, collapsedSizeProp);
 
   const { progress, shouldMount, state } = useTransition({
@@ -80,7 +91,7 @@ export function Collapse({
   if (!shouldMount) return null;
 
   return (
-    <Animated.View testID={testID} style={[animatedStyle, style]}>
+    <Animated.View testID={testID} style={[animatedStyle, sxStyle, style]}>
       <View onLayout={onLayout}>{children}</View>
     </Animated.View>
   );

@@ -4,6 +4,7 @@ import { shape } from '../tokens/shape';
 import { elevation } from '../tokens/elevation';
 import { generatePalette } from './generatePalette';
 import type { Theme, DeepPartial, ColorMode } from './types';
+import type { ComponentsConfig } from './componentsDefs';
 
 /**
  * Options for createTheme().
@@ -24,6 +25,13 @@ export interface CreateThemeOptions {
    * Deep-merged: nested objects are combined, not replaced.
    */
   overrides?: DeepPartial<Theme>;
+  /**
+   * Global component configuration — sets defaultProps and styleOverrides
+   * for any component without altering the component's own code.
+   * Stored verbatim on the returned Theme; merging happens at render time
+   * via `useComponentDefaults`.
+   */
+  components?: ComponentsConfig;
 }
 
 function deepMerge<T extends object>(base: T, overrides: DeepPartial<T>): T {
@@ -32,7 +40,10 @@ function deepMerge<T extends object>(base: T, overrides: DeepPartial<T>): T {
     const override = overrides[key];
     if (override !== undefined) {
       if (typeof override === 'object' && override !== null && !Array.isArray(override)) {
-        result[key] = deepMerge(base[key] as object, override as DeepPartial<object>) as T[keyof T];
+        const baseVal = base[key];
+        result[key] = (baseVal !== null && baseVal !== undefined && typeof baseVal === 'object'
+          ? deepMerge(baseVal as object, override as DeepPartial<object>)
+          : override) as T[keyof T];
       } else {
         result[key] = override as T[keyof T];
       }
@@ -53,7 +64,7 @@ function deepMerge<T extends object>(base: T, overrides: DeepPartial<T>): T {
  * const theme = createTheme({ mode: 'dark', seedColor: '#E91E63' });
  */
 export function createTheme(options: CreateThemeOptions = {}): Theme {
-  const { mode = 'light', seedColor, overrides } = options;
+  const { mode = 'light', seedColor, overrides, components } = options;
 
   let colorScheme = mode === 'dark' ? baseDarkColors : baseLightColors;
 
@@ -67,6 +78,7 @@ export function createTheme(options: CreateThemeOptions = {}): Theme {
     shape,
     elevation,
     mode,
+    ...(components !== undefined ? { components } : {}),
   };
 
   return overrides ? deepMerge(base, overrides) : base;

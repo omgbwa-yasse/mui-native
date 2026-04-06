@@ -1,4 +1,6 @@
 import type { StyleProp, ViewStyle } from 'react-native';
+import type { SizeProp } from '../../tokens/size';
+import type { SxProps } from '../../types/shared';
 
 export type LinearProgressVariant = 'determinate' | 'indeterminate' | 'buffer' | 'query';
 
@@ -20,4 +22,6 @@ export interface LinearProgressProps {
   color?: string;
   style?: StyleProp<ViewStyle>;
   testID?: string;
+  size?: SizeProp;
+  sx?: SxProps;
 }

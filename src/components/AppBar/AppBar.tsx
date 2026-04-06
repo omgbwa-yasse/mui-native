@@ -1,16 +1,33 @@
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import type { AppBarProps } from './types';
 
-export function AppBar({
-  title,
-  variant = 'center',
-  navigationIcon,
-  actions,
-  testID,
-}: AppBarProps): React.ReactElement {
+export function AppBar(rawProps: AppBarProps): React.ReactElement {
+  const props = useComponentDefaults('AppBar', rawProps);
+  const {
+    title,
+    variant = 'center',
+    navigationIcon,
+    actions,
+    testID,
+    color,
+    sx,
+    style,
+    slots,
+    slotProps,
+  } = props;
+
+  const RootSlot = slots?.Root ?? View;
+  const TitleSlot = slots?.Title ?? Text;
+  const NavigationIconSlot = slots?.NavigationIcon ?? View;
+  const ActionsSlot = slots?.Actions ?? View;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const { colorScheme, typography, elevation: elev } = theme;
 
   const styles = useMemo(
@@ -48,22 +65,22 @@ export function AppBar({
   );
 
   return (
-    <View style={styles.container} testID={testID} accessibilityRole="header">
-      {navigationIcon != null && <View style={styles.navIcon}>{navigationIcon}</View>}
+    <RootSlot {...slotProps?.Root} style={[styles.container, sxStyle, style, slotProps?.Root?.style]} testID={testID} accessibilityRole="header">
+      {navigationIcon != null && <NavigationIconSlot {...slotProps?.NavigationIcon} style={[styles.navIcon, slotProps?.NavigationIcon?.style]}>{navigationIcon}</NavigationIconSlot>}
       <View style={styles.titleContainer}>
-        <Text style={styles.title} numberOfLines={1} accessibilityRole="text">
+        <TitleSlot {...slotProps?.Title} style={[styles.title, slotProps?.Title?.style]} numberOfLines={1} accessibilityRole="text">
           {title}
-        </Text>
+        </TitleSlot>
       </View>
       {actions != null && actions.length > 0 && (
-        <View style={styles.actions}>
+        <ActionsSlot {...slotProps?.Actions} style={[styles.actions, slotProps?.Actions?.style]}>
           {actions.map((action, idx) => (
             <View key={idx} style={{ padding: 8 }}>
               {action}
             </View>
           ))}
-        </View>
+        </ActionsSlot>
       )}
-    </View>
+    </RootSlot>
   );
 }

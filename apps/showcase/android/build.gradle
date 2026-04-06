@@ -1,0 +1,40 @@
+buildscript {
+    ext {
+        buildToolsVersion = "34.0.0"
+        minSdkVersion = 24
+        compileSdkVersion = 34
+        targetSdkVersion = 34
+        ndkVersion = "26.1.10909125"
+        kotlinVersion = "1.9.24"
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle:8.6.0")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.24")
+    }
+}
+
+plugins {
+    id "com.facebook.react.rootproject"
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    configurations.all {
+        resolutionStrategy {
+            force 'androidx.core:core:1.13.1'
+            force 'androidx.core:core-ktx:1.13.1'
+        }
+        resolutionStrategy.dependencySubstitution {
+            // react-native artifact was renamed to react-android in RN 0.71+
+            substitute module('com.facebook.react:react-native') using module('com.facebook.react:react-android:0.76.0')
+            substitute module('com.facebook.react:hermes-engine') using module('com.facebook.react:hermes-android:0.76.0')
+        }
+    }
+}

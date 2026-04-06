@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useTheme } from '../../theme';
 import type { GridPaginationModel } from './types';
 
 interface DataGridPaginationProps {

@@ -1,8 +1,13 @@
 import type { StyleProp, ViewStyle } from 'react-native';
 import type { TextFieldSlotProps } from '../DatePicker/types';
+import type { SizeProp } from '../../tokens/size';
+import type { ColorProp, SxProps } from '../../types/shared';
 
 export interface DateTimePickerProps {
   testID?: string;
+  size?: SizeProp;
+  color?: ColorProp;
+  sx?: SxProps;
   style?: StyleProp<ViewStyle>;
   accessibilityLabel?: string;
   value?: Date | null;

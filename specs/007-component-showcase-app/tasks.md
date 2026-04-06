@@ -37,16 +37,16 @@ No story implementation can start until registry and types exist.
 
 - [X] T007 Write `apps/showcase/scripts/generate-registry.ts` — scans `../../src/components/*/index.tsx`, extracts raw source text, writes a typed `SourceCodeMap` to `apps/showcase/src/catalogue/registry.generated.ts`
 - [X] T008 Write `apps/showcase/src/catalogue/types.ts` — export `CategoryId`, `Category`, `ComponentEntry`, `ExampleConfig`, `LayoutDirection`, `LayoutPreferenceContextValue`, `RootStackParamList`, `CatalogueRegistry` from `contracts/catalogue.contract.ts`
-- [X] T009 Write `apps/showcase/src/catalogue/registry.ts` skeletion — all 77 components across 5 categories (`INPUTS` 21, `DATA_DISPLAY` 19, `FEEDBACK` 11, `NAVIGATION` 10, `LAYOUT` 16); 62 entries with `examples: null, hasFullExamples: false`; 15 priority entries with `examples` stub (3 placeholder `ExampleConfig` items, `hasFullExamples: false`) to be filled in Phase 7
-- [X] T010 Run `npm run generate` in `apps/showcase/`; verify `registry.generated.ts` is created with all 77 keys populated
+- [X] T009 Write `apps/showcase/src/catalogue/registry.ts` skeletion — all 78 components across 5 categories (`INPUTS` 22, `DATA_DISPLAY` 18, `FEEDBACK` 11, `NAVIGATION` 10, `LAYOUT` 17); 63 entries with `examples: null, hasFullExamples: false`; 15 priority entries with `examples` stub (3 placeholder `ExampleConfig` items, `hasFullExamples: false`) to be filled in Phase 7
+- [X] T010 Run `npm run generate` in `apps/showcase/`; verify `registry.generated.ts` is created with all 78 keys populated
 
-**Checkpoint**: `import { registry } from './catalogue/registry'` compiles and returns 77 entries across 5 categories
+**Checkpoint**: `import { registry } from './catalogue/registry'` compiles and returns 78 entries across 5 categories
 
 ---
 
 ## Phase 3: User Story 1 — Browse Components by Category (Priority: P1) 🎯 MVP
 
-**Goal**: A full navigable app — HomeScreen → CategoryListScreen → ComponentDetailScreen — with all 77 components listed (no examples yet; that is US3).
+**Goal**: A full navigable app — HomeScreen → CategoryListScreen → ComponentDetailScreen — with all 78 components listed (no examples yet; that is US3).
 
 **Independent Test**: Launch the app → verify 5 category cards → tap any category → verify its components are listed → tap any component → verify a detail screen opens with the component name in the header. Back navigation restores the previous screen.
 
@@ -56,7 +56,7 @@ No story implementation can start until registry and types exist.
 - [X] T014 [US1] Implement `apps/showcase/src/screens/CategoryListScreen.tsx` — receives `{ categoryId: CategoryId }` route param; looks up category from registry; `FlatList` of `ComponentEntry` rows showing `name` + `description`; `onPress` navigates to `ComponentDetail` passing `componentKey`
 - [X] T015 [US1] Implement `apps/showcase/src/screens/ComponentDetailScreen.tsx` (navigation shell only) — receives `{ componentKey: string }` route param; looks up `ComponentEntry`; renders screen title with component name; placeholders for code block and examples (filled in US2 and US3)
 
-**Checkpoint**: US1 fully functional — browse all 5 categories and 77 components via 3-tap navigation; back gesture restores previous screen
+**Checkpoint**: US1 fully functional — browse all 5 categories and 78 components via 3-tap navigation; back gesture restores previous screen
 
 ---
 
@@ -159,9 +159,9 @@ No story implementation can start until registry and types exist.
 - [X] T043 [P] Write `apps/showcase/tests/unit/ExampleGallery.test.tsx` — renders 3 items vertically by default; switches to horizontal on direction toggle
 - [X] T044 [P] Write `apps/showcase/tests/unit/LayoutToggle.test.tsx` — calls `context.toggle()` on press; shows correct icon per direction state
 - [X] T045 Write `apps/showcase/tests/integration/navigation.test.tsx` — full navigation flow: HomeScreen → CategoryListScreen → ComponentDetailScreen → back
-- [X] T046 Write `apps/showcase/tests/integration/registry-completeness.test.ts` — all 77 `componentKey` values present; `examples` is `null` or exactly `length === 3`
+- [X] T046 Write `apps/showcase/tests/integration/registry-completeness.test.ts` — all 78 `componentKey` values present; `examples` is `null` or exactly `length === 3`
 
-**Checkpoint**: `npm test` (in `apps/showcase/`) passes all 5 new test files; registry-completeness test confirms 77 entries and exactly 15 with `hasFullExamples === true`
+**Checkpoint**: `npm test` (in `apps/showcase/`) passes all 5 new test files; registry-completeness test confirms 78 entries and exactly 15 with `hasFullExamples === true`
 
 ---
 
@@ -207,12 +207,12 @@ Agent B: T039 (category icons)
 ## Implementation Strategy
 
 **MVP scope** (deliver to stakeholders after Phase 3 only):
-- 5 categories browsable, 77 components listed, navigation works end-to-end
+- 5 categories browsable, 78 components listed, navigation works end-to-end
 - No code blocks, no examples — but the core feature (SC-001 navigation) is done
 
 **Increment 2** (add Phase 4 + Phase 5 baseline):
-- Code blocks visible for all 77 components (if source was generated)
-- Placeholder shown for all 62 non-priority components — FR-010 satisfied
+- Code blocks visible for all 78 components (if source was generated)
+- Placeholder shown for all 63 non-priority components — FR-010 satisfied
 
 **Increment 3** (add Phase 6 + Phase 7):
 - Layout toggle works; 15 fully-authored example sets live
@@ -220,6 +220,86 @@ Agent B: T039 (category icons)
 
 **Full v1** (add Phase 8):
 - Accessibility audit complete; category icons present; iOS + Android smoke passed
+
+---
+
+## Deferred: v2 Example Coverage (63 Non-Priority Components)
+
+**Context**: v1 delivers fully-authored examples (3 use-case variants each) for the 15 priority
+components listed in Phase 7. The remaining 63 components display an `ExamplesPlaceholder`
+("Examples coming soon"). This section defines the roadmap so that placeholder promise does
+not become indefinite technical debt.
+
+### Definition of "done" for a deferred component
+
+A deferred component is considered fully authored when all of the following are true:
+
+1. Its `examples` field in `registry.ts` contains a fixed-length tuple of exactly 3 `ExampleConfig` items
+2. Each `ExampleConfig.render()` produces a visually distinct variant, state, or prop combination
+3. `hasFullExamples` is set to `true` for that entry
+4. The registry-completeness integration test (T046) still passes after the addition
+
+### Suggested v2 priority order
+
+The 63 deferred components are grouped by complexity. Simpler components (single-purpose,
+few props) should be authored first to build momentum before the complex interactive ones.
+
+#### Tier A — Low complexity (author first, ~20 components)
+Stateless or near-stateless UI primitives. Examples require no wrapper state.
+
+| Component | Category | Suggested variants |
+|-----------|----------|--------------------|
+| Badge | DATA_DISPLAY | numeric count / dot variant / invisible (hidden) |
+| Icon | DATA_DISPLAY | default size / large / custom color |
+| MaterialIcon | DATA_DISPLAY | outlined / filled / two-tone |
+| Tooltip | DATA_DISPLAY | short label / multiline / delay |
+| Box | LAYOUT | padding/margin demo / background color / border |
+| Container | LAYOUT | narrow / default / fluid |
+| Paper | LAYOUT | flat / elevated / outlined |
+| Divider | *(already priority)* | — |
+| HelperText | LAYOUT | default / error / disabled |
+| ActivityIndicator | FEEDBACK | small / default / large |
+| LinearProgress | FEEDBACK | indeterminate / determinate 40% / buffer |
+| Skeleton | FEEDBACK | text / circular / rectangular |
+| Banner | FEEDBACK | info / with action / dismissible |
+| Breadcrumbs | NAVIGATION | 2-level / 3-level / collapsed |
+| Link | NAVIGATION | inline text / standalone / underline |
+| Pagination | NAVIGATION | 3 pages / many pages / disabled |
+| ToggleButton | INPUTS | selected / unselected / group of 3 |
+| Rating | INPUTS | read-only / interactive / half-star |
+| Switch | INPUTS | off / on / disabled |
+| Checkbox | INPUTS | unchecked / checked / indeterminate |
+
+#### Tier B — Medium complexity (~25 components)
+Require minimal local state (toggle, value) in a wrapper component.
+
+- RadioButton, Slider, Searchbar, SegmentedButtons, NumberField, FAB, IconButton, ButtonGroup
+- ImageList, List, Timeline, TreeView, Masonry, DataTable, Charts
+- Dialog, Modal, Backdrop, SpeedDial
+- Collapse, Fade, Grow, Slide, Zoom
+- Grid, Stepper
+
+#### Tier C — High complexity (~18 components)
+Interactive or multi-part components that require significant wrapper setup or cannot be
+trivially isolated from navigation context.
+
+- Autocomplete, DatePicker, DateTimePicker, TimePicker, CodeInput, TextField (multiline), Select (complex)
+- DataGrid, NavigationBar, Menu, Popover, Popper, Portal
+- BottomSheet, Accordion, TransferList
+- HumanizationScoreBar, InvitationStatusBadge, WorkerAgentRow *(domain-specific — may need mock props)*
+
+### How to add a deferred example (contributor guide)
+
+1. Open `apps/showcase/src/catalogue/examples.tsx`
+2. Add a named export `export const <componentName>Examples: [ExampleConfig, ExampleConfig, ExampleConfig] = [...]`
+3. Import the new export in `registry.ts` and pass it to the matching `entry(...)` call
+4. Verify `npm test` passes in `apps/showcase/` (T046 will catch count regressions)
+5. Update the `hasFullExamples: true` count in the Summary table below
+
+### Tracking
+
+When a deferred component is fully authored, mark it in the Tier tables above with ~~strikethrough~~
+and increment the v2 counter in the Summary table.
 
 ---
 
@@ -239,3 +319,5 @@ Agent B: T039 (category icons)
 | Parallelizable tasks | 24 |
 | Independent test checkpoints | 4 (one per user story) |
 | Suggested MVP | Phase 1 + 2 + 3 (T001–T015) |
+| v1 components with full examples | 15 / 78 |
+| v2 deferred components (placeholder) | 63 / 78 |

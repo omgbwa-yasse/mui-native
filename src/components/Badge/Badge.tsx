@@ -1,23 +1,30 @@
 import React, { memo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
 import type { BadgeProps } from './types';
 
 const DOT_SIZE = 8;
 const BADGE_HEIGHT = 18;
 const BADGE_OFFSET = -6;
 
-const Badge = memo(function Badge({
-  content,
-  max = 99,
-  visible = true,
-  color,
-  labelColor,
-  children,
-  anchorOrigin = { vertical: 'top', horizontal: 'right' },
-  testID,
-}: BadgeProps) {
+const Badge = memo(function Badge(rawProps: BadgeProps) {
+  const props = useComponentDefaults('Badge', rawProps);
+  const {
+    content,
+    max = 99,
+    visible = true,
+    color,
+    labelColor,
+    children,
+    anchorOrigin = { vertical: 'top', horizontal: 'right' },
+    sx,
+    style,
+    testID,
+  } = props;
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
 
   const bgColor = color ?? theme.colorScheme.error;
   const fgColor = labelColor ?? theme.colorScheme.onError;
@@ -41,7 +48,7 @@ const Badge = memo(function Badge({
   };
 
   return (
-    <View style={styles.wrapper}>
+    <View style={[styles.wrapper, sxStyle, style]}>
       {children}
       {visible ? (
         <View

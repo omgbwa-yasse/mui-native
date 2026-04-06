@@ -12,7 +12,10 @@ import {
   Text,
   View,
 } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useComponentDefaults } from '../../hooks/useComponentDefaults';
+import { useTheme } from '../../theme';
+import { useSx } from '../../hooks/useSx';
+import { useColorRole } from '../../hooks/useColorRole';
 import { createDataGridStyles } from './DataGrid.styles';
 import { DataGridFilterRow } from './DataGridFilterRow';
 import { DataGridHeaderRow } from './DataGridHeaderRow';
@@ -104,8 +107,9 @@ function applyPagination<TRow extends GridRowData>(
 // ─── DataGrid component ───────────────────────────────────────────────────────
 
 function DataGridInner<TRow extends GridRowData = GridRowData>(
-  props: DataGridProps<TRow>,
+  rawProps: DataGridProps<TRow>,
 ): React.ReactElement {
+  const props = useComponentDefaults('DataGrid', rawProps) as DataGridProps<TRow>;
   const {
     rows,
     columns,
@@ -134,9 +138,13 @@ function DataGridInner<TRow extends GridRowData = GridRowData>(
     style,
     testID,
     accessibilityLabel,
+    color,
+    sx,
   } = props;
 
   const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg, container, onContainer } = useColorRole(color);
   const styles = useMemo(() => createDataGridStyles(theme, density), [theme, density]);
   const flatListRef = useRef<FlatList>(null);
 
@@ -328,7 +336,7 @@ function DataGridInner<TRow extends GridRowData = GridRowData>(
 
   return (
     <View
-      style={[styles.container, style]}
+      style={[styles.container, sxStyle, style]}
       testID={testID}
       accessibilityLabel={accessibilityLabel}
       role="grid"
@@ -392,7 +400,7 @@ function DataGridInner<TRow extends GridRowData = GridRowData>(
           ) : (
             <ActivityIndicator
               size="large"
-              color={theme.colorScheme.primary}
+              color={bg}
               accessibilityLabel="Loading data"
             />
           )}
