@@ -1,0 +1,221 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CircularProgress — determinate snapshots matches snapshot at value=0 1`] = `
+[
+  <View
+    accessibilityRole="progressbar"
+    accessibilityValue={
+      {
+        "max": 100,
+        "min": 0,
+        "now": 0,
+      }
+    }
+    accessible={true}
+    style={
+      [
+        {
+          "height": 40,
+          "width": 40,
+        },
+        undefined,
+        undefined,
+      ]
+    }
+  >
+    <View>
+      <View
+        testID="progress-arc"
+      />
+    </View>
+  </View>,
+  <View
+    pointerEvents="box-none"
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  />,
+]
+`;
+
+exports[`CircularProgress — determinate snapshots matches snapshot at value=25 1`] = `
+[
+  <View
+    accessibilityRole="progressbar"
+    accessibilityValue={
+      {
+        "max": 100,
+        "min": 0,
+        "now": 25,
+      }
+    }
+    accessible={true}
+    style={
+      [
+        {
+          "height": 40,
+          "width": 40,
+        },
+        undefined,
+        undefined,
+      ]
+    }
+  >
+    <View>
+      <View
+        testID="progress-arc"
+      />
+    </View>
+  </View>,
+  <View
+    pointerEvents="box-none"
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  />,
+]
+`;
+
+exports[`CircularProgress — determinate snapshots matches snapshot at value=50 1`] = `
+[
+  <View
+    accessibilityRole="progressbar"
+    accessibilityValue={
+      {
+        "max": 100,
+        "min": 0,
+        "now": 50,
+      }
+    }
+    accessible={true}
+    style={
+      [
+        {
+          "height": 40,
+          "width": 40,
+        },
+        undefined,
+        undefined,
+      ]
+    }
+  >
+    <View>
+      <View
+        testID="progress-arc"
+      />
+    </View>
+  </View>,
+  <View
+    pointerEvents="box-none"
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  />,
+]
+`;
+
+exports[`CircularProgress — determinate snapshots matches snapshot at value=75 1`] = `
+[
+  <View
+    accessibilityRole="progressbar"
+    accessibilityValue={
+      {
+        "max": 100,
+        "min": 0,
+        "now": 75,
+      }
+    }
+    accessible={true}
+    style={
+      [
+        {
+          "height": 40,
+          "width": 40,
+        },
+        undefined,
+        undefined,
+      ]
+    }
+  >
+    <View>
+      <View
+        testID="progress-arc"
+      />
+    </View>
+  </View>,
+  <View
+    pointerEvents="box-none"
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  />,
+]
+`;
+
+exports[`CircularProgress — determinate snapshots matches snapshot at value=100 1`] = `
+[
+  <View
+    accessibilityRole="progressbar"
+    accessibilityValue={
+      {
+        "max": 100,
+        "min": 0,
+        "now": 100,
+      }
+    }
+    accessible={true}
+    style={
+      [
+        {
+          "height": 40,
+          "width": 40,
+        },
+        undefined,
+        undefined,
+      ]
+    }
+  >
+    <View>
+      <View
+        testID="progress-arc"
+      />
+    </View>
+  </View>,
+  <View
+    pointerEvents="box-none"
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  />,
+]
+`;

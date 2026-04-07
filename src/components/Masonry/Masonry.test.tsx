@@ -1,7 +1,12 @@
 import React from 'react';
 import { View } from 'react-native';
 import { render, act } from '@testing-library/react-native';
+import { ThemeProvider } from '../../theme/ThemeProvider';
 import { Masonry } from './Masonry';
+
+function Wrapper({ children }: { children: React.ReactNode }): React.ReactElement {
+  return <ThemeProvider>{children}</ThemeProvider>;
+}
 
 // Helper: simulate onLayout for all children in the rendered tree
 function fireLayouts(getAllByTestId: ReturnType<typeof render>['getAllByTestId'], heights: number[]) {
@@ -15,7 +20,7 @@ function fireLayouts(getAllByTestId: ReturnType<typeof render>['getAllByTestId']
 
 describe('Masonry', () => {
   it('renders empty container for zero children without throwing', () => {
-    const { toJSON } = render(<Masonry columns={3} />);
+    const { toJSON } = render(<Masonry columns={3} />, { wrapper: Wrapper });
     expect(toJSON()).toBeTruthy();
   });
 
@@ -25,7 +30,8 @@ describe('Masonry', () => {
         <View testID="a" />
         <View testID="b" />
         <View testID="c" />
-      </Masonry>
+      </Masonry>,
+      { wrapper: Wrapper },
     );
     // Should render 3 column Views (row + 3 column children)
     const cols = UNSAFE_getAllByType(View).filter(
@@ -39,7 +45,8 @@ describe('Masonry', () => {
       <Masonry columns={2}>
         <View testID="a" />
         <View testID="b" />
-      </Masonry>
+      </Masonry>,
+      { wrapper: Wrapper },
     );
     const cols = UNSAFE_getAllByType(View).filter(
       v => v.props.style && JSON.stringify(v.props.style).includes('"flexDirection":"column"')
@@ -54,7 +61,8 @@ describe('Masonry', () => {
         <View testID="child-1" />
         <View testID="child-2" />
         <View testID="child-3" />
-      </Masonry>
+      </Masonry>,
+      { wrapper: Wrapper },
     );
     expect(getByTestId('child-0')).toBeTruthy();
     expect(getByTestId('child-1')).toBeTruthy();
@@ -69,7 +77,8 @@ describe('Masonry', () => {
         <View testID="child-1" />
         <View testID="child-2" />
         <View testID="child-3" />
-      </Masonry>
+      </Masonry>,
+      { wrapper: Wrapper },
     );
     // Column Views should have marginLeft: 8 (except first column)
     const views = UNSAFE_getAllByType(View);
@@ -86,7 +95,8 @@ describe('Masonry', () => {
         <View />
         <View />
         <View />
-      </Masonry>
+      </Masonry>,
+      { wrapper: Wrapper },
     );
     const cols = UNSAFE_getAllByType(View).filter(
       v => v.props.style && JSON.stringify(v.props.style).includes('"flexDirection":"column"')
@@ -98,7 +108,8 @@ describe('Masonry', () => {
     const { UNSAFE_getByType } = render(
       <Masonry columns={2} style={{ backgroundColor: 'red' }}>
         <View />
-      </Masonry>
+      </Masonry>,
+      { wrapper: Wrapper },
     );
     const outer = UNSAFE_getByType(View);
     const flatStyle = Array.isArray(outer.props.style)
@@ -111,7 +122,8 @@ describe('Masonry', () => {
     const { getByTestId } = render(
       <Masonry columns={3}>
         <View testID="only-child" />
-      </Masonry>
+      </Masonry>,
+      { wrapper: Wrapper },
     );
     expect(getByTestId('only-child')).toBeTruthy();
   });

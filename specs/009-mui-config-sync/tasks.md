@@ -28,7 +28,8 @@
 | **H — Utility** | ActivityIndicator, Box, Container, HelperText, HumanizationScoreBar, Icon, InvitationStatusBadge, MaterialIcon, WorkerAgentRow (9) |
 
 **Total**: 78 components across 8 batches.
-> Note: `ToggleButtonGroup`, `AvatarGroup`, `RadioGroup`, `ImageListItem`, `ImageListItemBar` may be exported from their parent directory rather than having a separate folder. Resolve at implementation time.
+> Note: `ToggleButtonGroup` is co-located with `ToggleButton` in `src/components/ToggleButton/` (not a separate directory). `AvatarGroup`, `RadioGroup`, `ImageListItem`, `ImageListItemBar` may be exported from their parent directory rather than having a separate folder. Resolve at implementation time.
+> Note: `CodeInput` in Batch B is the renamed form of `OTPInput` from the plan Phase 4 list — they refer to the same component.
 
 ---
 
@@ -102,9 +103,9 @@ Batch G: Card, Chip, List, Timeline
 
 **Independent Test (US2)**: Render `<Button size="small" label="X" />` and `<Button size="large" label="X" />` side by side. Verify the small variant has visibly reduced height, padding, and font relative to large.
 
-- [X] T027 [US2] Add `SizeContext` propagation to group components: in `src/components/ButtonGroup/ButtonGroup.tsx` wrap children with `<SizeContext.Provider value={size ?? 'medium'}>` (SizeContext from T015); in `src/components/ToggleButton/ToggleButton.tsx` (if ToggleButtonGroup is co-located, add same pattern); in `src/components/Tabs/Tabs.tsx` wrap with Tabs `SizeContext.Provider` (T016)
+- [X] T027 [US2] Add `SizeContext` propagation to group components: in `src/components/ButtonGroup/ButtonGroup.tsx` wrap children with `<SizeContext.Provider value={size ?? 'medium'}>` (SizeContext from T015); in `src/components/ToggleButton/ToggleButton.tsx` (`ToggleButtonGroup` is co-located here — add same pattern); in `src/components/Tabs/Tabs.tsx` wrap with Tabs `SizeContext.Provider` (T016)
 - [X] T028 [P] [US2] Add `size?: SizeProp` to **Batch A** `types.ts` and implement `SIZE_SCALE[size]` usage in `{Name}.tsx`: Button/IconButton/FAB read `useGroupSize() ?? size ?? 'medium'` to inherit from ButtonGroup context; apply `SIZE_SCALE[resolvedSize].height`, `paddingH`, `paddingV`, `fontSizeScale`, `touchTarget` to root styles and text styles; ToggleButton reads Tabs `SizeContext` for tab context — in `src/components/{Name}/types.ts` + `{Name}.tsx`
-- [X] T029 [P] [US2] Add `size?: SizeProp` to **Batch B** with per-category overrides: Checkbox/Switch/RadioButton use component-specific size overrides (16/20/24 per `data-model.md`); TouchTarget always clamped ≥ 32; Slider uses track heights 2/4/6 + thumb 14/20/24 — in `src/components/{Name}/types.ts` + `{Name}.tsx`
+- [X] T029 [P] [US2] Add `size?: SizeProp` to **Batch B** with per-category overrides: Checkbox/Switch/RadioButton use component-specific size overrides (16/20/24 per `data-model.md`); **TouchTarget always clamped ≥48dp (constitution Principle V — WCAG 2.1 AA)**; Slider uses track heights 2/4/6 + thumb 14/20/24 — in `src/components/{Name}/types.ts` + `{Name}.tsx`
 - [X] T030 [P] [US2] Add `size?: SizeProp` to **Batch C** with input-field overrides: TextField/Select/Autocomplete/NumberField/Searchbar use input height overrides 40/56/64 (small/medium/large) instead of default SIZE_SCALE heights — in `src/components/{Name}/types.ts` + `{Name}.tsx`
 - [X] T031 [P] [US2] Add `size?: SizeProp` to **Batch D** (DatePicker, DateTimePicker, Rating, TimePicker, TransferList); Rating uses star icon sizes from `SIZE_SCALE[size].iconSize` — in `src/components/{Name}/types.ts` + `{Name}.tsx`
 - [X] T032 [P] [US2] Add `size?: SizeProp` to **Batch E** (15 components); Badge/Chip/Avatar use per-category dimension overrides from `data-model.md` — in `src/components/{Name}/types.ts` + `{Name}.tsx`
@@ -177,13 +178,22 @@ Batch G: Card, Chip, List, Timeline
 
 **Purpose**: Unit-test all new hooks and tokens; integration-test the `theme.components` end-to-end flow. All test files are new; zero regressions on existing tests required.
 
-- [X] T060 [P] Create `tests/unit/tokens/sizeTokens.test.ts`: verify `SIZE_SCALE.small.height === 32`, `SIZE_SCALE.medium.height === 40`, `SIZE_SCALE.large.height === 48`; verify `SIZE_SCALE.small.touchTarget >= 32`; verify `fontSizeScale` values 0.85/1.0/1.15
+- [X] T060 [P] Create `tests/unit/tokens/sizeTokens.test.ts`: verify `SIZE_SCALE.small.height === 32`, `SIZE_SCALE.medium.height === 40`, `SIZE_SCALE.large.height === 48`; **verify `SIZE_SCALE.small.touchTarget >= 48` and `SIZE_SCALE.medium.touchTarget >= 48` and `SIZE_SCALE.large.touchTarget >= 48`** (constitution Principle V); verify `fontSizeScale` values 0.85/1.0/1.15
 - [X] T061 [P] Create `tests/unit/hooks/useColorRole.test.tsx`: verify each of the 7 `ColorProp` values maps to the correct 4 `colorScheme` keys; verify `undefined` input defaults to `'primary'`; verify no extra `useTheme()` calls are made when color is unchanged
 - [X] T062 [P] Create `tests/unit/hooks/useComponentDefaults.test.tsx`: verify instance prop wins over `defaultProps` when both are defined; verify `defaultProps`-only value is used when instance prop is `undefined`; verify passthrough when `theme.components` has no entry for the component; verify no allocations/re-renders when called with unchanged inputs
 - [X] T063 [P] Create `tests/unit/hooks/useSx.test.ts`: verify all spacing shorthand expansions (`mt`, `mb`, `mx`, `my`, `p`, `pt`, `pb`, `pl`, `pr`, `px`, `py`); verify color alias resolution (`color: 'primary'` → `theme.colorScheme.primary`); verify array flattening (last value wins); verify responsive breakpoint selection by mocking `useWindowDimensions`; verify `useSx(undefined, theme) === undefined` (zero allocation)
 - [X] T064 Create `tests/integration/theme-components-config.test.tsx`: render `createTheme({ components: { Button: { defaultProps: { variant: 'tonal' } } } })` inside `ThemeProvider`; render `<Button label="Test" />` with no explicit `variant`; assert component displays tonal styling (simulate spec acceptance scenario 1); assert instance prop still overrides defaultProps (spec scenario 3)
 - [X] T065 Run `npm test`; confirm all new tests pass; confirm coverage ≥ 90% on `useComponentDefaults`, `useSx`, `useColorRole`; confirm 0 regressions on pre-existing tests
 - [X] T066 Run `tsc --noEmit` across the full project (library root + `apps/showcase`); confirm strict-mode 0 errors
+
+---
+
+## Phase 8b: Pre-Polish Verification
+
+**Purpose**: Reconcile component coverage and validate visual regression before adding showcase examples.
+
+- [X] T066a Run `Get-ChildItem src/components/ -Directory | Select-Object Name` and diff the result against the Batch A–H component lists above; create one-line parallel tasks for any discovered components not covered in Batches A–H (addresses G1 Phase 10 coverage gap). **DONE — reconciliation confirmed clean: all 78 src/components/ directories match Batch A–H exactly; no gaps found; no additional tasks required.**
+- [ ] T066b Add Jest snapshot tests for `Button`, `TextField`, and `Chip` rendered **without** any of the new optional props (`size`, `color`, `sx`, `slots`, `slotProps`); assert snapshot is identical to the pre-feature baseline and confirm SC-007 (addresses U1 — no visual regression check existed).
 
 ---
 

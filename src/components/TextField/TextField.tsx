@@ -6,11 +6,12 @@ import {
   StyleSheet,
   Animated as RNAnimated,
 } from 'react-native';
-import type { TextProps } from 'react-native';
+import type { TextProps, NativeSyntheticEvent, TextInputContentSizeChangeEventData } from 'react-native';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
 import { useColorRole } from '../../hooks/useColorRole';
+import { Select } from '../Select';
 import type { TextFieldProps, TextFieldVariant } from './types';
 
 function createTextFieldStyles(
@@ -19,19 +20,20 @@ function createTextFieldStyles(
   variant: TextFieldVariant,
   hasError: boolean,
   primaryColor: string,
+  fullWidth: boolean,
 ) {
   const borderColor = hasError ? colorScheme.error : colorScheme.outline;
   const focusBorderColor = hasError ? colorScheme.error : primaryColor;
 
   const containerBase = {
-    borderRadius: variant === 'filled' ? 0 : shape.extraSmall,
+    borderRadius: variant === 'filled' ? 0 : variant === 'standard' ? 0 : shape.extraSmall,
     minHeight: 56,
     justifyContent: 'flex-end' as const,
     paddingHorizontal: 16,
   };
 
   return StyleSheet.create({
-    wrapper: { marginBottom: 4 },
+    wrapper: { marginBottom: 4, ...(fullWidth && { width: '100%' }) },
     container:
       variant === 'filled'
         ? {
@@ -42,18 +44,25 @@ function createTextFieldStyles(
             borderBottomWidth: 1,
             borderBottomColor: borderColor,
           }
+        : variant === 'standard'
+        ? {
+            ...containerBase,
+            backgroundColor: 'transparent',
+            borderBottomWidth: 1,
+            borderBottomColor: borderColor,
+          }
         : {
             ...containerBase,
             backgroundColor: 'transparent',
             borderWidth: 1,
             borderColor,
           },
-    containerFocused: {
-      borderBottomColor: focusBorderColor,
-      borderColor: focusBorderColor,
-      borderBottomWidth: variant === 'filled' ? 2 : undefined,
-      borderWidth: variant === 'outlined' ? 2 : undefined,
-    },
+    containerFocused:
+      variant === 'standard'
+        ? { borderBottomWidth: 2, borderBottomColor: focusBorderColor }
+        : variant === 'filled'
+        ? { borderBottomColor: focusBorderColor, borderBottomWidth: 2 }
+        : { borderColor: focusBorderColor, borderWidth: 2 },
     input: {
       color: colorScheme.onSurface,
       fontSize: 16,
@@ -100,6 +109,7 @@ export function TextField(rawProps: TextFieldProps): React.ReactElement {
     variant = 'filled',
     placeholder,
     supportingText,
+    helperText,
     error,
     disabled = false,
     trailingIcon,
@@ -109,6 +119,14 @@ export function TextField(rawProps: TextFieldProps): React.ReactElement {
     returnKeyType,
     onBlur,
     onFocus,
+    multiline = false,
+    rows,
+    minRows,
+    maxRows,
+    fullWidth = false,
+    required = false,
+    select = false,
+    options = [],
     testID,
     accessibilityLabel,
     color,
@@ -121,16 +139,32 @@ export function TextField(rawProps: TextFieldProps): React.ReactElement {
   const sxStyle = useSx(sx, theme);
   const { bg, fg, container, onContainer } = useColorRole(color);
   const hasError = Boolean(error);
+  const errorText = typeof error === 'string' ? error : undefined;
+  const resolvedHelper = helperText ?? errorText ?? supportingText;
   const [focused, setFocused] = useState(false);
+  const [inputHeight, setInputHeight] = useState<number | undefined>(undefined);
   const labelAnim = useRef(new RNAnimated.Value(value ? 1 : 0)).current;
   const SlotRoot = slots?.Root ?? View;
   const SlotInput = slots?.Input ?? TextInput;
   const SlotLabel = slots?.Label ?? RNAnimated.Text;
   const SlotSupportingText = (slots?.SupportingText ?? Text) as React.ComponentType<TextProps & { accessibilityRole?: string }>;
 
+  const LINE_HEIGHT = 20;
+  const handleContentSizeChange = (
+    e: NativeSyntheticEvent<TextInputContentSizeChangeEventData>,
+  ): void => {
+    if (!multiline || rows != null) return;
+    let h = e.nativeEvent.contentSize.height;
+    if (minRows != null) h = Math.max(h, minRows * LINE_HEIGHT);
+    if (maxRows != null) h = Math.min(h, maxRows * LINE_HEIGHT);
+    setInputHeight(h);
+  };
+
+  const displayLabel = required ? `${label} *` : label;
+
   const styles = useMemo(
-    () => createTextFieldStyles(theme.colorScheme, theme.shape, variant, hasError, bg),
-    [theme, variant, hasError, bg],
+    () => createTextFieldStyles(theme.colorScheme, theme.shape, variant, hasError, bg, fullWidth),
+    [theme, variant, hasError, bg, fullWidth],
   );
 
   const handleFocus = (): void => {
@@ -150,6 +184,9 @@ export function TextField(rawProps: TextFieldProps): React.ReactElement {
   const labelTop = labelAnim.interpolate({ inputRange: [0, 1], outputRange: [16, 8] });
   const labelSize = labelAnim.interpolate({ inputRange: [0, 1], outputRange: [16, 12] });
 
+  // Suppress unused variable warnings for color role outputs not yet used in styles
+  void fg; void container; void onContainer;
+
   return (
     <SlotRoot {...slotProps?.Root} style={[styles.wrapper, disabled && styles.disabledOverlay, sxStyle, style, slotProps?.Root?.style]}>
       <View style={[styles.container, focused && styles.containerFocused]}>
@@ -161,35 +198,57 @@ export function TextField(rawProps: TextFieldProps): React.ReactElement {
               style={[styles.label, { top: labelTop, fontSize: labelSize }, slotProps?.Label?.style]}
               numberOfLines={1}
             >
-              {label}
+              {displayLabel}
             </SlotLabel>
-            <SlotInput
-              value={value}
-              onChangeText={onChangeText}
-              placeholder={focused ? placeholder : undefined}
-              placeholderTextColor={theme.colorScheme.onSurfaceVariant}
-              editable={!disabled}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              secureTextEntry={secureTextEntry}
-              keyboardType={keyboardType}
-              returnKeyType={returnKeyType}
-              testID={testID}
-              accessibilityLabel={accessibilityLabel ?? label}
-              accessibilityState={{ disabled }}
-              {...slotProps?.Input}
-              style={[styles.input, slotProps?.Input?.style]}
-            />
+            {select ? (
+              <Select
+                value={value ?? null}
+                onValueChange={(v) =>
+                  onChangeText?.(Array.isArray(v) ? (v[0] ?? '') : v)
+                }
+                options={options}
+                disabled={disabled}
+                testID={testID}
+                style={{ flex: 1 }}
+              />
+            ) : (
+              <SlotInput
+                value={value}
+                onChangeText={onChangeText}
+                placeholder={focused ? placeholder : undefined}
+                placeholderTextColor={theme.colorScheme.onSurfaceVariant}
+                editable={!disabled}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                secureTextEntry={secureTextEntry}
+                keyboardType={keyboardType}
+                returnKeyType={returnKeyType}
+                multiline={multiline}
+                numberOfLines={rows != null ? rows : undefined}
+                onContentSizeChange={handleContentSizeChange}
+                testID={testID}
+                accessibilityLabel={accessibilityLabel ?? label}
+                accessibilityState={{ disabled }}
+                {...slotProps?.Input}
+                style={[
+                  styles.input,
+                  inputHeight != null ? { height: inputHeight } : undefined,
+                  slotProps?.Input?.style,
+                ]}
+              />
+            )}
           </View>
           {trailingIcon != null && <View style={styles.iconWrapper}>{trailingIcon}</View>}
         </View>
       </View>
-      {error != null && error.length > 0 ? (
-        <SlotSupportingText {...slotProps?.SupportingText} style={[styles.errorText, slotProps?.SupportingText?.style]} accessibilityRole="alert">
-          {error}
+      {resolvedHelper != null ? (
+        <SlotSupportingText
+          {...slotProps?.SupportingText}
+          style={[hasError ? styles.errorText : styles.supportingText, slotProps?.SupportingText?.style]}
+          accessibilityRole={hasError ? 'alert' : undefined}
+        >
+          {resolvedHelper}
         </SlotSupportingText>
-      ) : supportingText != null ? (
-        <SlotSupportingText {...slotProps?.SupportingText} style={[styles.supportingText, slotProps?.SupportingText?.style]}>{supportingText}</SlotSupportingText>
       ) : null}
     </SlotRoot>
   );

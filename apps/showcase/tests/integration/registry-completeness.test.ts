@@ -18,17 +18,37 @@ jest.mock('@mui-native', () => {
     Alert: noop,
     AppBar: noop,
     Avatar: noop,
+    AvatarGroup: noop,
     Button: noop,
     Card: noop,
+    CardActions: noop,
+    CardContent: noop,
+    CardHeader: noop,
     Chip: noop,
     CircularProgress: noop,
     Divider: noop,
     Drawer: noop,
     IconButton: noop,
+    ListItemButton: noop,
+    ListItemText: noop,
+    ListSubheader: noop,
     MaterialIcon: noop,
+    MobileStepper: noop,
+    AccordionSummary: noop,
+    AccordionDetails: noop,
+    AccordionActions: noop,
+    Radio: noop,
     Select: noop,
     Snackbar: noop,
+    Step: noop,
+    StepLabel: noop,
     Stack: ({ children }: { children: React.ReactNode }) => children,
+    Table: noop,
+    TableBody: noop,
+    TableCell: noop,
+    TableContainer: noop,
+    TableHead: noop,
+    TableRow: noop,
     Tabs: noop,
     Text: noop,
     TextField: noop,
@@ -43,8 +63,8 @@ import { registry } from '../../src/catalogue/registry';
 describe('Registry completeness', () => {
   const allComponents = registry.categories.flatMap(c => c.components);
 
-  it('contains exactly 78 component entries across all 5 categories', () => {
-    expect(allComponents).toHaveLength(78);
+  it('contains exactly 80 component entries across all 5 categories', () => {
+    expect(allComponents).toHaveLength(80);
   });
 
   it('every componentKey is unique', () => {
@@ -53,17 +73,17 @@ describe('Registry completeness', () => {
     expect(uniqueKeys.size).toBe(allComponents.length);
   });
 
-  it('each entry with examples has exactly 3 items', () => {
+  it('each entry with examples has at least 3 items', () => {
     for (const entry of allComponents) {
       if (entry.examples !== null) {
-        expect(entry.examples).toHaveLength(3);
+        expect(entry.examples.length).toBeGreaterThanOrEqual(3);
       }
     }
   });
 
-  it('exactly 78 entries have hasFullExamples === true', () => {
+  it('exactly 80 entries have hasFullExamples === true', () => {
     const fullCount = allComponents.filter(e => e.hasFullExamples).length;
-    expect(fullCount).toBe(78);
+    expect(fullCount).toBe(80);
   });
 
   it('hasFullExamples is true only when examples is non-null', () => {

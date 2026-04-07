@@ -19,6 +19,7 @@ const Rating = memo(function Rating(rawProps: RatingProps) {
   const {
     value,
     onValueChange,
+    onChange,
     max = 5,
     precision = 1,
     disabled = false,
@@ -36,8 +37,8 @@ const Rating = memo(function Rating(rawProps: RatingProps) {
   const { bg, fg, container, onContainer } = useColorRole(color);
   const [internalValue, setInternalValue] = useState<number>(0);
 
-  const isControlled = value !== undefined;
-  const currentValue = isControlled ? value : internalValue;
+  const isControlled = value !== undefined && value !== null;
+  const currentValue = isControlled ? (value ?? 0) : internalValue;
   const starSize = SIZE_MAP[size];
   const isInteractive = !disabled && !readOnly;
 
@@ -49,8 +50,9 @@ const Rating = memo(function Rating(rawProps: RatingProps) {
         setInternalValue(newValue);
       }
       onValueChange?.(newValue);
+      onChange?.(null, newValue);
     },
-    [isInteractive, isControlled, onValueChange, precision],
+    [isInteractive, isControlled, onValueChange, onChange, precision],
   );
 
   return (

@@ -1,2 +1,12 @@
 export { Card } from './Card';
 export type { CardProps, CardVariant, CardSlots } from './types';
+export { CardHeader } from './CardHeader';
+export type { CardHeaderProps, CardHeaderSlots } from './CardHeader';
+export { CardMedia } from './CardMedia';
+export type { CardMediaProps, CardMediaSlots } from './CardMedia';
+export { CardContent } from './CardContent';
+export type { CardContentProps, CardContentSlots } from './CardContent';
+export { CardActions } from './CardActions';
+export type { CardActionsProps, CardActionsSlots } from './CardActions';
+export { CardActionArea } from './CardActionArea';
+export type { CardActionAreaProps, CardActionAreaSlots } from './CardActionArea';

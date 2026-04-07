@@ -10,8 +10,12 @@ export interface BadgeAnchorOrigin {
 
 export interface BadgeProps {
   content?: number | string;
+  /** MUI-idiomatic alias for `content`. When both are provided, `badgeContent` takes precedence. */
+  badgeContent?: number | string;
   max?: number;
   visible?: boolean;
+  /** MUI-idiomatic alias — inverse of `visible`. `invisible=true` hides the badge. */
+  invisible?: boolean;
   color?: string;
   labelColor?: string;
   children?: ReactNode;

@@ -3,6 +3,7 @@ import { Text as RNText } from 'react-native';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
+import { typographyVariantMap } from '../../tokens/typography';
 import type { TextProps } from './types';
 
 /**
@@ -30,15 +31,18 @@ export const Text = memo(function Text(rawProps: TextProps): React.ReactElement 
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
 
+  // Resolve MD2 variant names (e.g. 'body1', 'h4') to their MD3 equivalents
+  const resolvedVariant = (typographyVariantMap as Record<string, string>)[variant as string] ?? variant;
+
   const resolvedStyle = useMemo(
     () => [
-      theme.typography[variant],
+      theme.typography[resolvedVariant as keyof typeof theme.typography],
       { color: color ?? theme.colorScheme.onSurface },
       align != null ? { textAlign: align } : undefined,
       sxStyle,
       style,
     ],
-    [theme, variant, color, align, style, sxStyle],
+    [theme, variant, resolvedVariant, color, align, style, sxStyle],
   );
 
   return (

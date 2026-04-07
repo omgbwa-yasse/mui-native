@@ -1,0 +1,221 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TableSortLabel snapshot: asc direction 1`] = `
+[
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": true,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    aria-sort="asc"
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "cursor": "pointer",
+          "flexDirection": "row",
+        },
+        undefined,
+        undefined,
+      ]
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "fontFamily": "Roboto, system-ui, sans-serif",
+            "fontSize": 12,
+            "fontWeight": "500",
+            "letterSpacing": 0.5,
+            "lineHeight": 16,
+          },
+          {
+            "color": "#1976D2",
+          },
+        ]
+      }
+    >
+      Col
+    </Text>
+    <View
+      style={
+        {
+          "marginLeft": 2,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "lineHeight": 16,
+            },
+            {
+              "fontFamily": "Roboto, system-ui, sans-serif",
+              "fontSize": 11,
+              "fontWeight": "500",
+              "letterSpacing": 0.5,
+              "lineHeight": 16,
+            },
+            {
+              "color": "#1976D2",
+              "opacity": 1,
+            },
+          ]
+        }
+      >
+        ↑
+      </Text>
+    </View>
+  </View>,
+  <View
+    pointerEvents="box-none"
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  />,
+]
+`;
+
+exports[`TableSortLabel snapshot: desc direction differs from asc 1`] = `
+[
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": true,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    aria-sort="desc"
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "cursor": "pointer",
+          "flexDirection": "row",
+        },
+        undefined,
+        undefined,
+      ]
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "fontFamily": "Roboto, system-ui, sans-serif",
+            "fontSize": 12,
+            "fontWeight": "500",
+            "letterSpacing": 0.5,
+            "lineHeight": 16,
+          },
+          {
+            "color": "#1976D2",
+          },
+        ]
+      }
+    >
+      Col
+    </Text>
+    <View
+      style={
+        {
+          "marginLeft": 2,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "lineHeight": 16,
+            },
+            {
+              "fontFamily": "Roboto, system-ui, sans-serif",
+              "fontSize": 11,
+              "fontWeight": "500",
+              "letterSpacing": 0.5,
+              "lineHeight": 16,
+            },
+            {
+              "color": "#1976D2",
+              "opacity": 1,
+            },
+          ]
+        }
+      >
+        ↓
+      </Text>
+    </View>
+  </View>,
+  <View
+    pointerEvents="box-none"
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  />,
+]
+`;

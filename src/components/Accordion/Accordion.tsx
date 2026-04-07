@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -12,6 +12,7 @@ import { useSx } from '../../hooks/useSx';
 import { useColorRole } from '../../hooks/useColorRole';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import { Text } from '../Text/Text';
+import { AccordionContext } from './AccordionContext';
 import type { AccordionProps } from './types';
 
 const ANIMATION_DURATION = 300;
@@ -23,6 +24,8 @@ const Accordion = memo<AccordionProps>(function Accordion(rawProps: AccordionPro
     children,
     expanded: expandedProp,
     onToggle,
+    onChange,
+    defaultExpanded,
     disabled = false,
     left,
     right,
@@ -30,14 +33,19 @@ const Accordion = memo<AccordionProps>(function Accordion(rawProps: AccordionPro
     sx,
     style,
     ...rest
-  } = props;
+  } = props as any;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
+  const { bg: _bg, fg: _fg, container: _container, onContainer: _onContainer } = useColorRole(color);
   const reduceMotion = useReducedMotionValue();
+
+  // ─── Mode detection ───────────────────────────────────────────────────────
+  const isComposable = title === undefined;
   const isControlled = expandedProp !== undefined;
 
-  const [internalExpanded, setInternalExpanded] = useState(false);
+  const [internalExpanded, setInternalExpanded] = useState(() =>
+    isComposable ? (defaultExpanded ?? false) : false,
+  );
   const isExpanded = isControlled ? (expandedProp ?? false) : internalExpanded;
 
   const [mounted, setMounted] = useState(isExpanded);
@@ -49,13 +57,12 @@ const Accordion = memo<AccordionProps>(function Accordion(rawProps: AccordionPro
     if (disabled) return;
     const next = !isExpanded;
     if (!isControlled) setInternalExpanded(next);
-    onToggle?.(next);
-  }, [disabled, isExpanded, isControlled, onToggle]);
+    onToggle?.(next);   // data-driven callback
+    onChange?.(next);   // composable callback
+  }, [disabled, isExpanded, isControlled, onToggle, onChange]);
 
   useEffect(() => {
-    if (isExpanded) {
-      setMounted(true);
-    }
+    if (isExpanded) setMounted(true);
   }, [isExpanded]);
 
   useEffect(() => {
@@ -82,6 +89,23 @@ const Accordion = memo<AccordionProps>(function Accordion(rawProps: AccordionPro
 
   const { colorScheme: cs } = theme;
 
+  // ─── Composable mode: provide context, render children directly ───────────
+  const contextValue = useMemo(
+    () => ({ isExpanded, toggle: handlePress, disabled }),
+    [isExpanded, handlePress, disabled],
+  );
+
+  if (isComposable) {
+    return (
+      <AccordionContext.Provider value={contextValue}>
+        <View style={[styles.container, sxStyle, style]} {...rest}>
+          {children}
+        </View>
+      </AccordionContext.Provider>
+    );
+  }
+
+  // ─── Data-driven mode: original implementation ────────────────────────────
   return (
     <View
       style={[styles.container, sxStyle, style]}

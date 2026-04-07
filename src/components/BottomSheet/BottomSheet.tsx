@@ -33,8 +33,10 @@ export function BottomSheet(rawProps: BottomSheetProps): React.ReactElement {
   const props = useComponentDefaults('BottomSheet', rawProps);
   const {
     visible,
+    open,
     children,
     onDismiss,
+    onClose,
     snapPoints = [0.5],
     showHandle = true,
     testID,
@@ -48,17 +50,26 @@ export function BottomSheet(rawProps: BottomSheetProps): React.ReactElement {
   const { colorScheme, shape } = theme;
   const { height: windowHeight } = useWindowDimensions();
 
+  // Resolve MUI-idiomatic `open` alias → `visible`
+  const isVisible = open ?? visible;
+
+  // Resolve `onClose` → `onDismiss` alias
+  const handleDismiss = (): void => {
+    onClose?.();
+    onDismiss?.();
+  };
+
   // Height of the sheet (first snap point)
   const sheetHeight = windowHeight * (snapPoints[0] ?? 0.5);
   const translateY = useSharedValue(sheetHeight);
   const backdropOpacity = useSharedValue(0);
   const startY = useSharedValue(0);
 
-  const callDismiss = (): void => { onDismiss?.(); };
+  const callDismiss = (): void => { handleDismiss(); };
   const reduceMotion = useReducedMotionValue();
 
   useEffect(() => {
-    if (visible) {
+    if (isVisible) {
       if (reduceMotion.value) {
         translateY.value = 0;
         backdropOpacity.value = 1;
@@ -75,7 +86,7 @@ export function BottomSheet(rawProps: BottomSheetProps): React.ReactElement {
         backdropOpacity.value = withTiming(0, { duration: 300 });
       }
     }
-  }, [visible, sheetHeight, translateY, backdropOpacity, reduceMotion]);
+  }, [isVisible, sheetHeight, translateY, backdropOpacity, reduceMotion]);
 
   // RNGK v2: Gesture.Pan() — NO deprecated PanGestureHandler / useAnimatedGestureHandler
   const panGesture = useMemo(
@@ -153,13 +164,13 @@ export function BottomSheet(rawProps: BottomSheetProps): React.ReactElement {
 
   return (
     <Modal
-      visible={visible}
+      visible={isVisible}
       transparent
       animationType="none"
-      onRequestClose={onDismiss}
+      onRequestClose={handleDismiss}
       statusBarTranslucent
     >
-      <TouchableWithoutFeedback onPress={onDismiss} accessible={false}>
+      <TouchableWithoutFeedback onPress={handleDismiss} accessible={false}>
         <Animated.View style={[styles.backdrop, backdropAnimatedStyle]} />
       </TouchableWithoutFeedback>
 

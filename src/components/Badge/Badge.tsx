@@ -13,8 +13,10 @@ const Badge = memo(function Badge(rawProps: BadgeProps) {
   const props = useComponentDefaults('Badge', rawProps);
   const {
     content,
+    badgeContent,
     max = 99,
     visible = true,
+    invisible,
     color,
     labelColor,
     children,
@@ -29,14 +31,17 @@ const Badge = memo(function Badge(rawProps: BadgeProps) {
   const bgColor = color ?? theme.colorScheme.error;
   const fgColor = labelColor ?? theme.colorScheme.onError;
 
-  const isDot = content === undefined;
+  const resolvedContent = badgeContent ?? content;
+  const isVisible = invisible !== undefined ? !invisible : visible;
+
+  const isDot = resolvedContent === undefined;
 
   let label = '';
   if (!isDot) {
-    if (typeof content === 'number' && content > max) {
+    if (typeof resolvedContent === 'number' && resolvedContent > max) {
       label = `${max}+`;
     } else {
-      label = String(content);
+      label = String(resolvedContent);
     }
   }
 
@@ -50,7 +55,7 @@ const Badge = memo(function Badge(rawProps: BadgeProps) {
   return (
     <View style={[styles.wrapper, sxStyle, style]}>
       {children}
-      {visible ? (
+      {isVisible ? (
         <View
           style={[
             isDot ? styles.dot : styles.badge,

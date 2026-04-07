@@ -2,6 +2,7 @@
 export { useComponentDefaults } from './useComponentDefaults';
 export { useSx } from './useSx';
 export { useColorRole } from './useColorRole';
+export { useMediaQuery } from './useMediaQuery';
 
 // Pre-existing hooks
 export { useTransition } from './useTransition';

@@ -16,7 +16,7 @@ export type SizeProp = 'small' | 'medium' | 'large';
  * - `paddingH`      — horizontal padding in dp
  * - `paddingV`      — vertical padding in dp
  * - `iconSize`      — icon size in dp
- * - `touchTarget`   — minimum touch target size in dp (always ≥ 32)
+ * - `touchTarget`   — minimum touch target size in dp (MUST always ≥ 48 — constitution Principle V / WCAG 2.1 AA)
  * - `fontSizeScale` — multiplier applied to the component's base font size
  */
 export interface SizeTokens {
@@ -42,7 +42,9 @@ export const SIZE_SCALE: Record<SizeProp, SizeTokens> = {
     paddingH: 12,
     paddingV: 6,
     iconSize: 16,
-    touchTarget: 32,
+    // CONSTITUTION-EXCEPTION(none): visual height is 32dp; touch target is padded to 48dp via hitSlop
+    // in each component. Do NOT reduce below 48 — Principle V (WCAG 2.1 AA).
+    touchTarget: 48,
     fontSizeScale: 0.85,
   },
   medium: {
@@ -50,7 +52,7 @@ export const SIZE_SCALE: Record<SizeProp, SizeTokens> = {
     paddingH: 24,
     paddingV: 10,
     iconSize: 20,
-    touchTarget: 40,
+    touchTarget: 48, // padded to 48dp via hitSlop; visual height is 40dp
     fontSizeScale: 1.0,
   },
   large: {

@@ -1,6 +1,6 @@
 /**
  * catalogue/examples.dataDisplay.tsx
- * ExampleConfig tuples for all DATA_DISPLAY-category components (18 total).
+ * ExampleConfig tuples for all DATA_DISPLAY-category components (20 total).
  * Phase 0: 3 migrated priority components with code stubs.
  * Phases 2+: Filled in by T029–T046.
  */
@@ -8,6 +8,7 @@
 import React from 'react';
 import {
   Avatar,
+  AvatarGroup,
   Badge,
   BarChart,
   Chip,
@@ -22,10 +23,19 @@ import {
   List,
   ListAccordion,
   ListItem,
+  ListItemButton,
+  ListItemText,
   ListSection,
+  ListSubheader,
   Masonry,
   MaterialIcon,
   SimpleTreeView,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   Text,
   Timeline,
   TimelineConnector,
@@ -112,6 +122,65 @@ export const avatarExamples: [ExampleConfig, ExampleConfig, ExampleConfig] = [
         icon={materialIconSource('person')}
         accessibilityLabel="Person icon avatar"
       />
+    ),
+  },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// AvatarGroup
+// ─────────────────────────────────────────────────────────────────────────────
+
+export const avatarGroupExamples: [ExampleConfig, ExampleConfig, ExampleConfig] = [
+  {
+    label: 'Basic',
+    description: 'Three overlapping avatars',
+    code: `<AvatarGroup>
+  <Avatar source={{ uri: 'https://i.pravatar.cc/150?img=1' }} />
+  <Avatar source={{ uri: 'https://i.pravatar.cc/150?img=2' }} />
+  <Avatar source={{ uri: 'https://i.pravatar.cc/150?img=3' }} />
+</AvatarGroup>`,
+    render: () => (
+      <AvatarGroup>
+        <Avatar source={{ uri: 'https://i.pravatar.cc/150?img=1' }} />
+        <Avatar source={{ uri: 'https://i.pravatar.cc/150?img=2' }} />
+        <Avatar source={{ uri: 'https://i.pravatar.cc/150?img=3' }} />
+      </AvatarGroup>
+    ),
+  },
+  {
+    label: 'Max Overflow',
+    description: 'Shows surplus count badge after max is reached',
+    code: `<AvatarGroup max={3}>
+  <Avatar source={{ uri: 'https://i.pravatar.cc/150?img=4' }} />
+  <Avatar source={{ uri: 'https://i.pravatar.cc/150?img=5' }} />
+  <Avatar source={{ uri: 'https://i.pravatar.cc/150?img=6' }} />
+  <Avatar source={{ uri: 'https://i.pravatar.cc/150?img=7' }} />
+  <Avatar source={{ uri: 'https://i.pravatar.cc/150?img=8' }} />
+</AvatarGroup>`,
+    render: () => (
+      <AvatarGroup max={3}>
+        <Avatar source={{ uri: 'https://i.pravatar.cc/150?img=4' }} />
+        <Avatar source={{ uri: 'https://i.pravatar.cc/150?img=5' }} />
+        <Avatar source={{ uri: 'https://i.pravatar.cc/150?img=6' }} />
+        <Avatar source={{ uri: 'https://i.pravatar.cc/150?img=7' }} />
+        <Avatar source={{ uri: 'https://i.pravatar.cc/150?img=8' }} />
+      </AvatarGroup>
+    ),
+  },
+  {
+    label: 'Small Spacing',
+    description: 'Tighter overlap with small spacing variant',
+    code: `<AvatarGroup spacing="small">
+  <Avatar label="A" />
+  <Avatar label="B" />
+  <Avatar label="C" />
+</AvatarGroup>`,
+    render: () => (
+      <AvatarGroup spacing="small">
+        <Avatar label="A" />
+        <Avatar label="B" />
+        <Avatar label="C" />
+      </AvatarGroup>
     ),
   },
 ];
@@ -614,20 +683,26 @@ export const listExamples: [ExampleConfig, ExampleConfig, ExampleConfig] = [
     ),
   },
   {
-    label: 'Accordion',
-    description: 'Expandable list accordion group',
+    label: 'Sub-components',
+    description: 'MUI-style ListItemButton, ListItemText and ListSubheader',
     code: `<List>
-  <ListAccordion title="Notifications">
-    <ListItem title="Email alerts" />
-    <ListItem title="Push notifications" />
-  </ListAccordion>
+  <ListSubheader>Recent</ListSubheader>
+  <ListItemButton onPress={() => {}}>
+    <ListItemText primary="Inbox" secondary="3 unread messages" />
+  </ListItemButton>
+  <ListItemButton onPress={() => {}} selected>
+    <ListItemText primary="Starred" secondary="2 items" />
+  </ListItemButton>
 </List>`,
     render: () => (
       <List>
-        <ListAccordion title="Notifications">
-          <ListItem title="Email alerts" />
-          <ListItem title="Push notifications" />
-        </ListAccordion>
+        <ListSubheader>Recent</ListSubheader>
+        <ListItemButton onPress={() => {}}>
+          <ListItemText primary="Inbox" secondary="3 unread messages" />
+        </ListItemButton>
+        <ListItemButton onPress={() => {}} selected>
+          <ListItemText primary="Starred" secondary="2 items" />
+        </ListItemButton>
       </List>
     ),
   },
@@ -684,6 +759,165 @@ export const masonryExamples: [ExampleConfig, ExampleConfig, ExampleConfig] = [
         <View style={{ height: 70, backgroundColor: '#b39ddb', borderRadius: 8 }} />
         <View style={{ height: 110, backgroundColor: '#80deea', borderRadius: 8 }} />
       </Masonry>
+    ),
+  },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Table
+// ─────────────────────────────────────────────────────────────────────────────
+
+export const tableExamples: [ExampleConfig, ExampleConfig, ExampleConfig] = [
+  {
+    label: 'Basic',
+    description: 'Simple table with head and body rows',
+    code: `<TableContainer>
+  <Table>
+    <TableHead>
+      <TableRow>
+        <TableCell variant="head">Name</TableCell>
+        <TableCell variant="head">Role</TableCell>
+      </TableRow>
+    </TableHead>
+    <TableBody>
+      <TableRow>
+        <TableCell>Alice</TableCell>
+        <TableCell>Admin</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Bob</TableCell>
+        <TableCell>Editor</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</TableContainer>`,
+    render: () => (
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell variant="head">Name</TableCell>
+              <TableCell variant="head">Role</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              <TableCell>Alice</TableCell>
+              <TableCell>Admin</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Bob</TableCell>
+              <TableCell>Editor</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    ),
+  },
+  {
+    label: 'Dense',
+    description: 'Compact table with size="small"',
+    code: `<TableContainer>
+  <Table size="small">
+    <TableHead>
+      <TableRow>
+        <TableCell variant="head">City</TableCell>
+        <TableCell variant="head" align="right">Population</TableCell>
+      </TableRow>
+    </TableHead>
+    <TableBody>
+      <TableRow>
+        <TableCell>Paris</TableCell>
+        <TableCell align="right">2.1M</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>London</TableCell>
+        <TableCell align="right">8.9M</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Tokyo</TableCell>
+        <TableCell align="right">13.9M</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</TableContainer>`,
+    render: () => (
+      <TableContainer>
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell variant="head">City</TableCell>
+              <TableCell variant="head" align="right">Population</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              <TableCell>Paris</TableCell>
+              <TableCell align="right">2.1M</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>London</TableCell>
+              <TableCell align="right">8.9M</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Tokyo</TableCell>
+              <TableCell align="right">13.9M</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    ),
+  },
+  {
+    label: 'Aligned Columns',
+    description: 'Table with mixed column alignments',
+    code: `<TableContainer>
+  <Table>
+    <TableHead>
+      <TableRow>
+        <TableCell variant="head">Product</TableCell>
+        <TableCell variant="head" align="center">Qty</TableCell>
+        <TableCell variant="head" align="right">Price</TableCell>
+      </TableRow>
+    </TableHead>
+    <TableBody>
+      <TableRow>
+        <TableCell>Widget A</TableCell>
+        <TableCell align="center">12</TableCell>
+        <TableCell align="right">$4.99</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Widget B</TableCell>
+        <TableCell align="center">7</TableCell>
+        <TableCell align="right">$9.99</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</TableContainer>`,
+    render: () => (
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell variant="head">Product</TableCell>
+              <TableCell variant="head" align="center">Qty</TableCell>
+              <TableCell variant="head" align="right">Price</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              <TableCell>Widget A</TableCell>
+              <TableCell align="center">12</TableCell>
+              <TableCell align="right">$4.99</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Widget B</TableCell>
+              <TableCell align="center">7</TableCell>
+              <TableCell align="right">$9.99</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
     ),
   },
 ];

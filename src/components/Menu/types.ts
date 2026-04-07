@@ -16,11 +16,18 @@ export interface MenuProps {
   /** Whether the menu is visible. */
   visible: boolean;
   /**
+   * MUI-idiomatic alias for `visible`.
+   * When both are provided, `open` takes precedence.
+   */
+  open?: boolean;
+  /**
    * Ref to the anchor view used to compute the menu's position.
    * The menu opens below (or above, if no space) the anchor.
    */
   anchor: React.RefObject<View>;
   onDismiss?: () => void;
+  /** MUI-idiomatic alias for `onDismiss`. */
+  onClose?: () => void;
   children: React.ReactNode;
   testID?: string;
   size?: SizeProp;

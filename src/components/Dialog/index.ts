@@ -1,2 +1,10 @@
 export { Dialog } from './Dialog';
-export type { DialogProps, DialogAction, DialogSlots } from './types';
+export type { DialogProps, DialogAction, DialogSlots, DialogMaxWidth, DialogScroll } from './types';
+export { DialogTitle } from './DialogTitle';
+export type { DialogTitleProps, DialogTitleSlots } from './DialogTitle';
+export { DialogContent } from './DialogContent';
+export type { DialogContentProps, DialogContentSlots } from './DialogContent';
+export { DialogContentText } from './DialogContentText';
+export type { DialogContentTextProps, DialogContentTextSlots } from './DialogContentText';
+export { DialogActions } from './DialogActions';
+export type { DialogActionsProps, DialogActionsSlots } from './DialogActions';

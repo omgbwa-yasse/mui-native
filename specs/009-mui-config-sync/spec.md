@@ -42,12 +42,12 @@ A developer wants to render a compact form by passing `size="small"` to `Button`
 
 **Acceptance Scenarios**:
 
-1. **Given** `size="small"`, **When** an interactive component renders, **Then** its touch target, padding, and text are reduced relative to `size="medium"` (the default).
+1. **Given** `size="small"`, **When** an interactive component renders, **Then** its padding and text are reduced relative to `size="medium"` (the default) while its touch target remains ≥48×48 dp (constitution Principle V).
 2. **Given** `size="large"`, **When** an interactive component renders, **Then** its touch target, padding, and text are increased relative to `size="medium"`.
 3. **Given** no `size` prop, **When** a component renders, **Then** it behaves identically to `size="medium"`.
 4. **Given** `theme.components.Button.defaultProps.size = 'small'`, **When** any `<Button>` renders without an explicit `size`, **Then** it uses the small scale.
 
-**Components in scope**: All 70+ MUI-Native components receive the `size` prop in this feature. Complete parity with MUI is the goal; no component is excluded.
+**Components in scope**: All 78 MUI-Native components receive the `size` prop in this feature. Complete parity with MUI is the goal; no component is excluded.
 
 ---
 
@@ -121,12 +121,12 @@ A developer wants to replace or augment specific internal parts of a composite c
 #### FR-001 — `theme.components` extension
 - **FR-001a**: `createTheme()` MUST accept a `components` key structured as `{ [ComponentName]: { defaultProps?: Partial<ComponentProps>; styleOverrides?: Record<string, object> } }`.
 - **FR-001b**: Every component MUST read its own `defaultProps` from `theme.components` at render time and merge them with instance props (instance wins on conflict).
-- **FR-001c**: Every component MUST apply `styleOverrides` from `theme.components` as a base style layer underneath its own internal styles.
+- **FR-001c**: Every component MUST apply `styleOverrides` from `theme.components` as a base style layer underneath its own internal styles. Specifically: `styleOverrides` are applied after the component's baseline layout styles but before token-derived color/typography styles, so visual overrides (e.g., label color) are respected. Style merge order is: baseline layout → `styleOverrides` → token-derived styles → `sx` → `style` prop.
 - **FR-001d**: The `Theme` TypeScript interface MUST expose a fully-typed `components` dictionary covering all component names.
 
 #### FR-002 — Uniform `size` prop
-- **FR-002a**: All 70+ MUI-Native components MUST accept `size?: 'small' | 'medium' | 'large'`, defaulting to `'medium'`.
-- **FR-002b**: Visual scaling between sizes MUST be consistent: `small` reduces font size by ~20% and padding/touch target proportionally; `large` increases by ~20%.
+- **FR-002a**: All 78 MUI-Native components MUST accept `size?: 'small' | 'medium' | 'large'`, defaulting to `'medium'`.
+- **FR-002b**: Visual scaling between sizes MUST be consistent: `small` reduces font size by ~20% and padding proportionally; `large` increases by ~20%. Touch targets MUST remain ≥48×48 dp for all size variants per constitution Principle V (WCAG 2.1 AA).
 - **FR-002c**: `size` MUST cascade from group components to children via context (e.g., `ButtonGroup`, `ToggleButtonGroup`).
 - **FR-002d**: `size` MUST be settable via `theme.components.ComponentName.defaultProps.size`.
 
@@ -141,8 +141,7 @@ A developer wants to replace or augment specific internal parts of a composite c
 - **FR-004b**: The `sx` system MUST resolve spacing shorthand keys (`m`, `mt`, `mb`, `ml`, `mr`, `mx`, `my`, `p`, `pt`, `pb`, `pl`, `pr`, `px`, `py`) using `theme.spacing`.
 - **FR-004c**: The `sx` system MUST resolve color aliases (`color`, `backgroundColor`, `bg`, `borderColor`) using `colorScheme` role names as string aliases (e.g., `'primary'`, `'error'`).
 - **FR-004d**: `sx` MUST support array syntax (last value wins), responsive breakpoints (`xs/sm/md/lg/xl` resolved against device screen width), and nested style objects where React Native's style model permits.
-- **FR-004e-old**: `sx` MUST resolve to a style object without runtime overhead when the prop is absent.
-- **FR-004e**: `sx` values MUST be applied with lower specificity than the component's own `style` prop.
+- **FR-004e**: `sx` values MUST be applied with lower specificity than the component's own `style` prop. When `sx` is absent or `undefined`, `useSx` MUST return `undefined` with zero allocation (no object creation, no memoization overhead).
 
 #### FR-005 — `slots` / `slotProps`
 - **FR-005a**: Composite components with distinct named sub-parts MUST accept `slots?: Partial<Record<SlotName, React.ComponentType>>` to swap those parts.
@@ -168,7 +167,7 @@ A developer wants to replace or augment specific internal parts of a composite c
 
 ### Measurable Outcomes
 
-- **SC-001**: A developer familiar with MUI can configure global component defaults in under 5 minutes using only their existing MUI knowledge — verified by a task-completion usability checklist.
+- **SC-001**: *(Post-launch outcome metric — not a buildable deliverable)* A developer familiar with MUI can configure global component defaults in under 5 minutes using only their existing MUI knowledge. Validated informally during internal dogfooding; a formal usability checklist is out of scope for this sprint.
 - **SC-002**: 100% of interactive components in scope respond to `size="small"` and `size="large"` with a visually distinct and consistent scaling.
 - **SC-003**: 100% of colorable components render correctly with all 7 color values (`primary`, `secondary`, `tertiary`, `error`, `success`, `warning`, `info`) without visual regression.
 - **SC-004**: TypeScript strict mode reports 0 errors across the entire library after all changes.
@@ -183,7 +182,7 @@ A developer wants to replace or augment specific internal parts of a composite c
 - **Spacing base**: The 4dp grid (`spacing[1] = 4`) is the established base used for `sx` spacing shorthand computation. No new spacing scale is introduced.
 - **Color mapping for `success`/`warning`/`info`**: These roles are not part of MD3's 30 core color roles; baseline values will use Material Design 3-compatible tonal palette derivations (green seed for success, amber for warning, blue-teal for info).
 - **`styleOverrides` format**: Uses React Native `StyleSheet`-compatible objects, not CSS strings. This is a native-specific adaptation of MUI's convention.
-- **`sx` scope for v1**: Flat shorthand only (spacing + color aliases). Array syntax, responsive breakpoints, and nested selectors are out of scope for this feature.
+- **`sx` scope for v1**: Full shorthand system — spacing shorthands, color aliases, array notation (last value wins), and responsive breakpoints (`xs/sm/md/lg/xl` resolved against device screen width via `useWindowDimensions`) are in scope per FR-004d. CSS-only features (pseudo-selectors, `@media` strings, `display` values other than `'flex'|'none'`) are silently ignored and documented with `// RN-DEVIATION:` comments.
 - **Slot scope for v1**: Only composite components with clearly named sub-parts (e.g., `Chip`, `TextField`, `AppBar`, `Autocomplete`, `Stepper`) will receive `slots`/`slotProps`; atomic components (e.g., `Button`, `Switch`) do not have distinct slots.
 - **No peer dependency changes**: The feature uses only existing peer dependencies (`react-native`, `react-native-reanimated`, `react-native-gesture-handler`).
 - **`theme.components` is optional**: Omitting it entirely produces a theme with behavior identical to today (zero breaking change).

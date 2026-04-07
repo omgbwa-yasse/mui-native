@@ -1,0 +1,330 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Text — MD2 variant support renders all 13 MD2 variants (snapshot) 1`] = `
+[
+  <Text
+    accessibilityRole="text"
+    allowFontScaling={true}
+    style={
+      [
+        {
+          "fontFamily": "Roboto, system-ui, sans-serif",
+          "fontSize": 57,
+          "fontWeight": "400",
+          "letterSpacing": -0.25,
+          "lineHeight": 64,
+        },
+        {
+          "color": "#1A1C1E",
+        },
+        undefined,
+        undefined,
+        undefined,
+      ]
+    }
+    testID="text-h1"
+  >
+    h1
+  </Text>,
+  <Text
+    accessibilityRole="text"
+    allowFontScaling={true}
+    style={
+      [
+        {
+          "fontFamily": "Roboto, system-ui, sans-serif",
+          "fontSize": 45,
+          "fontWeight": "400",
+          "letterSpacing": 0,
+          "lineHeight": 52,
+        },
+        {
+          "color": "#1A1C1E",
+        },
+        undefined,
+        undefined,
+        undefined,
+      ]
+    }
+    testID="text-h2"
+  >
+    h2
+  </Text>,
+  <Text
+    accessibilityRole="text"
+    allowFontScaling={true}
+    style={
+      [
+        {
+          "fontFamily": "Roboto, system-ui, sans-serif",
+          "fontSize": 36,
+          "fontWeight": "400",
+          "letterSpacing": 0,
+          "lineHeight": 44,
+        },
+        {
+          "color": "#1A1C1E",
+        },
+        undefined,
+        undefined,
+        undefined,
+      ]
+    }
+    testID="text-h3"
+  >
+    h3
+  </Text>,
+  <Text
+    accessibilityRole="text"
+    allowFontScaling={true}
+    style={
+      [
+        {
+          "fontFamily": "Roboto, system-ui, sans-serif",
+          "fontSize": 32,
+          "fontWeight": "400",
+          "letterSpacing": 0,
+          "lineHeight": 40,
+        },
+        {
+          "color": "#1A1C1E",
+        },
+        undefined,
+        undefined,
+        undefined,
+      ]
+    }
+    testID="text-h4"
+  >
+    h4
+  </Text>,
+  <Text
+    accessibilityRole="text"
+    allowFontScaling={true}
+    style={
+      [
+        {
+          "fontFamily": "Roboto, system-ui, sans-serif",
+          "fontSize": 28,
+          "fontWeight": "400",
+          "letterSpacing": 0,
+          "lineHeight": 36,
+        },
+        {
+          "color": "#1A1C1E",
+        },
+        undefined,
+        undefined,
+        undefined,
+      ]
+    }
+    testID="text-h5"
+  >
+    h5
+  </Text>,
+  <Text
+    accessibilityRole="text"
+    allowFontScaling={true}
+    style={
+      [
+        {
+          "fontFamily": "Roboto, system-ui, sans-serif",
+          "fontSize": 24,
+          "fontWeight": "400",
+          "letterSpacing": 0,
+          "lineHeight": 32,
+        },
+        {
+          "color": "#1A1C1E",
+        },
+        undefined,
+        undefined,
+        undefined,
+      ]
+    }
+    testID="text-h6"
+  >
+    h6
+  </Text>,
+  <Text
+    accessibilityRole="text"
+    allowFontScaling={true}
+    style={
+      [
+        {
+          "fontFamily": "Roboto, system-ui, sans-serif",
+          "fontSize": 22,
+          "fontWeight": "400",
+          "letterSpacing": 0,
+          "lineHeight": 28,
+        },
+        {
+          "color": "#1A1C1E",
+        },
+        undefined,
+        undefined,
+        undefined,
+      ]
+    }
+    testID="text-subtitle1"
+  >
+    subtitle1
+  </Text>,
+  <Text
+    accessibilityRole="text"
+    allowFontScaling={true}
+    style={
+      [
+        {
+          "fontFamily": "Roboto, system-ui, sans-serif",
+          "fontSize": 16,
+          "fontWeight": "500",
+          "letterSpacing": 0.15,
+          "lineHeight": 24,
+        },
+        {
+          "color": "#1A1C1E",
+        },
+        undefined,
+        undefined,
+        undefined,
+      ]
+    }
+    testID="text-subtitle2"
+  >
+    subtitle2
+  </Text>,
+  <Text
+    accessibilityRole="text"
+    allowFontScaling={true}
+    style={
+      [
+        {
+          "fontFamily": "Roboto, system-ui, sans-serif",
+          "fontSize": 16,
+          "fontWeight": "400",
+          "letterSpacing": 0.5,
+          "lineHeight": 24,
+        },
+        {
+          "color": "#1A1C1E",
+        },
+        undefined,
+        undefined,
+        undefined,
+      ]
+    }
+    testID="text-body1"
+  >
+    body1
+  </Text>,
+  <Text
+    accessibilityRole="text"
+    allowFontScaling={true}
+    style={
+      [
+        {
+          "fontFamily": "Roboto, system-ui, sans-serif",
+          "fontSize": 14,
+          "fontWeight": "400",
+          "letterSpacing": 0.25,
+          "lineHeight": 20,
+        },
+        {
+          "color": "#1A1C1E",
+        },
+        undefined,
+        undefined,
+        undefined,
+      ]
+    }
+    testID="text-body2"
+  >
+    body2
+  </Text>,
+  <Text
+    accessibilityRole="text"
+    allowFontScaling={true}
+    style={
+      [
+        {
+          "fontFamily": "Roboto, system-ui, sans-serif",
+          "fontSize": 11,
+          "fontWeight": "500",
+          "letterSpacing": 0.5,
+          "lineHeight": 16,
+        },
+        {
+          "color": "#1A1C1E",
+        },
+        undefined,
+        undefined,
+        undefined,
+      ]
+    }
+    testID="text-caption"
+  >
+    caption
+  </Text>,
+  <Text
+    accessibilityRole="text"
+    allowFontScaling={true}
+    style={
+      [
+        {
+          "fontFamily": "Roboto, system-ui, sans-serif",
+          "fontSize": 14,
+          "fontWeight": "500",
+          "letterSpacing": 0.1,
+          "lineHeight": 20,
+        },
+        {
+          "color": "#1A1C1E",
+        },
+        undefined,
+        undefined,
+        undefined,
+      ]
+    }
+    testID="text-button"
+  >
+    button
+  </Text>,
+  <Text
+    accessibilityRole="text"
+    allowFontScaling={true}
+    style={
+      [
+        {
+          "fontFamily": "Roboto, system-ui, sans-serif",
+          "fontSize": 12,
+          "fontWeight": "500",
+          "letterSpacing": 0.5,
+          "lineHeight": 16,
+        },
+        {
+          "color": "#1A1C1E",
+        },
+        undefined,
+        undefined,
+        undefined,
+      ]
+    }
+    testID="text-overline"
+  >
+    overline
+  </Text>,
+  <View
+    pointerEvents="box-none"
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  />,
+]
+`;

@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LinearProgress — buffer variant renders buffer bar when variant=buffer 1`] = `
+[
+  <View
+    accessibilityRole="progressbar"
+    accessibilityValue={
+      {
+        "max": 100,
+        "min": 0,
+        "now": 40,
+      }
+    }
+    accessible={true}
+    style={
+      [
+        {
+          "height": 4,
+          "overflow": "hidden",
+          "position": "relative",
+          "width": "100%",
+        },
+        undefined,
+        undefined,
+      ]
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          },
+          {
+            "backgroundColor": "#1976D240",
+          },
+        ]
+      }
+    />
+    <View
+      style={
+        [
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "top": 0,
+          },
+          {
+            "backgroundColor": "#1976D280",
+            "width": "70%",
+          },
+        ]
+      }
+    />
+    <View
+      style={
+        [
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "top": 0,
+          },
+          {
+            "backgroundColor": "#1976D2",
+            "width": "40%",
+          },
+        ]
+      }
+    />
+  </View>,
+  <View
+    pointerEvents="box-none"
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  />,
+]
+`;

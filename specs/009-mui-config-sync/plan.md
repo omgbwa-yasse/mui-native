@@ -242,11 +242,15 @@ Key decisions:
 
 **Components**: `AppBar`, `BottomNavigation`, `Breadcrumbs`, `Drawer`, `NavigationBar`, `NavigationDrawer`, `NavigationRail`, `Pagination`, `Stepper`, `Tabs` (10 components + `slots`/`slotProps` on AppBar, Breadcrumbs, NavigationBar, Stepper, Tabs)
 
+> **Reconciliation note (I2)**: Tasks Batch F resolved to `AppBar, Breadcrumbs, Drawer, NavigationBar, Pagination, Stepper, Tabs, TreeView` (8 components). `BottomNavigation`, `NavigationDrawer`, and `NavigationRail` listed here map to existing `src/components/` directories; if absent, they fall under the Phase 10 catch-all. `TreeView` is in Batch F (tasks) but not listed here — treat it as in-scope. Reconcile against `ls src/components/` during T066a.
+
 ---
 
 ## Phase 9: Component Batch 7 — Display + Data
 
-**Components**: `Accordion`, `Avatar`, `AvatarGroup`, `Card`, `Chip`, `Collapse`, `DataGrid`, `DataTable`, `Divider`, `Fade`, `Grow`, `ImageList`, `ImageListItem`, `ImageListItemBar`, `Link`, `List`, `Paper`, `Portal`, `Slide`, `Stack`, `SvgIcon`, `Table`, `Timeline`, `Typography`, `Zoom`, `Box`, `Container`, `Grid`, `ActivityIndicator` (29 components + `slots`/`slotProps` on Card, Chip, List, Timeline)
+**Components**: `Accordion`, `Avatar`, `AvatarGroup`, `Card`, `Charts`, `Chip`, `Collapse`, `DataGrid`, `DataTable`, `Divider`, `Fade`, `Grow`, `ImageList`, `ImageListItem`, `ImageListItemBar`, `Link`, `List`, `Masonry`, `Paper`, `Portal`, `Slide`, `Stack`, `SvgIcon`, `Table`, `Text` (`Typography`), `Timeline`, `Zoom`, `Box`, `Container`, `Grid`, `ActivityIndicator` (31 components + `slots`/`slotProps` on Card, Chip, List, Timeline)
+
+> **Reconciliation note (I3)**: Tasks Batch G resolved to `Accordion, Avatar, Card, Charts, Chip, Collapse, DataGrid, DataTable, Divider, Fade, Grid, Grow, ImageList, Link, List, Masonry, Paper, Portal, Slide, Stack, Text, Timeline, Zoom` and Batch H to `ActivityIndicator, Box, Container, HelperText, HumanizationScoreBar, Icon, InvitationStatusBadge, MaterialIcon, WorkerAgentRow`. `AvatarGroup`, `ImageListItem`, `ImageListItemBar`, `SvgIcon`, `Table` from this plan are absent from both Batch G and H — verify against `src/components/` and reconcile during T066a. `Box`, `Container`, `ActivityIndicator` migrated to Batch H (tasks); kept here for phase-level traceability. `Text` = `Typography` (renamed to match RN convention).
 
 ---
 

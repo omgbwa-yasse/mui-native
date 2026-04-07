@@ -1,8 +1,8 @@
 export type { ColorScheme } from './colors';
 export { baseLightColors, baseDarkColors } from './colors';
 
-export type { TypographyStyle, TypographyScale } from './typography';
-export { typography } from './typography';
+export type { TypographyStyle, TypographyScale, TypographyMD2Variant } from './typography';
+export { typography, typographyVariantMap } from './typography';
 
 export type { SpacingKey } from './spacing';
 export { spacing, getSpacing } from './spacing';

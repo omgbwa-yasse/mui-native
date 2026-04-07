@@ -141,3 +141,43 @@ export const typography: TypographyScale = {
     letterSpacing: 0.5,
   },
 };
+
+// ── MD2 typography aliases ────────────────────────────────────────────────────
+// Maps the 13 Material Design 2 variant names to their MD3 equivalents.
+// Enables MUI Web copy-paste compatibility (FR-034, FR-035).
+
+/** The 13 Material Design 2 typography variant names. */
+export type TypographyMD2Variant =
+  | 'h1'
+  | 'h2'
+  | 'h3'
+  | 'h4'
+  | 'h5'
+  | 'h6'
+  | 'subtitle1'
+  | 'subtitle2'
+  | 'body1'
+  | 'body2'
+  | 'caption'
+  | 'button'
+  | 'overline';
+
+/**
+ * Maps each MD2 typography variant name to its MD3 `TypographyScale` key.
+ * All 15 MD3 type-scale roles remain the canonical default.
+ */
+export const typographyVariantMap: Record<TypographyMD2Variant, keyof TypographyScale> = {
+  h1:        'displayLarge',
+  h2:        'displayMedium',
+  h3:        'displaySmall',
+  h4:        'headlineLarge',
+  h5:        'headlineMedium',
+  h6:        'headlineSmall',
+  subtitle1: 'titleLarge',
+  subtitle2: 'titleMedium',
+  body1:     'bodyLarge',
+  body2:     'bodyMedium',
+  caption:   'labelSmall',
+  button:    'labelLarge',
+  overline:  'labelMedium',
+};

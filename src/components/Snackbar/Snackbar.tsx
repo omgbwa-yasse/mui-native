@@ -24,6 +24,7 @@ const Snackbar = memo(function Snackbar(rawProps: SnackbarProps) {
   const {
     item,
     onDismiss,
+    open,
     testID,
     color,
     sx,
@@ -101,6 +102,8 @@ const Snackbar = memo(function Snackbar(rawProps: SnackbarProps) {
   const SlotRoot = slots?.Root ?? Animated.View;
   const SlotMessage = slots?.Message ?? Text;
   const SlotAction = slots?.Action ?? Pressable;
+
+  if (open === false) return null;
 
   return (
     <Portal>

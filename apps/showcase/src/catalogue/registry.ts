@@ -1,6 +1,6 @@
 /**
  * catalogue/registry.ts
- * Hand-authored catalogue data. All 78 library components across 5 categories.
+ * Hand-authored catalogue data. All 80 library components across 5 categories.
  *
  * Priority components (15 total, 3 per category) have hasFullExamples: true
  * with AuthoredExamples filled in Phase 7.
@@ -38,11 +38,13 @@ import {
   transferListExamples,
   // DATA_DISPLAY
   avatarExamples,
+  avatarGroupExamples,
   badgeExamples,
   chartsExamples,
   chipExamples,
   dataGridExamples,
   dataTableExamples,
+  tableExamples,
   humanizationScoreBarExamples,
   iconExamples,
   imageListExamples,
@@ -177,17 +179,19 @@ const INPUTS_COMPONENTS: ComponentEntry[] = [
 ];
 
 // ---------------------------------------------------------------------------
-// DATA_DISPLAY (18 components)
+// DATA_DISPLAY (20 components)
 // Priority: Text, Avatar, Chip
 // ---------------------------------------------------------------------------
 
 const DATA_DISPLAY_COMPONENTS: ComponentEntry[] = [
   entry('Avatar', 'Avatar', 'DATA_DISPLAY', 'User or entity avatar — image, initials, or icon', 'account_circle', avatarExamples),
+  entry('AvatarGroup', 'AvatarGroup', 'DATA_DISPLAY', 'Overlapping avatar stack with overflow count badge', 'group', avatarGroupExamples),
   entry('Badge', 'Badge', 'DATA_DISPLAY', 'Numeric or status badge overlaid on an element', 'badge', badgeExamples),
   entry('Charts', 'Charts', 'DATA_DISPLAY', 'Line, bar, and pie chart components', 'bar_chart', chartsExamples),
   entry('Chip', 'Chip', 'DATA_DISPLAY', 'Compact element representing an attribute, input, or action', 'sell', chipExamples),
   entry('DataGrid', 'DataGrid', 'DATA_DISPLAY', 'Sortable, paginated data grid with column definitions', 'grid_on', dataGridExamples),
   entry('DataTable', 'DataTable', 'DATA_DISPLAY', 'Simple tabular data display', 'table_chart', dataTableExamples),
+  entry('Table', 'Table', 'DATA_DISPLAY', 'Structured data table with rows, columns, head and body', 'table_view', tableExamples),
   entry('HumanizationScoreBar', 'HumanizationScoreBar', 'DATA_DISPLAY', 'Visual score bar for humanization metrics', 'ssid_chart', humanizationScoreBarExamples),
   entry('Icon', 'Icon', 'DATA_DISPLAY', 'Material Design icon renderer', 'emoji_emotions', iconExamples),
   entry('ImageList', 'ImageList', 'DATA_DISPLAY', 'Masonry or grid image gallery', 'photo_library', imageListExamples),

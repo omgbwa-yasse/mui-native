@@ -8,9 +8,15 @@
 import React from 'react';
 import {
   Accordion,
+  AccordionActions,
+  AccordionDetails,
+  AccordionSummary,
   Box,
   Button,
   Card,
+  CardActions,
+  CardContent,
+  CardHeader,
   Collapse,
   Container,
   Divider,
@@ -62,16 +68,32 @@ export const cardExamples: [ExampleConfig, ExampleConfig, ExampleConfig] = [
     ),
   },
   {
-    label: 'With Actions',
-    description: 'Card with action button',
+    label: 'Composable',
+    description: 'Card built from CardHeader, CardContent, and CardActions',
     code: `<Card>
-  <Text variant="bodyMedium">Card with action button.</Text>
-  <Button variant="text" label="Learn More" />
+  <CardHeader title="Project Alpha" subheader="Updated 2 days ago" />
+  <CardContent>
+    <Text variant="bodyMedium">
+      Progress is on track. All milestones met for Q2.
+    </Text>
+  </CardContent>
+  <CardActions>
+    <Button variant="text" label="Details" onPress={() => {}} />
+    <Button variant="text" label="Share" onPress={() => {}} />
+  </CardActions>
 </Card>`,
     render: () => (
       <Card>
-        <Text variant="bodyMedium">Card with action button.</Text>
-        <Button variant="text" label="Learn More" />
+        <CardHeader title="Project Alpha" subheader="Updated 2 days ago" />
+        <CardContent>
+          <Text variant="bodyMedium">
+            Progress is on track. All milestones met for Q2.
+          </Text>
+        </CardContent>
+        <CardActions>
+          <Button variant="text" label="Details" onPress={() => {}} />
+          <Button variant="text" label="Share" onPress={() => {}} />
+        </CardActions>
       </Card>
     ),
   },
@@ -174,14 +196,13 @@ export const dividerExamples: [ExampleConfig, ExampleConfig, ExampleConfig] = [
 const AccordionBasicExample: React.FC = () => {
   const [expanded, setExpanded] = React.useState(false);
   return (
-    <Accordion
-      title="What is React Native?"
-      expanded={expanded}
-      onToggle={() => setExpanded((e) => !e)}
-    >
-      <Text variant="bodyMedium">
-        React Native lets you build mobile apps using React and JavaScript.
-      </Text>
+    <Accordion expanded={expanded} onChange={setExpanded}>
+      <AccordionSummary>What is React Native?</AccordionSummary>
+      <AccordionDetails>
+        <Text variant="bodyMedium">
+          React Native lets you build mobile apps using React and JavaScript.
+        </Text>
+      </AccordionDetails>
     </Accordion>
   );
 };
@@ -212,15 +233,14 @@ const AccordionDisabledExample: React.FC = () => (
 
 export const accordionExamples: [ExampleConfig, ExampleConfig, ExampleConfig] = [
   {
-    label: 'Basic',
-    description: 'Single expandable accordion panel',
+    label: 'Composable',
+    description: 'AccordionSummary, AccordionDetails composable API',
     code: `const [expanded, setExpanded] = React.useState(false);
-<Accordion
-  title="What is React Native?"
-  expanded={expanded}
-  onToggle={() => setExpanded((e) => !e)}
->
-  <Text variant="bodyMedium">React Native lets you build mobile apps…</Text>
+<Accordion expanded={expanded} onChange={setExpanded}>
+  <AccordionSummary>What is React Native?</AccordionSummary>
+  <AccordionDetails>
+    <Text variant="bodyMedium">React Native lets you build mobile apps…</Text>
+  </AccordionDetails>
 </Accordion>`,
     render: () => <AccordionBasicExample />,
   },

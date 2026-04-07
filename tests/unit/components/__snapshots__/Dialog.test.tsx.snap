@@ -1,0 +1,429 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dialog — DialogContent dividers snapshot: DialogContent with dividers 1`] = `
+[
+  <Modal
+    animationType="none"
+    hardwareAccelerated={false}
+    onRequestClose={[Function]}
+    statusBarTranslucent={true}
+    transparent={true}
+    visible={true}
+  >
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessible={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "#00000052",
+          "flex": 1,
+          "justifyContent": "center",
+          "padding": 24,
+        }
+      }
+    >
+      <View
+        accessibilityRole="alert"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityViewIsModal={true}
+        accessible={false}
+        collapsable={false}
+        focusable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "opacity": 0,
+              "transform": [
+                {
+                  "scale": 0.9,
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "backgroundColor": "#FDFBFF",
+              "borderRadius": 28,
+              "elevation": 6,
+              "maxWidth": 560,
+              "padding": 24,
+              "shadowColor": "#000000",
+              "shadowOffset": {
+                "height": 6,
+                "width": 0,
+              },
+              "shadowOpacity": 0.15,
+              "shadowRadius": 10,
+              "width": undefined,
+            },
+            undefined,
+            undefined,
+            undefined,
+          ]
+        }
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          [
+            {
+              "backgroundColor": "#FDFBFF",
+              "borderRadius": 28,
+              "elevation": 6,
+              "maxWidth": 560,
+              "padding": 24,
+              "shadowColor": "#000000",
+              "shadowOffset": {
+                "height": 6,
+                "width": 0,
+              },
+              "shadowOpacity": 0.15,
+              "shadowRadius": 10,
+              "width": undefined,
+            },
+            {
+              "opacity": 0,
+              "transform": [
+                {
+                  "scale": 0.9,
+                },
+              ],
+            },
+            undefined,
+            undefined,
+            undefined,
+          ]
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "color": "#1A1C1E",
+                "fontFamily": "Roboto, system-ui, sans-serif",
+                "fontSize": 24,
+                "fontWeight": "400",
+                "letterSpacing": 0,
+                "lineHeight": 32,
+                "marginBottom": 16,
+              },
+              undefined,
+            ]
+          }
+        />
+        <RCTScrollView>
+          <View>
+            <View
+              style={
+                [
+                  {
+                    "marginBottom": 24,
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <View
+                testID="dc-dividers"
+              >
+                <View
+                  accessibilityElementsHidden={true}
+                  importantForAccessibility="no-hide-descendants"
+                  style={
+                    [
+                      {
+                        "alignSelf": "stretch",
+                      },
+                      {
+                        "backgroundColor": "#C3C7CF",
+                        "height": 1,
+                      },
+                      undefined,
+                      undefined,
+                      undefined,
+                    ]
+                  }
+                />
+                <RCTScrollView>
+                  <View>
+                    <View
+                      style={
+                        [
+                          {
+                            "paddingHorizontal": 24,
+                            "paddingVertical": 20,
+                          },
+                          undefined,
+                          undefined,
+                        ]
+                      }
+                    >
+                      <Text
+                        style={
+                          [
+                            {},
+                            {
+                              "color": "#43474E",
+                              "fontFamily": "Roboto, system-ui, sans-serif",
+                              "fontSize": 14,
+                              "fontWeight": "400",
+                              "letterSpacing": 0.25,
+                              "lineHeight": 20,
+                            },
+                            undefined,
+                            undefined,
+                          ]
+                        }
+                      >
+                        Content
+                      </Text>
+                    </View>
+                  </View>
+                </RCTScrollView>
+                <View
+                  accessibilityElementsHidden={true}
+                  importantForAccessibility="no-hide-descendants"
+                  style={
+                    [
+                      {
+                        "alignSelf": "stretch",
+                      },
+                      {
+                        "backgroundColor": "#C3C7CF",
+                        "height": 1,
+                      },
+                      undefined,
+                      undefined,
+                      undefined,
+                    ]
+                  }
+                />
+              </View>
+            </View>
+          </View>
+        </RCTScrollView>
+      </View>
+    </View>
+  </Modal>,
+  <View
+    pointerEvents="box-none"
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Dialog — fullScreen prop snapshot: fullScreen dialog 1`] = `
+[
+  <Modal
+    animationType="none"
+    hardwareAccelerated={false}
+    onRequestClose={[Function]}
+    statusBarTranslucent={true}
+    transparent={true}
+    visible={true}
+  >
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessible={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "#00000052",
+          "flex": 1,
+          "justifyContent": "center",
+        }
+      }
+    >
+      <View
+        accessibilityRole="alert"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityViewIsModal={true}
+        accessible={false}
+        collapsable={false}
+        focusable={false}
+        jestAnimatedProps={
+          {
+            "value": {},
+          }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "opacity": 0,
+              "transform": [
+                {
+                  "scale": 0.9,
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "backgroundColor": "#FDFBFF",
+              "borderRadius": 0,
+              "bottom": 0,
+              "elevation": 6,
+              "left": 0,
+              "padding": 24,
+              "position": "absolute",
+              "right": 0,
+              "shadowColor": "#000000",
+              "shadowOffset": {
+                "height": 6,
+                "width": 0,
+              },
+              "shadowOpacity": 0.15,
+              "shadowRadius": 10,
+              "top": 0,
+            },
+            undefined,
+            undefined,
+            undefined,
+          ]
+        }
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          [
+            {
+              "backgroundColor": "#FDFBFF",
+              "borderRadius": 0,
+              "bottom": 0,
+              "elevation": 6,
+              "left": 0,
+              "padding": 24,
+              "position": "absolute",
+              "right": 0,
+              "shadowColor": "#000000",
+              "shadowOffset": {
+                "height": 6,
+                "width": 0,
+              },
+              "shadowOpacity": 0.15,
+              "shadowRadius": 10,
+              "top": 0,
+            },
+            {
+              "opacity": 0,
+              "transform": [
+                {
+                  "scale": 0.9,
+                },
+              ],
+            },
+            undefined,
+            undefined,
+            undefined,
+          ]
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "color": "#1A1C1E",
+                "fontFamily": "Roboto, system-ui, sans-serif",
+                "fontSize": 24,
+                "fontWeight": "400",
+                "letterSpacing": 0,
+                "lineHeight": 32,
+                "marginBottom": 16,
+              },
+              undefined,
+            ]
+          }
+        >
+          Fullscreen dialog
+        </Text>
+      </View>
+    </View>
+  </Modal>,
+  <View
+    pointerEvents="box-none"
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  />,
+]
+`;

@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { type AccessibilityRole, StyleSheet, View } from 'react-native';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
@@ -6,6 +6,8 @@ import { useSx } from '../../hooks/useSx';
 import { useColorRole } from '../../hooks/useColorRole';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import { Text } from '../Text/Text';
+import { StepperContext } from './StepperContext';
+import { StepConnector } from './StepConnector';
 import type { StepperProps, StepState } from './types';
 
 function getStepState(index: number, activeStep: number, explicitState?: StepState): StepState {
@@ -29,29 +31,79 @@ const Stepper = memo(function Stepper(rawProps: StepperProps) {
     style,
     slots,
     slotProps,
-  } = props;
+    // composable-only
+    children,
+    connector,
+  } = props as any;
 
+  const { theme } = useTheme();
+  const sxStyle = useSx(sx, theme);
+  const { bg, fg } = useColorRole(color);
+  const isHorizontal = orientation === 'horizontal';
+  const layoutStyles = styleSheet(isHorizontal);
+
+  const isComposable = steps === undefined;
+
+  // ─── Composable mode ──────────────────────────────────────────────────────
+  if (isComposable) {
+    const stepChildren = React.Children.toArray(children);
+    const totalSteps = stepChildren.length;
+
+    const contextValue = { activeStep: activeStep ?? 0, orientation, totalSteps };
+
+    const stepElements = stepChildren.map((child, index) => {
+      const isLast = index === totalSteps - 1;
+      const cloned = React.isValidElement(child)
+        ? React.cloneElement(child as React.ReactElement<any>, { index, last: isLast })
+        : child;
+
+      return (
+        <React.Fragment key={index}>
+          {cloned}
+          {!isLast && (connector != null ? connector : <StepConnector />)}
+        </React.Fragment>
+      );
+    });
+
+    return (
+      <StepperContext.Provider value={contextValue}>
+        <View
+          style={[isHorizontal ? layoutStyles.rootH : layoutStyles.rootV, sxStyle, style]}
+          accessibilityRole="progressbar"
+          accessible
+          accessibilityValue={{ min: 0, max: totalSteps - 1, now: activeStep ?? 0 }}
+          testID={testID}
+        >
+          {stepElements}
+        </View>
+      </StepperContext.Provider>
+    );
+  }
+
+  // ─── Data-driven mode (existing) ─────────────────────────────────────────
   const RootSlot = slots?.Root ?? View;
   const StepIndicatorSlot = slots?.StepIndicator ?? View;
   const StepLabelSlot = slots?.StepLabel ?? View;
   const ConnectorSlot = slots?.Connector ?? View;
-  const { theme } = useTheme();
-  const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
-  const isHorizontal = orientation === 'horizontal';
 
-  const styles = styleSheet(isHorizontal);
+  const dataDrivenContextValue = useMemo(
+    () => ({ activeStep: activeStep ?? 0, orientation, totalSteps: steps.length }),
+    [activeStep, orientation, steps.length],
+  );
+
+  const ddStyles = styleSheet(isHorizontal);
 
   return (
-    <RootSlot
+    <StepperContext.Provider value={dataDrivenContextValue}>
+      <RootSlot
       {...slotProps?.Root}
-      style={[isHorizontal ? styles.rootH : styles.rootV, sxStyle, style, slotProps?.Root?.style]}
+      style={[isHorizontal ? ddStyles.rootH : ddStyles.rootV, sxStyle, style, slotProps?.Root?.style]}
       accessibilityRole="progressbar"
       accessible
       accessibilityValue={{ min: 0, max: steps.length - 1, now: activeStep }}
       testID={testID}
     >
-      {steps.map((step, index) => {
+      {(steps as import('./types').StepItem[]).map((step, index: number) => {
         const state = getStepState(index, activeStep, step.state);
         const isCompleted = state === 'completed';
         const isActive = state === 'active';
@@ -86,7 +138,7 @@ const Stepper = memo(function Stepper(rawProps: StepperProps) {
           <StepIndicatorSlot
             {...slotProps?.StepIndicator}
             style={[
-              styles.circle,
+              ddStyles.circle,
               {
                 backgroundColor: circleBg,
                 borderColor: circleColor,
@@ -108,7 +160,7 @@ const Stepper = memo(function Stepper(rawProps: StepperProps) {
         );
 
         const stepLabel = (
-          <StepLabelSlot {...slotProps?.StepLabel} style={[isHorizontal ? styles.labelH : styles.labelV, slotProps?.StepLabel?.style]}>
+          <StepLabelSlot {...slotProps?.StepLabel} style={[isHorizontal ? ddStyles.labelH : ddStyles.labelV, slotProps?.StepLabel?.style]}>
             <Text variant="labelMedium" color={labelColor}>{step.label}</Text>
             {step.optional && (
               <Text variant="labelSmall" color={theme.colorScheme.onSurfaceVariant}>
@@ -124,18 +176,18 @@ const Stepper = memo(function Stepper(rawProps: StepperProps) {
         );
 
         const stepContent = (
-          <View style={isHorizontal ? styles.stepH : styles.stepV}>
+          <View style={isHorizontal ? ddStyles.stepH : ddStyles.stepV}>
             {isHorizontal ? (
               <>
                 {stepIndicator}
                 {stepLabel}
               </>
             ) : (
-              <View style={styles.stepVInner}>
-                <View style={styles.stepVLeft}>
+              <View style={ddStyles.stepVInner}>
+                <View style={ddStyles.stepVLeft}>
                   {stepIndicator}
                   {!isLast && (
-                    <ConnectorSlot {...slotProps?.Connector} style={[styles.connectorV, { backgroundColor: connectorColor }, slotProps?.Connector?.style]} />
+                    <ConnectorSlot {...slotProps?.Connector} style={[ddStyles.connectorV, { backgroundColor: connectorColor }, slotProps?.Connector?.style]} />
                   )}
                 </View>
                 {stepLabel}
@@ -161,14 +213,15 @@ const Stepper = memo(function Stepper(rawProps: StepperProps) {
             )}
             {/* Horizontal connector */}
             {isHorizontal && !isLast && (
-              <View style={styles.connectorHWrapper}>
-                <ConnectorSlot {...slotProps?.Connector} style={[styles.connectorH, { backgroundColor: connectorColor }, slotProps?.Connector?.style]} />
+              <View style={ddStyles.connectorHWrapper}>
+                <ConnectorSlot {...slotProps?.Connector} style={[ddStyles.connectorH, { backgroundColor: connectorColor }, slotProps?.Connector?.style]} />
               </View>
             )}
           </React.Fragment>
         );
       })}
     </RootSlot>
+    </StepperContext.Provider>
   );
 });
 

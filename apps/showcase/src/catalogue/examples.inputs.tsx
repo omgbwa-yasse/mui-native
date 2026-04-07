@@ -16,6 +16,7 @@ import {
   IconButton,
   MaterialIcon,
   NumberField,
+  Radio,
   RadioButton,
   RadioGroup,
   Rating,
@@ -833,18 +834,28 @@ const RadioGroupDisabledExample: React.FC = () => {
   );
 };
 
+const RadioRowExample: React.FC = () => {
+  const [val, setVal] = React.useState('a');
+  return (
+    <RadioGroup row value={val} onChange={(_e, v) => setVal(v)}>
+      <Radio value="a" />
+      <Radio value="b" />
+      <Radio value="c" />
+    </RadioGroup>
+  );
+};
+
 export const radioButtonExamples: [ExampleConfig, ExampleConfig, ExampleConfig] = [
   {
-    label: 'Single Button',
-    description: 'Standalone radio button',
-    code: `<RadioGroup value="a" onValueChange={() => {}}>
-  <RadioButton value="a" />
+    label: 'Row Layout',
+    description: 'Radio alias with row layout and onChange handler',
+    code: `const [val, setVal] = React.useState('a');
+<RadioGroup row value={val} onChange={(_e, v) => setVal(v)}>
+  <Radio value="a" />
+  <Radio value="b" />
+  <Radio value="c" />
 </RadioGroup>`,
-    render: () => (
-      <RadioGroup value="a" onValueChange={() => {}}>
-        <RadioButton value="a" />
-      </RadioGroup>
-    ),
+    render: () => <RadioRowExample />,
   },
   {
     label: 'Group',

@@ -12,7 +12,15 @@ export interface RadioGroupContextValue {
 export interface RadioGroupProps {
   value: string;
   onValueChange: (value: string) => void;
+  /** MUI-aligned callback: (event, value) => void */
+  onChange?: (event: unknown, value: string) => void;
   disabled?: boolean;
+  /** Optional name for the radio group form element */
+  name?: string;
+  /** Initial value for uncontrolled usage */
+  defaultValue?: string;
+  /** Arrange radio buttons in a horizontal row */
+  row?: boolean;
   children: React.ReactNode;
   testID?: string;
 }
@@ -26,4 +34,12 @@ export interface RadioButtonProps {
   style?: StyleProp<ViewStyle>;
   testID?: string;
   accessibilityLabel?: string;
+}
+
+/** MUI-aligned Radio props */
+export interface RadioProps extends RadioButtonProps {
+  /** MUI-aligned callback called with (event, checked) */
+  onChange?: (event: unknown, checked: boolean) => void;
+  /** Controlled checked state */
+  checked?: boolean;
 }

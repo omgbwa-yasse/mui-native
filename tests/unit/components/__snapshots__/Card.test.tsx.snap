@@ -1,0 +1,169 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CardActions snapshot: with disableSpacing 1`] = `
+[
+  <View
+    style={
+      [
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "paddingBottom": 8,
+          "paddingHorizontal": 8,
+        },
+        {},
+        undefined,
+        undefined,
+      ]
+    }
+  >
+    <View />
+    <View />
+  </View>,
+  <View
+    pointerEvents="box-none"
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  />,
+]
+`;
+
+exports[`CardContent snapshot 1`] = `
+[
+  <View
+    style={
+      [
+        {
+          "paddingBottom": 16,
+          "paddingHorizontal": 16,
+          "paddingTop": 8,
+        },
+        undefined,
+        undefined,
+      ]
+    }
+  >
+    <Text>
+      Snapshot content
+    </Text>
+  </View>,
+  <View
+    pointerEvents="box-none"
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  />,
+]
+`;
+
+exports[`CardHeader snapshot 1`] = `
+[
+  <View
+    style={
+      [
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "paddingBottom": 8,
+          "paddingHorizontal": 16,
+          "paddingTop": 16,
+        },
+        undefined,
+        undefined,
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "marginEnd": 16,
+        }
+      }
+    >
+      <View
+        testID="snap-avatar"
+      />
+    </View>
+    <View
+      style={
+        {
+          "flex": 1,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "fontFamily": "Roboto, system-ui, sans-serif",
+              "fontSize": 16,
+              "fontWeight": "500",
+              "letterSpacing": 0.15,
+              "lineHeight": 24,
+            },
+            {
+              "color": "#1A1C1E",
+            },
+          ]
+        }
+      >
+        Snapshot Title
+      </Text>
+      <Text
+        style={
+          [
+            {
+              "fontFamily": "Roboto, system-ui, sans-serif",
+              "fontSize": 14,
+              "fontWeight": "400",
+              "letterSpacing": 0.25,
+              "lineHeight": 20,
+            },
+            {
+              "color": "#43474E",
+            },
+          ]
+        }
+      >
+        Snapshot Sub
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "marginStart": 8,
+        }
+      }
+    >
+      <View
+        testID="snap-action"
+      />
+    </View>
+  </View>,
+  <View
+    pointerEvents="box-none"
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  />,
+]
+`;

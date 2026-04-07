@@ -1,0 +1,241 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AvatarGroup — spacing variants snapshot: default spacing 1`] = `
+[
+  <View
+    style={
+      [
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+        },
+        undefined,
+        undefined,
+      ]
+    }
+  >
+    <View
+      style={
+        [
+          undefined,
+          {
+            "zIndex": 3,
+          },
+        ]
+      }
+    >
+      <View
+        accessibilityLabel="U1"
+        accessibilityRole="image"
+        accessible={true}
+        style={
+          [
+            [
+              {
+                "alignItems": "center",
+                "justifyContent": "center",
+                "overflow": "hidden",
+              },
+              {
+                "backgroundColor": "#D1E4FF",
+                "borderRadius": 20,
+                "height": 40,
+                "width": 40,
+              },
+            ],
+            undefined,
+            undefined,
+          ]
+        }
+        testID="avatar-0"
+      >
+        <Text
+          style={
+            [
+              {
+                "fontWeight": "600",
+              },
+              {
+                "color": "#001D35",
+                "fontSize": 16,
+              },
+            ]
+          }
+        >
+          U1
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        [
+          {
+            "marginLeft": -8,
+          },
+          {
+            "zIndex": 2,
+          },
+        ]
+      }
+    >
+      <View
+        accessibilityLabel="U2"
+        accessibilityRole="image"
+        accessible={true}
+        style={
+          [
+            [
+              {
+                "alignItems": "center",
+                "justifyContent": "center",
+                "overflow": "hidden",
+              },
+              {
+                "backgroundColor": "#D1E4FF",
+                "borderRadius": 20,
+                "height": 40,
+                "width": 40,
+              },
+            ],
+            undefined,
+            undefined,
+          ]
+        }
+        testID="avatar-1"
+      >
+        <Text
+          style={
+            [
+              {
+                "fontWeight": "600",
+              },
+              {
+                "color": "#001D35",
+                "fontSize": 16,
+              },
+            ]
+          }
+        >
+          U2
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        [
+          {
+            "marginLeft": -8,
+          },
+          {
+            "zIndex": 1,
+          },
+        ]
+      }
+    >
+      <View
+        accessibilityLabel="U3"
+        accessibilityRole="image"
+        accessible={true}
+        style={
+          [
+            [
+              {
+                "alignItems": "center",
+                "justifyContent": "center",
+                "overflow": "hidden",
+              },
+              {
+                "backgroundColor": "#D1E4FF",
+                "borderRadius": 20,
+                "height": 40,
+                "width": 40,
+              },
+            ],
+            undefined,
+            undefined,
+          ]
+        }
+        testID="avatar-2"
+      >
+        <Text
+          style={
+            [
+              {
+                "fontWeight": "600",
+              },
+              {
+                "color": "#001D35",
+                "fontSize": 16,
+              },
+            ]
+          }
+        >
+          U3
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        {
+          "marginLeft": -8,
+          "zIndex": 0,
+        }
+      }
+    >
+      <View
+        accessibilityLabel="+3"
+        accessibilityRole="image"
+        accessible={true}
+        style={
+          [
+            [
+              {
+                "alignItems": "center",
+                "justifyContent": "center",
+                "overflow": "hidden",
+              },
+              {
+                "backgroundColor": "#FDFBFF",
+                "borderRadius": 20,
+                "height": 40,
+                "width": 40,
+              },
+            ],
+            undefined,
+            undefined,
+          ]
+        }
+        testID="avatar-group-surplus"
+      >
+        <Text
+          style={
+            [
+              {
+                "fontWeight": "600",
+              },
+              {
+                "color": "#1A1C1E",
+                "fontSize": 16,
+              },
+            ]
+          }
+        >
+          +3
+        </Text>
+      </View>
+    </View>
+  </View>,
+  <View
+    pointerEvents="box-none"
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  />,
+]
+`;

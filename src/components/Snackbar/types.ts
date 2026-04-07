@@ -31,6 +31,11 @@ export interface SnackbarSlots {
 export interface SnackbarProps extends SlotPropsConfig<SnackbarSlots> {
   item: SnackbarItem;
   onDismiss: (id: string) => void;
+  /**
+   * MUI-idiomatic alias — controls whether the snackbar is visible.
+   * When `open` is explicitly `false`, the snackbar is hidden.
+   */
+  open?: boolean;
   size?: SizeProp;
   color?: ColorProp;
   sx?: SxProps;

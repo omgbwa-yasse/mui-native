@@ -114,6 +114,7 @@ export function TouchableRipple(rawProps: TouchableRippleProps): React.ReactElem
         accessibilityRole={accessibilityRole}
         accessibilityLabel={accessibilityLabel}
         accessibilityState={{ disabled, ...accessibilityState }}
+        onStartShouldSetResponder={disabled ? () => false : undefined}
         testID={testID}
       >
         {children}

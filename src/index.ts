@@ -57,8 +57,20 @@ export { NavigationBar } from './components/NavigationBar';
 export type { NavigationBarProps, NavigationBarItem } from './components/NavigationBar';
 
 // New components (alphabetical)
-export { Accordion } from './components/Accordion';
-export type { AccordionProps } from './components/Accordion';
+export {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  AccordionActions,
+} from './components/Accordion';
+export type {
+  AccordionProps,
+  AccordionDataDrivenProps,
+  AccordionComposableProps,
+  AccordionSummaryProps,
+  AccordionDetailsProps,
+  AccordionActionsProps,
+} from './components/Accordion';
 
 export { ActivityIndicator } from './components/ActivityIndicator';
 export type { ActivityIndicatorProps } from './components/ActivityIndicator';
@@ -127,8 +139,28 @@ export { MaterialIcon } from './components/MaterialIcon';
 export { materialIconSource } from './components/MaterialIcon';
 export type { MaterialIconProps, IconVariant, MaterialIconName } from './components/MaterialIcon';
 
-export { List, ListItem, ListSection, ListAccordion } from './components/List';
-export type { ListProps, ListItemProps, ListSectionProps, ListAccordionProps } from './components/List';
+export {
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemAvatar,
+  ListItemText,
+  ListSubheader,
+  ListSection,
+  ListAccordion,
+} from './components/List';
+export type {
+  ListProps,
+  ListItemProps,
+  ListItemButtonProps,
+  ListItemIconProps,
+  ListItemAvatarProps,
+  ListItemTextProps,
+  ListSubheaderProps,
+  ListSectionProps,
+  ListAccordionProps,
+} from './components/List';
 
 export { Menu, MenuItem } from './components/Menu';
 export type { MenuProps, MenuItemProps } from './components/Menu';
@@ -148,8 +180,8 @@ export type { PaperProps, PaperElevation, PaperMode } from './components/Paper';
 export { Portal, PortalHost } from './components/Portal';
 export type { PortalProps, PortalHostProps } from './components/Portal';
 
-export { RadioButton, RadioGroup } from './components/RadioButton';
-export type { RadioButtonProps, RadioGroupProps, RadioGroupContextValue } from './components/RadioButton';
+export { RadioButton, Radio, RadioGroup } from './components/RadioButton';
+export type { RadioButtonProps, RadioGroupProps, RadioGroupContextValue, RadioProps } from './components/RadioButton';
 
 export { Rating } from './components/Rating';
 export type { RatingProps } from './components/Rating';
@@ -178,8 +210,21 @@ export type { SpeedDialProps, SpeedDialActionItem } from './components/SpeedDial
 export { Stack } from './components/Stack';
 export type { StackProps } from './components/Stack';
 
-export { Stepper } from './components/Stepper';
-export type { StepperProps, StepItem, StepState } from './components/Stepper';
+export { Stepper, Step, StepLabel, StepContent, StepConnector, MobileStepper } from './components/Stepper';
+export type {
+  StepperProps,
+  StepperDataDrivenProps,
+  StepperComposableProps,
+  StepItem,
+  StepState,
+  StepProps,
+  StepLabelProps,
+  StepContentProps,
+  StepConnectorProps,
+  MobileStepperProps,
+  MobileStepperVariant,
+  MobileStepperPosition,
+} from './components/Stepper';
 
 export { Switch } from './components/Switch';
 export type { SwitchProps } from './components/Switch';
@@ -212,6 +257,9 @@ export type { LinearProgressProps, LinearProgressVariant } from './components/Li
 // Popover
 export { Popover } from './components/Popover';
 export type { PopoverProps, AnchorOrigin } from './components/Popover';
+
+// Hooks
+export { useMediaQuery } from './hooks/useMediaQuery';
 
 // Transition components
 export { Fade } from './components/Fade';
@@ -273,3 +321,29 @@ export type { InvitationStatus } from './components/InvitationStatusBadge/Invita
 
 export { default as WorkerAgentRow } from './components/WorkerAgentRow/WorkerAgentRow';
 export type { WorkerAgentRowProps } from './components/WorkerAgentRow/WorkerAgentRow';
+
+// Feature 010 — Full MUI Alignment
+
+// AvatarGroup
+export { AvatarGroup } from './components/AvatarGroup';
+export type { AvatarGroupProps } from './components/AvatarGroup';
+
+// Card sub-components
+export { CardHeader, CardMedia, CardContent, CardActions, CardActionArea } from './components/Card';
+export type { CardHeaderProps, CardMediaProps, CardContentProps, CardActionsProps, CardActionAreaProps } from './components/Card';
+
+// Dialog sub-components
+export { DialogTitle, DialogContent, DialogContentText, DialogActions } from './components/Dialog';
+export type { DialogTitleProps, DialogContentProps, DialogContentTextProps, DialogActionsProps } from './components/Dialog';
+
+// Table family
+export { TableContainer, Table, TableHead, TableBody, TableFooter, TableRow, TableCell, TableSortLabel, TablePagination } from './components/Table';
+export type { TableContainerProps, TableProps, TableHeadProps, TableBodyProps, TableFooterProps, TableRowProps, TableCellProps, TableSortLabelProps, TablePaginationProps } from './components/Table';
+
+// Typography MD2 variant map
+export type { TypographyMD2Variant } from './tokens/typography';
+export { typographyVariantMap } from './tokens/typography';
+
+// Typography alias — MUI Web naming compatibility (source: Text component)
+export { Text as Typography } from './components/Text';
+export type { TextProps as TypographyProps } from './components/Text';

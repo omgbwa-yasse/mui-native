@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`typographyVariantMap snapshot — full map is stable 1`] = `
+{
+  "body1": "bodyLarge",
+  "body2": "bodyMedium",
+  "button": "labelLarge",
+  "caption": "labelSmall",
+  "h1": "displayLarge",
+  "h2": "displayMedium",
+  "h3": "displaySmall",
+  "h4": "headlineLarge",
+  "h5": "headlineMedium",
+  "h6": "headlineSmall",
+  "overline": "labelMedium",
+  "subtitle1": "titleLarge",
+  "subtitle2": "titleMedium",
+}
+`;

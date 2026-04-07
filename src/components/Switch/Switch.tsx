@@ -26,7 +26,9 @@ const Switch = memo(function Switch(rawProps: SwitchProps) {
   const props = useComponentDefaults('Switch', rawProps);
   const {
     value,
+    checked,
     onValueChange,
+    onChange,
     disabled = false,
     color,
     testID,
@@ -38,16 +40,19 @@ const Switch = memo(function Switch(rawProps: SwitchProps) {
   const sxStyle = useSx(sx, theme);
   const reduceMotion = useReducedMotionValue();
 
-  const progress = useSharedValue(value ? 1 : 0);
+  // Resolve MUI-idiomatic `checked` alias → `value`
+  const isChecked = checked ?? value;
+
+  const progress = useSharedValue(isChecked ? 1 : 0);
 
   useEffect(() => {
-    const target = value ? 1 : 0;
+    const target = isChecked ? 1 : 0;
     if (reduceMotion.value) {
       progress.value = target;
     } else {
       progress.value = withTiming(target, { duration: ANIM_DURATION });
     }
-  }, [value, progress, reduceMotion]);
+  }, [isChecked, progress, reduceMotion]);
 
   const trackOn = color ?? theme.colorScheme.primary;
   const trackOff = theme.colorScheme.surfaceVariant;
@@ -72,7 +77,11 @@ const Switch = memo(function Switch(rawProps: SwitchProps) {
   const tap = Gesture.Tap()
     .enabled(!disabled)
     .onEnd(() => {
-      runOnJS(onValueChange)(!value);
+      const newValue = !isChecked;
+      runOnJS(onValueChange)(newValue);
+      if (onChange) {
+        runOnJS(onChange)({ target: { checked: newValue } });
+      }
     });
 
   const styles = StyleSheet.create({
@@ -104,7 +113,7 @@ const Switch = memo(function Switch(rawProps: SwitchProps) {
         accessibilityRole="switch"
         accessible
         accessibilityLabel={accessibilityLabel}
-        accessibilityState={{ checked: value, disabled }}
+        accessibilityState={{ checked: isChecked, disabled }}
         testID={testID}
       >
         <Animated.View style={[styles.track, trackStyle]}>

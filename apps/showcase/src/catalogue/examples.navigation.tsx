@@ -17,8 +17,11 @@ import {
   MaterialIcon,
   Menu,
   MenuItem,
+  MobileStepper,
   NavigationBar,
   Pagination,
+  Step,
+  StepLabel,
   Stepper,
   Tabs,
   Text,
@@ -702,14 +705,11 @@ const StepperHorizontalExample: React.FC = () => {
   const [activeStep, setActiveStep] = React.useState(1);
   return (
     <View style={{ gap: 12 }}>
-      <Stepper
-        activeStep={activeStep}
-        steps={[
-          { label: 'Account' },
-          { label: 'Profile' },
-          { label: 'Review' },
-        ]}
-      />
+      <Stepper activeStep={activeStep}>
+        <Step><StepLabel>Account</StepLabel></Step>
+        <Step><StepLabel>Profile</StepLabel></Step>
+        <Step><StepLabel>Review</StepLabel></Step>
+      </Stepper>
       <View style={{ flexDirection: 'row', gap: 8 }}>
         <Button label="Back" onPress={() => setActiveStep((s) => Math.max(0, s - 1))} />
         <Button label="Next" onPress={() => setActiveStep((s) => Math.min(2, s + 1))} />
@@ -736,28 +736,33 @@ const StepperVerticalExample: React.FC = () => {
   );
 };
 
-const StepperCompletedExample: React.FC = () => {
+const StepperMobileExample: React.FC = () => {
+  const [activeStep, setActiveStep] = React.useState(1);
   return (
-    <Stepper
-      activeStep={3}
-      steps={[
-        { label: 'Step 1' },
-        { label: 'Step 2' },
-        { label: 'Step 3' },
-      ]}
+    <MobileStepper
+      variant="dots"
+      steps={4}
+      activeStep={activeStep}
+      backButton={
+        <Button label="Back" variant="text" onPress={() => setActiveStep((s) => Math.max(0, s - 1))} />
+      }
+      nextButton={
+        <Button label="Next" variant="text" onPress={() => setActiveStep((s) => Math.min(3, s + 1))} />
+      }
     />
   );
 };
 
 export const stepperExamples: [ExampleConfig, ExampleConfig, ExampleConfig] = [
   {
-    label: 'Horizontal',
-    description: 'Horizontal stepper with 3 steps',
+    label: 'Composable',
+    description: 'Step and StepLabel composable API',
     code: `const [activeStep, setActiveStep] = React.useState(1);
-<Stepper
-  activeStep={activeStep}
-  steps={[{ label: 'Account' }, { label: 'Profile' }, { label: 'Review' }]}
-/>`,
+<Stepper activeStep={activeStep}>
+  <Step><StepLabel>Account</StepLabel></Step>
+  <Step><StepLabel>Profile</StepLabel></Step>
+  <Step><StepLabel>Review</StepLabel></Step>
+</Stepper>`,
     render: () => <StepperHorizontalExample />,
   },
   {
@@ -776,12 +781,16 @@ export const stepperExamples: [ExampleConfig, ExampleConfig, ExampleConfig] = [
     render: () => <StepperVerticalExample />,
   },
   {
-    label: 'All Completed',
-    description: 'Stepper with all steps marked complete',
-    code: `<Stepper
-  activeStep={3}
-  steps={[{ label: 'Step 1' }, { label: 'Step 2' }, { label: 'Step 3' }]}
+    label: 'Mobile Stepper',
+    description: 'Dot-variant mobile stepper with back/next buttons',
+    code: `const [activeStep, setActiveStep] = React.useState(1);
+<MobileStepper
+  variant="dots"
+  steps={4}
+  activeStep={activeStep}
+  backButton={<Button label="Back" variant="text" onPress={() => {}} />}
+  nextButton={<Button label="Next" variant="text" onPress={() => {}} />}
 />`,
-    render: () => <StepperCompletedExample />,
+    render: () => <StepperMobileExample />,
   },
 ];

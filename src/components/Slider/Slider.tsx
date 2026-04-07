@@ -32,6 +32,7 @@ const Slider = memo(function Slider(rawProps: SliderProps) {
   const {
     value,
     onValueChange,
+    onChange,
     onSlidingComplete,
     min = 0,
     max = 100,
@@ -58,8 +59,9 @@ const Slider = memo(function Slider(rawProps: SliderProps) {
       const raw = min + ratio * (max - min);
       const stepped = clamp(snapToStep(raw, min, step), min, max);
       onValueChange(stepped);
+      onChange?.(null, stepped);
     },
-    [min, max, step, onValueChange],
+    [min, max, step, onValueChange, onChange],
   );
 
   const finishValue = useCallback(

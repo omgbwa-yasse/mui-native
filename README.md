@@ -45,10 +45,13 @@ export default function App() {
 | **Layout** | `Box`, `Container`, `Grid`, `GridItem`, `Stack`, `Paper`, `Divider` |
 | **Navigation** | `AppBar`, `Drawer`, `NavigationBar`, `Tabs`, `TabPanel`, `Breadcrumbs` |
 | **Inputs** | `Button`, `ButtonGroup`, `IconButton`, `Checkbox`, `RadioButton`, `RadioGroup`, `Switch`, `Slider`, `Select`, `NumberField`, `Searchbar`, `ToggleButton`, `ToggleButtonGroup` |
-| **Display** | `Text`, `Avatar`, `Badge`, `Icon`, `Chip`, `Rating`, `Skeleton`, `Tooltip`, `ImageList` |
-| **Feedback** | `ActivityIndicator`, `Alert`, `Backdrop`, `Banner`, `Dialog`, `Modal`, `Snackbar`, `SnackbarHost`, `SpeedDial` |
-| **Data** | `DataTable`, `List`, `ListItem`, `Accordion`, `Stepper`, `Pagination`, `TransferList`, `Autocomplete`, `SegmentedButtons` |
+| **Display** | `Text`, `Typography`†, `Avatar`, `AvatarGroup`, `Badge`, `Icon`, `Chip`, `Rating`, `Skeleton`, `Tooltip`, `ImageList` |
+| **Card** | `Card`, `CardHeader`, `CardMedia`, `CardContent`, `CardActions`, `CardActionArea` |
+| **Feedback** | `ActivityIndicator`, `Alert`, `Backdrop`, `Banner`, `Dialog`, `DialogTitle`, `DialogContent`, `DialogContentText`, `DialogActions`, `Modal`, `Snackbar`, `SnackbarHost`, `SpeedDial` |
+| **Data** | `DataTable`, `Table`, `TableContainer`, `TableHead`, `TableBody`, `TableFooter`, `TableRow`, `TableCell`, `TableSortLabel`, `TablePagination`, `List`, `ListItem`, `Accordion`, `Stepper`, `Pagination`, `TransferList`, `Autocomplete`, `SegmentedButtons` |
 | **Utility** | `Portal`, `PortalHost`, `FAB`, `Link`, `HelperText`, `Menu`, `MenuItem` |
+
+> † `Typography` is an alias for `Text` — both imports are equivalent and provided for MUI Web naming compatibility.
 
 ---
 

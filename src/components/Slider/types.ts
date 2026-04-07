@@ -10,6 +10,11 @@ export interface SliderMark {
 export interface SliderProps {
   value: number;
   onValueChange: (value: number) => void;
+  /**
+   * MUI-idiomatic callback — called alongside `onValueChange` with a MUI-compatible signature.
+   * // RN-DEVIATION: first arg is `null` (no DOM Event in React Native).
+   */
+  onChange?: (event: null, value: number) => void;
   onSlidingComplete?: (value: number) => void;
   min?: number;
   max?: number;

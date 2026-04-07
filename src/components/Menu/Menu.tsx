@@ -24,8 +24,10 @@ const Menu = memo(function Menu(rawProps: MenuProps) {
   const props = useComponentDefaults('Menu', rawProps as unknown as MenuItemProps) as unknown as MenuProps;
   const {
     visible,
+    open,
     anchor,
     onDismiss,
+    onClose,
     children,
     testID,
     color,
@@ -37,15 +39,24 @@ const Menu = memo(function Menu(rawProps: MenuProps) {
   const { bg, fg, container, onContainer } = useColorRole(color);
   const reduceMotion = useReducedMotionValue();
 
+  // Resolve MUI-idiomatic `open` alias → `visible`
+  const isVisible = open ?? visible;
+
+  // Resolve `onClose` → `onDismiss` alias
+  const handleDismiss = () => {
+    onClose?.();
+    onDismiss?.();
+  };
+
   const [position, setPosition] = useState<MenuPosition | null>(null);
-  const [mounted, setMounted] = useState(visible);
+  const [mounted, setMounted] = useState(isVisible);
 
   const opacity = useSharedValue(0);
   const scale = useSharedValue(0.9);
 
   // Measure anchor position before showing
   useEffect(() => {
-    if (!visible) return;
+    if (!isVisible) return;
 
     setMounted(true);
     anchor.current?.measure((_x: number, _y: number, _w: number, h: number, pageX: number, pageY: number) => {
@@ -59,10 +70,10 @@ const Menu = memo(function Menu(rawProps: MenuProps) {
       opacity.value = withTiming(1, { duration: ANIM_DURATION });
       scale.value = withTiming(1, { duration: ANIM_DURATION });
     }
-  }, [visible, anchor, opacity, scale, reduceMotion]);
+  }, [isVisible, anchor, opacity, scale, reduceMotion]);
 
   useEffect(() => {
-    if (visible) return;
+    if (isVisible) return;
 
     if (reduceMotion.value) {
       opacity.value = 0;
@@ -79,7 +90,7 @@ const Menu = memo(function Menu(rawProps: MenuProps) {
       return () => clearTimeout(timer);
     }
     return undefined;
-  }, [visible, opacity, scale, reduceMotion]);
+  }, [isVisible, opacity, scale, reduceMotion]);
 
   const menuAnimStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
@@ -111,7 +122,7 @@ const Menu = memo(function Menu(rawProps: MenuProps) {
         {/* Invisible scrim to dismiss on outside tap */}
         <Pressable
           style={styles.scrim}
-          onPress={onDismiss}
+          onPress={handleDismiss}
           accessibilityRole="button"
           accessibilityLabel="Close menu"
         />

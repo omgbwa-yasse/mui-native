@@ -13,12 +13,13 @@ const config: Config = {
   moduleNameMapper: {
     '^mui-native/(.*)$': '<rootDir>/src/$1',
     '^@mui-native(.*)$': '<rootDir>/src$1',
+    '^react-native-svg$': '<rootDir>/__mocks__/react-native-svg.tsx',
   },
   setupFilesAfterEnv: [
     '@testing-library/jest-native/extend-expect',
     'react-native-gesture-handler/jestSetup',
   ],
-  testPathIgnorePatterns: ['/node_modules/', '/lib/'],
+  testPathIgnorePatterns: ['/node_modules/', '/lib/', 'apps/showcase/tests/unit/', 'apps/showcase/tests/integration/navigation'],
   collectCoverageFrom: ['src/**/*.{ts,tsx}', '!src/**/*.stories.{ts,tsx}', '!src/**/index.ts'],
 };
 

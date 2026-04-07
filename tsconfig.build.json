@@ -1,0 +1,21 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {}
+  },
+  "exclude": [
+    "node_modules",
+    "lib",
+    "tests",
+    "stories",
+    "apps",
+    "specs",
+    "scripts",
+    "coverage",
+    "__mocks__",
+    "**/*.test.tsx",
+    "**/*.test.ts",
+    "**/*.spec.tsx",
+    "**/*.spec.ts"
+  ]
+}

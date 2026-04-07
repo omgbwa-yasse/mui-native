@@ -11,13 +11,13 @@ import { useSx } from '../../hooks/useSx';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import { RadioButtonContext } from './RadioButtonContext';
-import type { RadioButtonProps, RadioGroupProps } from './types';
+import type { RadioButtonProps, RadioGroupProps, RadioProps } from './types';
 
 const CONTROL_SIZES = { small: 16, medium: 20, large: 24 } as const;
 const ANIM_DURATION = 150;
 
 const RadioButton = memo(function RadioButton(rawProps: RadioButtonProps) {
-  const props = useComponentDefaults('RadioButton', rawProps as unknown as RadioGroupProps) as RadioButtonProps;
+  const props = useComponentDefaults('RadioButton', rawProps as unknown as RadioGroupProps) as RadioProps;
   const {
     value,
     disabled: propDisabled = false,
@@ -27,6 +27,8 @@ const RadioButton = memo(function RadioButton(rawProps: RadioButtonProps) {
     style,
     testID,
     accessibilityLabel,
+    onChange,
+    checked: checkedProp,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
@@ -36,7 +38,7 @@ const RadioButton = memo(function RadioButton(rawProps: RadioButtonProps) {
   const outer = CONTROL_SIZES[size ?? 'medium'];
   const inner = Math.round(outer / 2);
 
-  const isSelected = group ? group.value === value : false;
+  const isSelected = checkedProp !== undefined ? checkedProp : (group ? group.value === value : false);
   const disabled = propDisabled || (group?.disabled ?? false);
   const resolvedColor = color ?? theme.colorScheme.primary;
   const disabledColor = theme.colorScheme.onSurface + '61';
@@ -78,7 +80,10 @@ const RadioButton = memo(function RadioButton(rawProps: RadioButtonProps) {
 
   return (
     <TouchableRipple
-      onPress={disabled ? undefined : () => group?.onValueChange(value)}
+      onPress={disabled ? undefined : () => {
+        group?.onValueChange(value);
+        onChange?.(undefined, !isSelected);
+      }}
       disabled={disabled}
       borderless
       accessibilityRole="radio"

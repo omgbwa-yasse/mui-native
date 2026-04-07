@@ -27,7 +27,9 @@ const Modal = memo(function Modal(rawProps: ModalProps) {
   const props = useComponentDefaults('Modal', rawProps);
   const {
     visible,
+    open,
     onDismiss,
+    onClose,
     dismissible = true,
     children,
     testID,
@@ -40,17 +42,26 @@ const Modal = memo(function Modal(rawProps: ModalProps) {
   const { bg, fg, container, onContainer } = useColorRole(color);
   const reduceMotion = useReducedMotionValue();
 
+  // Resolve MUI-idiomatic `open` alias → `visible`
+  const isVisible = open ?? visible;
+
+  // Resolve `onClose` → `onDismiss` alias
+  const handleDismiss = () => {
+    onClose?.();
+    onDismiss?.();
+  };
+
   /**
    * Keep the portal mounted until the exit animation completes, so the
    * component doesn't vanish before fading out.
    */
-  const [mounted, setMounted] = useState(visible);
+  const [mounted, setMounted] = useState(isVisible);
 
-  const opacity = useSharedValue(visible ? 1 : 0);
-  const scale = useSharedValue(visible ? 1 : 0.9);
+  const opacity = useSharedValue(isVisible ? 1 : 0);
+  const scale = useSharedValue(isVisible ? 1 : 0.9);
 
   useEffect(() => {
-    if (visible) {
+    if (isVisible) {
       setMounted(true);
       if (reduceMotion.value) {
         opacity.value = 1;
@@ -78,7 +89,7 @@ const Modal = memo(function Modal(rawProps: ModalProps) {
       }
     }
     return undefined;
-  }, [visible, opacity, scale, reduceMotion]);
+  }, [isVisible, opacity, scale, reduceMotion]);
 
   const surfaceStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
@@ -117,7 +128,7 @@ const Modal = memo(function Modal(rawProps: ModalProps) {
         {/* Scrim */}
         <Pressable
           style={backdropStyle.backdrop}
-          onPress={dismissible ? onDismiss : undefined}
+          onPress={dismissible ? handleDismiss : undefined}
           accessibilityRole="button"
           accessibilityLabel="Close dialog"
         />
