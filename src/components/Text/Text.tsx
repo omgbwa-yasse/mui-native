@@ -10,7 +10,6 @@ import type { TextProps } from './types';
  * Text — MD3 typography-aware text primitive.
  *
  * Resolves font style from the active theme's type scale and ensures correct
- * color, scaling, and accessibility attributes.
  *
  * @example
  * <Text variant="bodyLarge">Hello world</Text>
@@ -19,7 +18,6 @@ export const Text = memo(function Text(rawProps: TextProps): React.ReactElement 
   const props = useComponentDefaults('Text', rawProps);
   const {
     variant,
-    color,
     align,
     children,
     accessibilityRole = 'text',
@@ -42,7 +40,6 @@ export const Text = memo(function Text(rawProps: TextProps): React.ReactElement 
       sxStyle,
       style,
     ],
-    [theme, variant, resolvedVariant, color, align, style, sxStyle],
   );
 
   return (

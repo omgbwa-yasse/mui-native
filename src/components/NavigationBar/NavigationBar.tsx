@@ -10,7 +10,6 @@ import Animated, {
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import type { NavigationBarProps, NavigationBarItem } from './types';
 import type { ViewProps } from 'react-native';
 
@@ -106,7 +105,6 @@ export function NavigationBar(rawProps: NavigationBarProps): React.ReactElement 
     activeIndex,
     items,
     testID,
-    color,
     sx,
     style,
     slots,
@@ -116,7 +114,6 @@ export function NavigationBar(rawProps: NavigationBarProps): React.ReactElement 
   const RootSlot = slots?.Root ?? View;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
   const { colorScheme, elevation: elev } = theme;
 
   const styles = useMemo(

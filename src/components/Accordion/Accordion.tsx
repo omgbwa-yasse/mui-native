@@ -9,7 +9,6 @@ import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import { Text } from '../Text/Text';
 import { AccordionContext } from './AccordionContext';
@@ -29,14 +28,12 @@ const Accordion = memo<AccordionProps>(function Accordion(rawProps: AccordionPro
     disabled = false,
     left,
     right,
-    color,
     sx,
     style,
     ...rest
   } = props as any;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg: _bg, fg: _fg, container: _container, onContainer: _onContainer } = useColorRole(color);
   const reduceMotion = useReducedMotionValue();
 
   // ─── Mode detection ───────────────────────────────────────────────────────

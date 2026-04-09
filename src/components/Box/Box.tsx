@@ -5,7 +5,6 @@ import type { SpacingKey } from '../../tokens/spacing';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import type { BoxProps } from './types';
 
 function resolveSpacing(key: SpacingKey | undefined): number | undefined {
@@ -19,13 +18,12 @@ const Box = memo<BoxProps>(function Box(rawProps: BoxProps) {
     m, mt, mb, ml, mr, mx, my,
     sx,
     style,
-    color,
     children,
     ...rest
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx as never, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
+
   const spacingStyle = {
     ...(p  !== undefined && { padding:          resolveSpacing(p)  }),
     ...(pt !== undefined && { paddingTop:        resolveSpacing(pt) }),

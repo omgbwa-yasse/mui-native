@@ -16,7 +16,6 @@ import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import { Portal } from '../Portal/Portal';
 import type { ModalProps } from './types';
 
@@ -33,13 +32,12 @@ const Modal = memo(function Modal(rawProps: ModalProps) {
     dismissible = true,
     children,
     testID,
-    color,
     sx,
     style,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
+
   const reduceMotion = useReducedMotionValue();
 
   // Resolve MUI-idiomatic `open` alias → `visible`

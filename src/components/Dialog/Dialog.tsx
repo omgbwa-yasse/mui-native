@@ -9,7 +9,6 @@ import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import type { DialogProps } from './types';
 
 /** maxWidth breakpoints (px equivalent, used as dp in RN). */
@@ -36,7 +35,6 @@ export function Dialog(rawProps: DialogProps): React.ReactElement {
     onDismiss,
     onClose,
     testID,
-    color,
     sx,
     style,
     slots,
@@ -44,7 +42,6 @@ export function Dialog(rawProps: DialogProps): React.ReactElement {
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg } = useColorRole(color);
   const { colorScheme, shape, typography } = theme;
 
   // Resolve MUI-idiomatic `open` alias â†’ `visible`

@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import { Text } from '../Text/Text';
 import type { PaginationProps } from './types';
@@ -66,13 +65,11 @@ const Pagination = memo(function Pagination(rawProps: PaginationProps) {
     disabled = false,
     size = 'medium',
     testID,
-    color,
     sx,
     style,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
 
   const btnSize = size === 'small' ? 32 : size === 'large' ? 48 : 40;
   const fontSize = size === 'small' ? ('labelSmall' as const) : ('labelMedium' as const);

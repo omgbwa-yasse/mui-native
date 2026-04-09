@@ -13,7 +13,6 @@ import {
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
 import { createButtonStyles } from './Button.styles';
 import type { ButtonProps } from './types';
@@ -29,7 +28,6 @@ export function Button(rawProps: ButtonProps): React.ReactElement {
     icon,
     onPress,
     size,
-    color,
     sx,
     style,
     accessibilityLabel,
@@ -38,7 +36,6 @@ export function Button(rawProps: ButtonProps): React.ReactElement {
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
   const styles = useMemo(() => createButtonStyles(theme, variant, bg, fg), [theme, variant, bg, fg]);
   const groupSize = useGroupSize();
   const resolvedSize = groupSize ?? size ?? 'medium';

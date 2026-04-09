@@ -11,7 +11,6 @@ import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import type { CardProps, CardVariant } from './types';
 
 const DefaultRoot = View;
@@ -60,7 +59,6 @@ export function Card(rawProps: CardProps): React.ReactElement {
     onPress,
     accessibilityLabel,
     testID,
-    color,
     sx,
     style,
     slots,
@@ -69,7 +67,6 @@ export function Card(rawProps: CardProps): React.ReactElement {
   const Root = slots?.Root ?? DefaultRoot;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
   const styles = useMemo(
     () => createCardStyles(theme.colorScheme, theme.shape, variant),
     [theme, variant],

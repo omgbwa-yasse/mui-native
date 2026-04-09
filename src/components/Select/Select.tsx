@@ -13,7 +13,6 @@ import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import type { SelectOption, SelectProps } from './types';
 
 const ITEM_HEIGHT = 48;
@@ -30,7 +29,6 @@ export const Select = memo(function Select(rawProps: SelectProps) {
     disabled = false,
     multiple = false,
     testID,
-    color,
     sx,
     style,
     slots,
@@ -38,7 +36,6 @@ export const Select = memo(function Select(rawProps: SelectProps) {
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
   const triggerRef = useRef<View>(null);
   const [open, setOpen] = useState(false);
   const [dropdownStyle, setDropdownStyle] = useState<{

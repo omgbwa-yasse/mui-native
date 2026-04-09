@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import { Text } from '../Text/Text';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import type { AlertProps, AlertSeverity } from './types';
@@ -39,7 +38,6 @@ export const Alert = memo(function Alert(rawProps: AlertProps): React.ReactEleme
     action,
     onClose,
     children,
-    color,
     sx,
     style,
     testID,
@@ -48,7 +46,6 @@ export const Alert = memo(function Alert(rawProps: AlertProps): React.ReactEleme
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
   const { iconColor, bgColor } = getSeverityColors(severity, theme.colorScheme as never);
 
   const SlotRoot = slots?.Root ?? View;

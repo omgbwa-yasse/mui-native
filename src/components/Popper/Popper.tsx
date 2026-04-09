@@ -5,7 +5,6 @@ import { useAnchorPosition } from '../../hooks/useAnchorPosition';
 import { Portal } from '../Portal/Portal';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import type { PopperProps, PopperPlacement } from './types';
 import { useTheme } from '../../theme';
 
@@ -63,11 +62,10 @@ export function Popper(rawProps: PopperProps): React.ReactElement | null {
     children,
     style,
     testID,
-    color,
     sx,
   } = props;
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
+
   const anchorPos = useAnchorPosition(anchorRef, open);
   const [surfaceSize, setSurfaceSize] = useState<{ width: number; height: number } | null>(null);
 

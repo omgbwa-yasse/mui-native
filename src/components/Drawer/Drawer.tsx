@@ -13,7 +13,6 @@ import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import { Portal } from '../Portal/Portal';
 import type { DrawerProps } from './types';
 
@@ -30,13 +29,12 @@ const Drawer = memo(function Drawer(rawProps: DrawerProps) {
     children,
     drawerWidth = DEFAULT_DRAWER_WIDTH,
     testID,
-    color,
     sx,
     style,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
+
   const reduceMotion = useReducedMotionValue();
 
   const offscreen = anchor === 'right' ? drawerWidth : -drawerWidth;

@@ -15,7 +15,6 @@ import {
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import { createDataGridStyles } from './DataGrid.styles';
 import { DataGridFilterRow } from './DataGridFilterRow';
 import { DataGridHeaderRow } from './DataGridHeaderRow';
@@ -138,13 +137,11 @@ function DataGridInner<TRow extends GridRowData = GridRowData>(
     style,
     testID,
     accessibilityLabel,
-    color,
     sx,
   } = props;
 
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
   const styles = useMemo(() => createDataGridStyles(theme, density), [theme, density]);
   const flatListRef = useRef<FlatList>(null);
 

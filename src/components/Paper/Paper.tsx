@@ -3,7 +3,6 @@ import { Platform, View } from 'react-native';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import type { PaperProps, PaperElevation } from './types';
 
 type ElevationKey = `level${PaperElevation}`;
@@ -27,13 +26,12 @@ const Paper = memo<PaperProps>(function Paper(rawProps: PaperProps) {
     borderRadius: borderRadiusProp,
     style,
     children,
-    color,
     sx,
     ...rest
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
+
   const cs = theme.colorScheme;
   const elevLevel: ElevationKey = `level${elevationProp}`;
   const elevData = theme.elevation[elevLevel];

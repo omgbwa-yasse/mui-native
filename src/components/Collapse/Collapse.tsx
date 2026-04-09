@@ -5,7 +5,6 @@ import Animated, { useAnimatedStyle, useSharedValue, interpolate } from 'react-n
 import { useTransition } from '../../hooks/useTransition';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import type { CollapseProps } from './types';
 import { useTheme } from '../../theme';
 
@@ -32,11 +31,9 @@ export function Collapse(rawProps: CollapseProps): React.ReactElement | null {
     onExit,
     onExited,
     testID,
-    color,
     sx,
   } = props;
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
   const clampedCollapsedSize = Math.max(0, collapsedSizeProp);
 
   const { progress, shouldMount, state } = useTransition({

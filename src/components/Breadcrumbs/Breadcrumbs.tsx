@@ -3,7 +3,6 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import { Text } from '../Text/Text';
 import type { BreadcrumbsProps } from './types';
@@ -15,7 +14,6 @@ const Breadcrumbs = memo(function Breadcrumbs(rawProps: BreadcrumbsProps) {
     separator,
     maxItems = 0,
     testID,
-    color,
     sx,
     style,
     slots,
@@ -26,7 +24,6 @@ const Breadcrumbs = memo(function Breadcrumbs(rawProps: BreadcrumbsProps) {
   const SeparatorSlot = slots?.Separator ?? View;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
   const [expanded, setExpanded] = useState(false);
 
   const separatorNode = separator ?? (

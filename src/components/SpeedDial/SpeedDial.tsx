@@ -13,7 +13,6 @@ import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import { Portal } from '../Portal/Portal';
 import { SpeedDialAction } from './SpeedDialAction';
 import type { SpeedDialProps } from './types';
@@ -32,13 +31,11 @@ const SpeedDial = memo(function SpeedDial(rawProps: SpeedDialProps) {
     onClose,
     direction = 'up',
     testID,
-    color,
     sx,
     style,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
   const reduceMotion = useReducedMotionValue();
 
   const isControlled = controlledOpen !== undefined;

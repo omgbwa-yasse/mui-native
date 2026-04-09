@@ -3,7 +3,6 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import type { InvitationStatus, InvitationStatusBadgeProps } from './types';
 
 export type { InvitationStatus, InvitationStatusBadgeProps } from './types';
@@ -20,13 +19,11 @@ const InvitationStatusBadge = memo(function InvitationStatusBadge(rawProps: Invi
   const {
     status,
     testID,
-    color,
     sx,
     style,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
 
   const bgColor = (() => {
     switch (status) {

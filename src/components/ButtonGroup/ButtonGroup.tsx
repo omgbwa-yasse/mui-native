@@ -3,7 +3,6 @@ import { View, StyleSheet } from 'react-native';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import { ButtonGroupContext } from './ButtonGroupContext';
 import { SizeProvider } from './SizeContext';
 import type { ButtonGroupProps } from './types';
@@ -17,13 +16,11 @@ export function ButtonGroup(rawProps: ButtonGroupProps) {
     size,
     children,
     testID,
-    color,
     sx,
     style,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
   const isHorizontal = orientation === 'horizontal';
   const childArray = Children.toArray(children);
   const count = childArray.length;

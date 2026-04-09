@@ -4,7 +4,6 @@ import Animated, { useAnimatedStyle, interpolate } from 'react-native-reanimated
 import { useTransition } from '../../hooks/useTransition';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import type { SlideProps, SlideDirection } from './types';
 import { useTheme } from '../../theme';
 
@@ -49,11 +48,10 @@ export function Slide(rawProps: SlideProps): React.ReactElement | null {
     onExit,
     onExited,
     testID,
-    color,
     sx,
   } = props;
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
+
   const { progress, shouldMount, state } = useTransition({
     in: inProp,
     timeout,
