@@ -52,7 +52,21 @@ Bien que `mui-native` couvre une grande partie des composants de base, plusieurs
 
 ---
 
-## 5. Composants de Domaine (Spécifiques)
+## 5. Comparaison avec React Native Paper (RNP)
+
+Une comparaison avec `react-native-paper` (la référence MD3 pour React Native) a été effectuée :
+
+### Convergence
+- **Surface / Paper** : Les deux bibliothèques utilisent un système d'élévation MD3 avec des overlays de teinte (tint). `mui-native` propose désormais l'alias `Surface` pour faciliter la transition.
+- **ProgressBar** : `mui-native` propose désormais l'alias `ProgressBar` (basé sur `LinearProgress`) pour correspondre à la nomenclature RNP.
+
+### Différences Notables
+- **Theming** : RNP utilise un système de thème très imbriqué et spécifique. `mui-native` reste plus proche de la structure plate de MUI Web, ce qui facilite le portage d'applications web.
+- **Searchbar** : RNP propose une `Searchbar` très riche. `mui-native` a été améliorée pour supporter les `slots` (Root, Input) et les icônes personnalisables, atteignant une parité fonctionnelle.
+
+---
+
+## 6. Composants de Domaine (Spécifiques)
 
 Les composants comme `WorkerAgentRow` et `HumanizationScoreBar` sont des extensions spécifiques :
 - **Cohérence** : Ils ne suivent pas strictement le pattern `slots`/`slotProps` des autres composants "MUI-like".

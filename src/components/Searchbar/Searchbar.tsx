@@ -21,9 +21,13 @@ const Searchbar = memo(function Searchbar(rawProps: SearchbarProps) {
     placeholder = 'Search',
     loading = false,
     disabled = false,
+    icon,
+    clearIcon,
     testID,
     sx,
     style,
+    slots,
+    slotProps,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
@@ -54,29 +58,34 @@ const Searchbar = memo(function Searchbar(rawProps: SearchbarProps) {
     },
   });
 
+  const SlotRoot = slots?.Root ?? View;
+  const SlotInput = slots?.Input ?? TextInput;
+
   return (
-    <View
-      style={[styles.container, sxStyle, style]}
+    <SlotRoot
+      {...slotProps?.Root}
+      style={[styles.container, sxStyle, style, slotProps?.Root?.style]}
       accessibilityRole="search"
       accessible
       testID={testID}
     >
       {/* Leading search icon */}
       <View style={styles.iconBox}>
-        <View
-          style={{
-            width: 16,
-            height: 16,
-            borderRadius: 8,
-            borderWidth: 2,
-            borderColor: theme.colorScheme.onSurfaceVariant,
-          }}
-        />
+        {icon ?? (
+          <View
+            style={{
+              width: 16,
+              height: 16,
+              borderRadius: 8,
+              borderWidth: 2,
+              borderColor: theme.colorScheme.onSurfaceVariant,
+            }}
+          />
+        )}
       </View>
 
-      <TextInput
-        ref={inputRef}
-        style={styles.input}
+      <SlotInput
+        {...(inputRef as any)}
         value={value}
         onChangeText={onChangeText}
         onSubmitEditing={onSubmitEditing}
@@ -85,6 +94,8 @@ const Searchbar = memo(function Searchbar(rawProps: SearchbarProps) {
         editable={!disabled}
         returnKeyType="search"
         underlineColorAndroid="transparent"
+        {...slotProps?.Input}
+        style={[styles.input, slotProps?.Input?.style]}
       />
 
       {loading ? (
@@ -97,18 +108,20 @@ const Searchbar = memo(function Searchbar(rawProps: SearchbarProps) {
           hitSlop={8}
         >
           <View style={[styles.iconBox]}>
-            <View
-              style={{
-                width: 12,
-                height: 2,
-                backgroundColor: theme.colorScheme.onSurfaceVariant,
-                transform: [{ rotate: '45deg' }],
-              }}
-            />
+            {clearIcon ?? (
+              <View
+                style={{
+                  width: 12,
+                  height: 2,
+                  backgroundColor: theme.colorScheme.onSurfaceVariant,
+                  transform: [{ rotate: '45deg' }],
+                }}
+              />
+            )}
           </View>
         </Pressable>
       ) : null}
-    </View>
+    </SlotRoot>
   );
 });
 

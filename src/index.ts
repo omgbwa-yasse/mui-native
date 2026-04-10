@@ -174,8 +174,8 @@ export type { NumberFieldProps } from './components/NumberField';
 export { Pagination } from './components/Pagination';
 export type { PaginationProps } from './components/Pagination';
 
-export { Paper } from './components/Paper';
-export type { PaperProps, PaperElevation, PaperMode } from './components/Paper';
+export { Paper, Paper as Surface } from './components/Paper';
+export type { PaperProps, PaperElevation, PaperMode, PaperProps as SurfaceProps } from './components/Paper';
 
 export { Portal, PortalHost } from './components/Portal';
 export type { PortalProps, PortalHostProps } from './components/Portal';
@@ -251,8 +251,8 @@ export type { TransferListProps, TransferItem } from './components/TransferList'
 export { CircularProgress } from './components/CircularProgress';
 export type { CircularProgressProps, CircularProgressVariant } from './components/CircularProgress';
 
-export { LinearProgress } from './components/LinearProgress';
-export type { LinearProgressProps, LinearProgressVariant } from './components/LinearProgress';
+export { LinearProgress, LinearProgress as ProgressBar } from './components/LinearProgress';
+export type { LinearProgressProps, LinearProgressVariant, LinearProgressProps as ProgressBarProps } from './components/LinearProgress';
 
 // Popover
 export { Popover } from './components/Popover';
