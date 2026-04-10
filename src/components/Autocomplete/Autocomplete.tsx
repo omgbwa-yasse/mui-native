@@ -15,7 +15,6 @@ import { ActivityIndicator } from '../ActivityIndicator/ActivityIndicator';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import type { AutocompleteOption, AutocompleteProps } from './types';
 
 const ITEM_HEIGHT = 48;
@@ -46,7 +45,6 @@ export const Autocomplete = memo(function Autocomplete(rawProps: AutocompletePro
     placeholder,
     label,
     testID,
-    color,
     sx,
     style,
     slots,
@@ -54,7 +52,6 @@ export const Autocomplete = memo(function Autocomplete(rawProps: AutocompletePro
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
   const triggerRef = useRef<View>(null);
   const [open, setOpen] = useState(false);
   const [internalInput, setInternalInput] = useState('');

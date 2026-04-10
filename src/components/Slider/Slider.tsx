@@ -9,7 +9,6 @@ import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import type { SliderProps } from './types';
 
 const TRACK_HEIGHT = 4;
@@ -40,13 +39,11 @@ const Slider = memo(function Slider(rawProps: SliderProps) {
     disabled = false,
     testID,
     accessibilityLabel,
-    color,
     sx,
     style,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
   const trackWidthRef = useRef(TRACK_WIDTH);
 
   const thumbX = useSharedValue(((value - min) / (max - min)) * TRACK_WIDTH);

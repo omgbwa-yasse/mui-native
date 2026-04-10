@@ -4,7 +4,6 @@ import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated'
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import type { WorkerAgentRowProps } from './types';
 
 export type { WorkerAgentRowProps } from './types';
@@ -24,13 +23,11 @@ const WorkerAgentRow = memo(function WorkerAgentRow(rawProps: WorkerAgentRowProp
     status,
     progressPercent,
     label,
-    color,
     sx,
     style,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
   const cs = theme.colorScheme;
 
   const clampedPct = Math.min(100, Math.max(0, progressPercent));

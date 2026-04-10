@@ -4,7 +4,6 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import { Icon } from '../Icon/Icon';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import type { RatingProps } from './types';
@@ -28,13 +27,11 @@ const Rating = memo(function Rating(rawProps: RatingProps) {
     icon,
     emptyIcon,
     testID,
-    color,
     sx,
     style,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
   const [internalValue, setInternalValue] = useState<number>(0);
 
   const isControlled = value !== undefined && value !== null;

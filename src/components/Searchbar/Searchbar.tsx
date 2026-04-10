@@ -8,7 +8,6 @@ import {
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import { ActivityIndicator } from '../ActivityIndicator/ActivityIndicator';
 import type { SearchbarProps } from './types';
 
@@ -23,13 +22,11 @@ const Searchbar = memo(function Searchbar(rawProps: SearchbarProps) {
     loading = false,
     disabled = false,
     testID,
-    color,
     sx,
     style,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
   const inputRef = useRef<TextInput>(null);
 
   const styles = StyleSheet.create({

@@ -26,7 +26,6 @@ export const ActivityIndicator = memo(function ActivityIndicator(rawProps: Activ
   const props = useComponentDefaults('ActivityIndicator', rawProps);
   const {
     size = 'medium',
-    color,
     animating = true,
     hidesWhenStopped = true,
     testID,

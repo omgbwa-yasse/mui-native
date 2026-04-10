@@ -10,7 +10,6 @@ import { Checkbox } from '../Checkbox/Checkbox';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import type { TransferItem, TransferListProps } from './types';
 
 const ITEM_HEIGHT = 48;
@@ -24,13 +23,11 @@ export const TransferList = memo(function TransferList(rawProps: TransferListPro
     leftTitle = 'Available',
     rightTitle = 'Selected',
     testID,
-    color,
     sx,
     style,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
   const { colorScheme, shape } = theme;
 
   const [leftChecked, setLeftChecked] = useState<Set<string>>(new Set());

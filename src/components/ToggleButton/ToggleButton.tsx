@@ -4,7 +4,6 @@ import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import { ToggleButtonGroupContext } from './ToggleButtonGroupContext';
 import type { ToggleButtonProps, ToggleButtonGroupProps } from './types';
 
@@ -15,7 +14,6 @@ export const ToggleButton = memo(function ToggleButton(rawProps: ToggleButtonPro
     disabled = false,
     accessibilityLabel,
     children,
-    color,
     sx,
     style,
     testID,
@@ -39,7 +37,6 @@ export const ToggleButton = memo(function ToggleButton(rawProps: ToggleButtonPro
 
   const { colorScheme } = theme;
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
 
   return (
     <TouchableRipple

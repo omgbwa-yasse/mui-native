@@ -3,7 +3,6 @@ import { View, StyleSheet } from 'react-native';
 import type { LayoutChangeEvent } from 'react-native';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import type { MasonryProps } from './types';
 import { useTheme } from '../../theme';
 
@@ -17,11 +16,10 @@ export const Masonry = memo(function Masonry(rawProps: MasonryProps) {
     spacing = 2,
     children,
     style,
-    color,
     sx,
   } = props;
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
+
   const colCount = columns ?? defaultColumns;
   const childArray = Children.toArray(children);
 

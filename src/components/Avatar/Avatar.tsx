@@ -15,7 +15,6 @@ const Avatar = memo(function Avatar(rawProps: AvatarProps) {
     label,
     icon,
     size = DEFAULT_AVATAR_SIZE,
-    color,
     labelColor,
     testID,
     accessibilityLabel,

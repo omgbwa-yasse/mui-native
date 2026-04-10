@@ -14,7 +14,6 @@ import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import { Text } from '../Text/Text';
 import { TabsContext } from './TabsContext';
@@ -34,7 +33,6 @@ const Tabs = memo(function Tabs(rawProps: TabsProps) {
     size = 'medium',
     children,
     testID,
-    color,
     sx,
     style,
     slots,
@@ -47,7 +45,6 @@ const Tabs = memo(function Tabs(rawProps: TabsProps) {
   const IndicatorSlot = slots?.Indicator ?? Animated.View;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
   const reduceMotion = useReducedMotionValue();
 
   const indicatorX = useSharedValue(0);

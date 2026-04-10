@@ -10,7 +10,6 @@ import type { TextProps, NativeSyntheticEvent, TextInputContentSizeChangeEventDa
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import { Select } from '../Select';
 import type { TextFieldProps, TextFieldVariant } from './types';
 
@@ -129,7 +128,6 @@ export function TextField(rawProps: TextFieldProps): React.ReactElement {
     options = [],
     testID,
     accessibilityLabel,
-    color,
     sx,
     style,
     slots,
@@ -137,7 +135,6 @@ export function TextField(rawProps: TextFieldProps): React.ReactElement {
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
   const hasError = Boolean(error);
   const errorText = typeof error === 'string' ? error : undefined;
   const resolvedHelper = helperText ?? errorText ?? supportingText;

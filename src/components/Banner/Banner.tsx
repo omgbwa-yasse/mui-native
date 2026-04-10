@@ -5,7 +5,6 @@ import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-na
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import { Icon } from '../Icon/Icon';
 import { Text } from '../Text/Text';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
@@ -21,13 +20,11 @@ const Banner = memo(function Banner(rawProps: BannerProps) {
     actions,
     icon,
     testID,
-    color,
     sx,
     style,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
   const height = useSharedValue(0);
   const measuredHeight = useRef(0);
   const [mounted, setMounted] = useState(visible);

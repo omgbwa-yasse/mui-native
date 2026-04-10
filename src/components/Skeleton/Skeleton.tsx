@@ -13,7 +13,6 @@ import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import type { SkeletonProps } from './types';
 
 /**
@@ -29,13 +28,12 @@ export const Skeleton = memo(function Skeleton(rawProps: SkeletonProps): React.R
     variant = 'rectangular',
     animation = 'wave',
     testID,
-    color,
     sx,
     style,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
+
   const reduceMotion = useReducedMotionValue();
   const progress = useSharedValue(0);
 

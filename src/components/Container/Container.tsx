@@ -2,7 +2,6 @@ import React, { memo } from 'react';
 import { View } from 'react-native';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import type { ContainerProps, ContainerMaxWidth } from './types';
 import { useTheme } from '../../theme';
 
@@ -24,12 +23,11 @@ const Container = memo<ContainerProps>(function Container(rawProps: ContainerPro
     disableGutters = false,
     style,
     children,
-    color,
     sx,
     ...rest
   } = props;
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
+
   const maxWidthValue =
     maxWidth !== false ? CONTAINER_MAX_WIDTHS[maxWidth] : undefined;
 

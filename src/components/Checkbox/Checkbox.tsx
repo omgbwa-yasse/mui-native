@@ -21,7 +21,6 @@ const Checkbox = memo(function Checkbox(rawProps: CheckboxProps) {
     status,
     onPress,
     disabled = false,
-    color,
     size,
     sx,
     style,

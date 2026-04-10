@@ -11,7 +11,6 @@ import {
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import { useLocalizationOptional } from './useLocalization';
 import { createDatePickerStyles } from './DatePicker.styles';
 import type { DatePickerProps } from './types';
@@ -74,12 +73,10 @@ export const DatePicker = React.memo(function DatePicker(rawProps: DatePickerPro
     testID,
     style,
     accessibilityLabel,
-    color,
     sx,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
   const localization = useLocalizationOptional();
   const styles = useMemo(() => createDatePickerStyles(theme, bg), [theme, bg]);
 

@@ -14,7 +14,6 @@ import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useAnchorPosition } from '../../hooks/useAnchorPosition';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import { Portal } from '../Portal/Portal';
 import type { PopoverProps, VerticalPosition, HorizontalPosition } from './types';
 
@@ -52,14 +51,13 @@ export function Popover(rawProps: PopoverProps): React.ReactElement | null {
     elevation: _elevationProp = 8,
     disablePortal = false,
     children,
-    color,
     sx,
     style,
     testID,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
+
   const anchorPos = useAnchorPosition(anchorRef, open);
 
   const [surfaceSize, setSurfaceSize] = useState<{ width: number; height: number } | null>(null);

@@ -12,7 +12,6 @@ import {
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import type { CodeInputProps } from './types';
 
 export type { CodeInputProps } from './types';
@@ -21,10 +20,8 @@ const SEGMENT_COUNT = 7;
 
 export function CodeInput(rawProps: CodeInputProps) {
   const props = useComponentDefaults('CodeInput', rawProps);
-  const { color, sx, style, value, onChange, disabled = false } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
   const inputRefs = useRef<Array<TextInput | null>>(
     Array.from({ length: SEGMENT_COUNT }, () => null),
   );

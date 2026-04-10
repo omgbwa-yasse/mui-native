@@ -14,7 +14,6 @@ import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import type { TouchableRippleProps } from './types';
 
 /**
@@ -43,12 +42,10 @@ export function TouchableRipple(rawProps: TouchableRippleProps): React.ReactElem
     accessibilityLabel,
     accessibilityState,
     style,
-    color,
     sx,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
   const reduceMotion = useReducedMotionValue();
 
   const resolvedRippleColor =

@@ -3,7 +3,6 @@ import { View, Text, StyleSheet } from 'react-native';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import type { AppBarProps } from './types';
 
 export function AppBar(rawProps: AppBarProps): React.ReactElement {
@@ -14,7 +13,6 @@ export function AppBar(rawProps: AppBarProps): React.ReactElement {
     navigationIcon,
     actions,
     testID,
-    color,
     sx,
     style,
     slots,
@@ -27,7 +25,6 @@ export function AppBar(rawProps: AppBarProps): React.ReactElement {
   const ActionsSlot = slots?.Actions ?? View;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
   const { colorScheme, typography, elevation: elev } = theme;
 
   const styles = useMemo(

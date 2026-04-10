@@ -17,7 +17,6 @@ const Badge = memo(function Badge(rawProps: BadgeProps) {
     max = 99,
     visible = true,
     invisible,
-    color,
     labelColor,
     children,
     anchorOrigin = { vertical: 'top', horizontal: 'right' },

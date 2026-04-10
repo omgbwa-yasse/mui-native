@@ -4,7 +4,6 @@ import { Text } from '../Text/Text';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import type { HelperTextProps } from './types';
 
 export const HelperText = memo(function HelperText(rawProps: HelperTextProps) {

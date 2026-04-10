@@ -4,7 +4,6 @@ import Animated, { useAnimatedStyle, withTiming, useReducedMotion } from 'react-
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import type { HumanizationScoreBarProps } from './types';
 
 export type { HumanizationScoreBarProps } from './types';
@@ -18,13 +17,11 @@ const HumanizationScoreBar = memo(function HumanizationScoreBar(rawProps: Humani
     fleschKincaidBefore,
     fleschKincaidAfter,
     maxScore = MAX_DEFAULT,
-    color,
     sx,
     style,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
   const cs = theme.colorScheme;
   const { width } = useWindowDimensions();
   const reduceMotion = useReducedMotion();

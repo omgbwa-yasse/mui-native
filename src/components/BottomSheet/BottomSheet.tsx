@@ -21,7 +21,6 @@ import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import type { BottomSheetProps } from './types';
 
 /**
@@ -40,13 +39,12 @@ export function BottomSheet(rawProps: BottomSheetProps): React.ReactElement {
     snapPoints = [0.5],
     showHandle = true,
     testID,
-    color,
     sx,
     style,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
+
   const { colorScheme, shape } = theme;
   const { height: windowHeight } = useWindowDimensions();
 

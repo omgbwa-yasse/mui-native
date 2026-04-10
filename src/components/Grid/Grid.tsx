@@ -2,7 +2,6 @@ import React, { Children, cloneElement, isValidElement, memo, useState } from 'r
 import { useWindowDimensions, View } from 'react-native';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import type { GridItemProps, GridProps } from './types';
 import { useTheme } from '../../theme';
 
@@ -63,12 +62,11 @@ const Grid = memo<GridProps>(function Grid(rawProps: GridProps) {
     rowSpacing,
     style,
     children,
-    color,
     sx,
     ...rest
   } = props;
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
+
   const { width: screenWidth } = useWindowDimensions();
   const [containerWidth, setContainerWidth] = useState(screenWidth);
 

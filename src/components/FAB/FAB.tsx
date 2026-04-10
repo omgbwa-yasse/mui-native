@@ -10,7 +10,6 @@ import Animated, {
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
 import type { FABProps, FABSize, FABVariant } from './types';
 
@@ -25,7 +24,6 @@ export function FAB(rawProps: FABProps): React.ReactElement {
     variant = 'primary',
     size = 'medium',
     onPress,
-    color,
     sx,
     style,
     accessibilityLabel,
@@ -34,7 +32,6 @@ export function FAB(rawProps: FABProps): React.ReactElement {
   const { theme } = useTheme();
   const { colorScheme, shape, elevation: elev } = theme;
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
 
   const containerColor: Record<FABVariant, string> = {
     primary: container,

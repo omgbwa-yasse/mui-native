@@ -3,7 +3,6 @@ import { type AccessibilityRole, StyleSheet, View } from 'react-native';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import { Text } from '../Text/Text';
 import { StepperContext } from './StepperContext';
@@ -26,7 +25,6 @@ const Stepper = memo(function Stepper(rawProps: StepperProps) {
     nonLinear = false,
     onStepPress,
     testID,
-    color,
     sx,
     style,
     slots,
@@ -38,7 +36,6 @@ const Stepper = memo(function Stepper(rawProps: StepperProps) {
 
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg } = useColorRole(color);
   const isHorizontal = orientation === 'horizontal';
   const layoutStyles = styleSheet(isHorizontal);
 

@@ -4,7 +4,6 @@ import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import { Text } from '../Text/Text';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import type { DataTableColumn, DataTableProps } from './types';
@@ -81,13 +80,11 @@ function DataTable<T = Record<string, unknown>>(rawProps: DataTableProps<T>) {
     emptyState,
     onEndReached,
     testID,
-    color,
     sx,
     style,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
   const selectedSet = new Set(selectedRows ?? []);
 
   const handleRowSelect = useCallback(

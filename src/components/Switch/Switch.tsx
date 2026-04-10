@@ -30,7 +30,6 @@ const Switch = memo(function Switch(rawProps: SwitchProps) {
     onValueChange,
     onChange,
     disabled = false,
-    color,
     testID,
     accessibilityLabel,
     sx,

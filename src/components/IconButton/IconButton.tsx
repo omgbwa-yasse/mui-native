@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import { Icon } from '../Icon/Icon';
 import { TouchableRipple } from '../TouchableRipple/TouchableRipple';
 import type { IconButtonProps } from './types';
@@ -19,7 +18,6 @@ const IconButton = memo(function IconButton(rawProps: IconButtonProps) {
     selected = false,
     variant = 'standard',
     size = 24,
-    color,
     sx,
     style,
     accessibilityLabel,
@@ -28,7 +26,6 @@ const IconButton = memo(function IconButton(rawProps: IconButtonProps) {
   const { theme } = useTheme();
   const cs = theme.colorScheme;
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
 
   let bgColor: string | undefined;
   let iconColor: string;

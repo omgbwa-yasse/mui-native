@@ -10,7 +10,6 @@ import Animated, {
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import { useReducedMotionValue } from '../../theme/useReduceMotion';
 import type { ChipProps } from './types';
 
@@ -28,7 +27,6 @@ export function Chip(rawProps: ChipProps): React.ReactElement {
     onRemove,
     disabled = false,
     size,
-    color,
     sx,
     style,
     accessibilityLabel,
@@ -39,7 +37,6 @@ export function Chip(rawProps: ChipProps): React.ReactElement {
   const { theme } = useTheme();
   const { colorScheme, shape, typography } = theme;
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
 
   const CHIP_HEIGHTS = { small: 24, medium: 32, large: 40 } as const;
   const chipHeight = CHIP_HEIGHTS[size ?? 'medium'];

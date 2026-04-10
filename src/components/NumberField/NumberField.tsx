@@ -9,7 +9,6 @@ import { Text } from '../Text/Text';
 import { useComponentDefaults } from '../../hooks/useComponentDefaults';
 import { useTheme } from '../../theme';
 import { useSx } from '../../hooks/useSx';
-import { useColorRole } from '../../hooks/useColorRole';
 import type { NumberFieldProps } from './types';
 
 function clamp(val: number, min?: number, max?: number): number {
@@ -40,13 +39,11 @@ export const NumberField = memo(function NumberField(rawProps: NumberFieldProps)
     placeholder,
     testID,
     accessibilityLabel,
-    color,
     sx,
     style,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
-  const { bg, fg, container, onContainer } = useColorRole(color);
   const { colorScheme, shape, typography } = theme;
 
   const [inputText, setInputText] = useState<string>(

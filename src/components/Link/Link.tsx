@@ -13,7 +13,6 @@ const Link = memo(function Link(rawProps: LinkProps) {
     href,
     onPress,
     underline = 'always',
-    color,
     testID,
     style,
     children,

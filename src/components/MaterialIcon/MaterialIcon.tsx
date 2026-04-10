@@ -47,7 +47,6 @@ export const MaterialIcon = memo(function MaterialIcon(rawProps: MaterialIconPro
     name,
     variant = 'filled',
     size = 24,
-    color,
     accessibilityLabel,
     testID,
     sx,
