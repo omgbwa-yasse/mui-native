@@ -57,7 +57,7 @@ const Breadcrumbs = memo(function Breadcrumbs(rawProps: BreadcrumbsProps) {
 
         const textColor = isLast
           ? theme.colorScheme.onSurface
-          : bg;
+          : theme.colorScheme.onSurfaceVariant;
 
         const itemNode = isLast ? (
           <View key={index} style={styles.item}>

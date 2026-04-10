@@ -265,7 +265,7 @@ export const DateTimePicker = React.memo(function DateTimePicker(rawProps: DateT
                   <Text
                     style={{
                       ...theme.typography.labelLarge,
-                      color: bg,
+                      color: theme.colorScheme.primary,
                     }}
                   >
                     OK

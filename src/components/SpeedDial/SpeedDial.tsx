@@ -130,7 +130,7 @@ const SpeedDial = memo(function SpeedDial(rawProps: SpeedDialProps) {
         {/* Main FAB */}
         <Pressable
           onPress={handleToggle}
-          style={[styles.fab, { backgroundColor: container }]}
+          style={[styles.fab, { backgroundColor: theme.colorScheme.primaryContainer }]}
           accessibilityRole="button"
           accessibilityLabel="Speed Dial"
           accessibilityState={{ expanded: open }}

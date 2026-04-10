@@ -1,9 +1,15 @@
-import type { ImageSourcePropType, StyleProp, ViewStyle } from 'react-native';
+import type { ImageSourcePropType, StyleProp, ViewProps, ViewStyle } from 'react-native';
 import type { IconSource } from '../Icon/types';
 import type { SizeProp } from '../../tokens/size';
-import type { SxProps } from '../../types/shared';
+import type { SxProps, SlotPropsConfig } from '../../types/shared';
 
-export interface AvatarProps {
+export interface AvatarSlots {
+  [key: string]: React.ComponentType<any>;
+  Root: React.ComponentType<ViewProps>;
+  Label: React.ComponentType<any>;
+}
+
+export interface AvatarProps extends SlotPropsConfig<AvatarSlots> {
   source?: ImageSourcePropType;
   label?: string;
   icon?: IconSource;

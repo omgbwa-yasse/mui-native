@@ -238,7 +238,7 @@ export const Autocomplete = memo(function Autocomplete(rawProps: AutocompletePro
                       style={[
                         styles.option,
                         selected && {
-                          backgroundColor: container,
+                          backgroundColor: colorScheme.secondaryContainer,
                         },
                       ]}
                     >
@@ -246,7 +246,7 @@ export const Autocomplete = memo(function Autocomplete(rawProps: AutocompletePro
                         variant="bodyLarge"
                         style={{
                           color: selected
-                            ? onContainer
+                            ? colorScheme.onSecondaryContainer
                             : colorScheme.onSurface,
                         }}
                       >

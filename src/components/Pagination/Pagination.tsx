@@ -88,9 +88,9 @@ const Pagination = memo(function Pagination(rawProps: PaginationProps) {
 
   const renderButton = (label: string, targetPage: number, isCurrentPage: boolean, key: string | number) => {
     const isDisabled = disabled || targetPage < 1 || targetPage > count;
-    const btnBg = isCurrentPage ? bg : 'transparent';
+    const btnBg = isCurrentPage ? theme.colorScheme.primary : 'transparent';
     const textColor = isCurrentPage
-      ? fg
+      ? theme.colorScheme.onPrimary
       : isDisabled
       ? `${theme.colorScheme.onSurface}61`
       : theme.colorScheme.onSurface;

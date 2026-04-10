@@ -77,11 +77,11 @@ const Rating = memo(function Rating(rawProps: RatingProps) {
                 >
                   <View style={{ width: starSize, height: starSize }}>
                     {icon && !isEmpty && !halfFilled ? (
-                      <Icon source={icon} size={starSize} color={bg} />
+                      <Icon source={icon} size={starSize} color={theme.colorScheme.primary} />
                     ) : emptyIcon && isEmpty ? (
                       <Icon source={emptyIcon} size={starSize} color={theme.colorScheme.onSurfaceVariant} />
                     ) : (
-                      <Text style={{ fontSize: starSize, color: halfFilled || filled ? bg : theme.colorScheme.onSurfaceVariant }}>
+                      <Text style={{ fontSize: starSize, color: halfFilled || filled ? theme.colorScheme.primary : theme.colorScheme.onSurfaceVariant }}>
                         {halfFilled || filled ? FILLED_STAR : EMPTY_STAR}
                       </Text>
                     )}
@@ -89,7 +89,7 @@ const Rating = memo(function Rating(rawProps: RatingProps) {
                 </TouchableRipple>
               ) : (
                 <View style={{ width: starSize / 2, height: starSize, overflow: 'hidden' }}>
-                  <Text style={{ fontSize: starSize, color: halfFilled || filled ? bg : theme.colorScheme.onSurfaceVariant }}>
+                  <Text style={{ fontSize: starSize, color: halfFilled || filled ? theme.colorScheme.primary : theme.colorScheme.onSurfaceVariant }}>
                     {halfFilled || filled ? FILLED_STAR : EMPTY_STAR}
                   </Text>
                 </View>
@@ -112,9 +112,9 @@ const Rating = memo(function Rating(rawProps: RatingProps) {
         }
 
         // precision = 1
-        const starColor = filled ? bg : theme.colorScheme.onSurfaceVariant;
+        const starColor = filled ? theme.colorScheme.primary : theme.colorScheme.onSurfaceVariant;
         const starContent = filled ? (icon ? (
-          <Icon source={icon} size={starSize} color={bg} />
+          <Icon source={icon} size={starSize} color={theme.colorScheme.primary} />
         ) : (
           <Text style={{ fontSize: starSize, color: starColor }}>{FILLED_STAR}</Text>
         )) : (emptyIcon ? (

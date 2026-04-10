@@ -195,7 +195,7 @@ export const Select = memo(function Select(rawProps: SelectProps) {
                       style={[
                         styles.option,
                         selected && {
-                          backgroundColor: container,
+                          backgroundColor: colorScheme.secondaryContainer,
                         },
                       ]}
                     >
@@ -205,7 +205,7 @@ export const Select = memo(function Select(rawProps: SelectProps) {
                           color: item.disabled
                             ? colorScheme.onSurface + '61'
                             : selected
-                              ? onContainer
+                              ? colorScheme.onSecondaryContainer
                               : colorScheme.onSurface,
                         }}
                       >

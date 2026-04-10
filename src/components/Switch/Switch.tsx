@@ -30,10 +30,13 @@ const Switch = memo(function Switch(rawProps: SwitchProps) {
     onValueChange,
     onChange,
     disabled = false,
+    color,
     testID,
     accessibilityLabel,
     sx,
     style,
+    slots,
+    slotProps,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
@@ -83,6 +86,8 @@ const Switch = memo(function Switch(rawProps: SwitchProps) {
       }
     });
 
+  const SlotRoot = slots?.Root ?? Animated.View;
+
   const styles = StyleSheet.create({
     hitSlop: {
       minWidth: 48,
@@ -107,8 +112,9 @@ const Switch = memo(function Switch(rawProps: SwitchProps) {
 
   return (
     <GestureDetector gesture={tap}>
-      <Animated.View
-        style={[styles.hitSlop, sxStyle, style]}
+      <SlotRoot
+        {...slotProps?.Root}
+        style={[styles.hitSlop, sxStyle, style, slotProps?.Root?.style]}
         accessibilityRole="switch"
         accessible
         accessibilityLabel={accessibilityLabel}
@@ -118,7 +124,7 @@ const Switch = memo(function Switch(rawProps: SwitchProps) {
         <Animated.View style={[styles.track, trackStyle]}>
           <Animated.View style={[styles.thumb, thumbStyle]} />
         </Animated.View>
-      </Animated.View>
+      </SlotRoot>
     </GestureDetector>
   );
 });

@@ -17,12 +17,15 @@ const Badge = memo(function Badge(rawProps: BadgeProps) {
     max = 99,
     visible = true,
     invisible,
+    color,
     labelColor,
     children,
     anchorOrigin = { vertical: 'top', horizontal: 'right' },
     sx,
     style,
     testID,
+    slots,
+    slotProps,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
@@ -51,15 +54,20 @@ const Badge = memo(function Badge(rawProps: BadgeProps) {
     left: anchorOrigin.horizontal === 'left' ? BADGE_OFFSET : undefined,
   };
 
+  const SlotRoot = slots?.Root ?? View;
+  const SlotBadge = slots?.Badge ?? View;
+
   return (
-    <View style={[styles.wrapper, sxStyle, style]}>
+    <SlotRoot {...slotProps?.Root} style={[styles.wrapper, sxStyle, style, slotProps?.Root?.style]}>
       {children}
       {isVisible ? (
-        <View
+        <SlotBadge
+          {...slotProps?.Badge}
           style={[
             isDot ? styles.dot : styles.badge,
             { backgroundColor: bgColor },
             positionStyle,
+            slotProps?.Badge?.style,
           ]}
           accessibilityElementsHidden
           importantForAccessibility="no-hide-descendants"
@@ -70,9 +78,9 @@ const Badge = memo(function Badge(rawProps: BadgeProps) {
               {label}
             </Text>
           )}
-        </View>
+        </SlotBadge>
       ) : null}
-    </View>
+    </SlotRoot>
   );
 });
 

@@ -90,6 +90,21 @@ function resolveColor(value: unknown, theme: Theme): unknown {
     const roles = colorRoleMap[value];
     return theme.colorScheme[roles.bg];
   }
+  // If it's a key in colorScheme, return it
+  if (typeof value === 'string' && value in theme.colorScheme) {
+    return theme.colorScheme[value as keyof typeof theme.colorScheme];
+  }
+  return value;
+}
+
+// ─── Shape resolution ──────────────────────────────────────────────────────────
+
+const SHAPE_PROPS = new Set(['borderRadius']);
+
+function resolveShape(value: unknown, theme: Theme): unknown {
+  if (typeof value === 'string' && value in theme.shape) {
+    return theme.shape[value as keyof typeof theme.shape];
+  }
   return value;
 }
 
@@ -150,6 +165,11 @@ function resolveSxObject(
     // Apply color resolution for color-bearing props
     if (COLOR_PROPS.has(key)) {
       rawValue = resolveColor(rawValue, theme);
+    }
+
+    // Apply shape resolution for shape-bearing props
+    if (SHAPE_PROPS.has(key)) {
+      rawValue = resolveShape(rawValue, theme);
     }
 
     // Map shorthand to RN key

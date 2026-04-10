@@ -16,6 +16,7 @@ const Link = memo(function Link(rawProps: LinkProps) {
     testID,
     style,
     children,
+    color,
     sx,
     ...textProps
   } = props;

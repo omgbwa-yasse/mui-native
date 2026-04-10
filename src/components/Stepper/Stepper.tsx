@@ -112,7 +112,7 @@ const Stepper = memo(function Stepper(rawProps: StepperProps) {
         const circleColor = isError
           ? theme.colorScheme.error
           : isCompleted || isActive
-          ? bg
+          ? theme.colorScheme.primary
           : theme.colorScheme.outline;
 
         const circleBg = isCompleted || isActive || isError
@@ -120,7 +120,7 @@ const Stepper = memo(function Stepper(rawProps: StepperProps) {
           : 'transparent';
 
         const circleTextColor = isCompleted || isActive || isError
-          ? fg
+          ? theme.colorScheme.onPrimary
           : theme.colorScheme.onSurfaceVariant;
 
         const labelColor = isActive
@@ -128,7 +128,7 @@ const Stepper = memo(function Stepper(rawProps: StepperProps) {
           : theme.colorScheme.onSurfaceVariant;
 
         const connectorColor = isCompleted
-          ? bg
+          ? theme.colorScheme.primary
           : theme.colorScheme.outlineVariant;
 
         const stepIndicator = (

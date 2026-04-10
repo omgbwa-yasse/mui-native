@@ -56,7 +56,7 @@ const Tabs = memo(function Tabs(rawProps: TabsProps) {
 
   const activeColor = variant === 'secondary'
     ? theme.colorScheme.secondary
-    : bg;
+    : theme.colorScheme.primary;
 
   const moveIndicator = useCallback(
     (index: number) => {

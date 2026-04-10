@@ -20,6 +20,7 @@ export function Chip(rawProps: ChipProps): React.ReactElement {
   const props = useComponentDefaults('Chip', rawProps);
   const {
     label,
+    children,
     variant = 'assist',
     selected = false,
     icon,
@@ -104,19 +105,31 @@ export function Chip(rawProps: ChipProps): React.ReactElement {
         style={[styles.container, animatedStyle, sxStyle, style, slotProps?.Root?.style]}
         accessible
         accessibilityRole="button"
-        accessibilityLabel={accessibilityLabel ?? label}
+        accessibilityLabel={accessibilityLabel ?? (typeof children === 'string' ? children : label)}
         accessibilityState={{ disabled, selected: isSelected }}
         testID={testID}
       >
         {icon != null && <View style={styles.iconWrapper}>{icon}</View>}
-        <LabelSlot {...slotProps?.Label} style={[styles.label, slotProps?.Label?.style]}>{label}</LabelSlot>
+        {children !== undefined ? (
+          typeof children === 'string' ? (
+            <LabelSlot {...slotProps?.Label} style={[styles.label, slotProps?.Label?.style]}>
+              {children}
+            </LabelSlot>
+          ) : (
+            children
+          )
+        ) : (
+          <LabelSlot {...slotProps?.Label} style={[styles.label, slotProps?.Label?.style]}>
+            {label}
+          </LabelSlot>
+        )}
         {onRemove != null && (
           <View style={styles.removeWrapper}>
             <DeleteIconSlot
               {...slotProps?.DeleteIcon}
               onPress={disabled ? undefined : onRemove}
               accessibilityRole="button"
-              accessibilityLabel={`Remove ${label}`}
+              accessibilityLabel={`Remove ${typeof children === 'string' ? children : label}`}
             >
               ✕
             </DeleteIconSlot>

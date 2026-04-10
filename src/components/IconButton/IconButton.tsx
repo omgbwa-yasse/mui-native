@@ -9,7 +9,7 @@ import type { IconButtonProps } from './types';
 
 const CONTAINER_SIZE = 40;
 
-const IconButton = memo(function IconButton(rawProps: IconButtonProps) {
+const IconButton = memo(React.forwardRef<View, IconButtonProps>(function IconButton(rawProps, ref) {
   const props = useComponentDefaults('IconButton', rawProps);
   const {
     icon,
@@ -57,8 +57,7 @@ const IconButton = memo(function IconButton(rawProps: IconButtonProps) {
   const ICON_SEMANTIC_SIZES = { small: 16, medium: 20, large: 24 } as const;
   const numericSize: number = typeof size === 'number' ? size : ICON_SEMANTIC_SIZES[size];
   const icSize = Math.max(CONTAINER_SIZE, numericSize + 16);
-  // No explicit width/height — TouchableRipple guarantees minWidth/minHeight: 48dp.
-  // borderRadius uses at least 24 so the container is a perfect circle at the 48dp minimum.
+
   const containerStyle = [
     styles.container,
     {
@@ -73,6 +72,7 @@ const IconButton = memo(function IconButton(rawProps: IconButtonProps) {
 
   return (
     <TouchableRipple
+      ref={ref}
       style={containerStyle}
       onPress={onPress}
       disabled={disabled}
@@ -86,7 +86,7 @@ const IconButton = memo(function IconButton(rawProps: IconButtonProps) {
       </View>
     </TouchableRipple>
   );
-});
+}));
 
 const styles = StyleSheet.create({
   container: {

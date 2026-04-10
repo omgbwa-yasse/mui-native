@@ -58,6 +58,7 @@ const CircularProgress = memo(function CircularProgress(rawProps: CircularProgre
     value = 0,
     size = 40,
     thickness = 3.6,
+    color,
     disableShrink = false,
     enableTrackSlot = false,
     style,

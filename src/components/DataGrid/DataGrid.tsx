@@ -397,7 +397,7 @@ function DataGridInner<TRow extends GridRowData = GridRowData>(
           ) : (
             <ActivityIndicator
               size="large"
-              color={bg}
+              color={theme.colorScheme.primary}
               accessibilityLabel="Loading data"
             />
           )}

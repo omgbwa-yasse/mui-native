@@ -40,6 +40,7 @@ const LinearProgress = memo(function LinearProgress(rawProps: LinearProgressProp
     variant = 'indeterminate',
     value = 0,
     valueBuffer = 0,
+    color,
     sx,
     style,
     testID,

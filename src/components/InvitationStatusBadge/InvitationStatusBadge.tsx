@@ -28,7 +28,7 @@ const InvitationStatusBadge = memo(function InvitationStatusBadge(rawProps: Invi
   const bgColor = (() => {
     switch (status) {
       case 'active':
-        return container;
+        return theme.colorScheme.primaryContainer;
       case 'expired':
         return theme.colorScheme.surfaceVariant;
       case 'revoked':
@@ -41,7 +41,7 @@ const InvitationStatusBadge = memo(function InvitationStatusBadge(rawProps: Invi
   const fgColor = (() => {
     switch (status) {
       case 'active':
-        return onContainer;
+        return theme.colorScheme.onPrimaryContainer;
       case 'expired':
         return theme.colorScheme.onSurfaceVariant;
       case 'revoked':

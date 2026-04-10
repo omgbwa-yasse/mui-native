@@ -110,7 +110,7 @@ function DataTable<T = Record<string, unknown>>(rawProps: DataTableProps<T>) {
         <View
           style={[
             styles.row,
-            isSelected && { backgroundColor: container + '28' },
+            isSelected && { backgroundColor: theme.colorScheme.secondaryContainer + '28' },
           ]}
           accessibilityRole={'row' as AccessibilityRole}
         >

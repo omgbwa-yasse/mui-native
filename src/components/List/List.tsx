@@ -7,6 +7,14 @@ import { useTheme } from '../../theme';
 
 const List = memo(function List(rawProps: ListProps) {
   const props = useComponentDefaults('List', rawProps);
+  const {
+    children,
+    sx,
+    style,
+    slots,
+    slotProps,
+    testID,
+  } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
   const Root = slots?.Root ?? View;

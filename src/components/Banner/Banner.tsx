@@ -22,6 +22,8 @@ const Banner = memo(function Banner(rawProps: BannerProps) {
     testID,
     sx,
     style,
+    slots,
+    slotProps,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
@@ -74,14 +76,19 @@ const Banner = memo(function Banner(rawProps: BannerProps) {
     return null;
   }
 
+  const SlotRoot = slots?.Root ?? Animated.View;
+  const SlotContent = slots?.Content ?? View;
+
   return (
-    <Animated.View
-      style={[containerStyle, { backgroundColor: theme.colorScheme.surface }, sxStyle, style]}
+    <SlotRoot
+      {...slotProps?.Root}
+      style={[containerStyle, { backgroundColor: theme.colorScheme.surface }, sxStyle, style, slotProps?.Root?.style]}
       testID={testID}
     >
-      <View
+      <SlotContent
+        {...slotProps?.Content}
         onLayout={handleLayout}
-        style={styles.content}
+        style={[styles.content, slotProps?.Content?.style]}
         accessibilityRole={'alert' as AccessibilityRole}
       >
         <View style={styles.body}>
@@ -110,7 +117,7 @@ const Banner = memo(function Banner(rawProps: BannerProps) {
               >
                 <Text
                   variant="labelLarge"
-                  color={bg}
+                  color="primary"
                 >
                   {action.label}
                 </Text>
@@ -118,8 +125,8 @@ const Banner = memo(function Banner(rawProps: BannerProps) {
             ))}
           </View>
         )}
-      </View>
-    </Animated.View>
+      </SlotContent>
+    </SlotRoot>
   );
 });
 

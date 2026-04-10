@@ -1,15 +1,21 @@
 import type { ReactNode } from 'react';
-import type { StyleProp, ViewStyle } from 'react-native';
+import type { StyleProp, ViewProps, ViewStyle } from 'react-native';
 import type { IconSource } from '../Icon/types';
 import type { SizeProp } from '../../tokens/size';
-import type { ColorProp, SxProps } from '../../types/shared';
+import type { ColorProp, SxProps, SlotPropsConfig } from '../../types/shared';
 
 export interface BannerAction {
   label: string;
   onPress: () => void;
 }
 
-export interface BannerProps {
+export interface BannerSlots {
+  [key: string]: React.ComponentType<any>;
+  Root: React.ComponentType<ViewProps>;
+  Content: React.ComponentType<ViewProps>;
+}
+
+export interface BannerProps extends SlotPropsConfig<BannerSlots> {
   visible: boolean;
   children: ReactNode;
   actions?: BannerAction[];

@@ -130,23 +130,23 @@ export function Dialog(rawProps: DialogProps): React.ReactElement {
         },
         actionText: {
           ...typography.labelLarge,
-          color: bg,
+          color: colorScheme.primary,
           padding: 8,
           minWidth: 64,
           textAlign: 'center',
         },
         actionFilled: {
-          backgroundColor: bg,
+          backgroundColor: colorScheme.primary,
           borderRadius: shape.full,
           paddingHorizontal: 24,
           paddingVertical: 10,
         },
         actionFilledText: {
           ...typography.labelLarge,
-          color: fg,
+          color: colorScheme.onPrimary,
         },
       }),
-    [theme, bg, fg, fullScreen, fullWidth, resolvedMaxWidth],
+    [theme, fullScreen, fullWidth, resolvedMaxWidth],
   );
 
   const dialogContent = (

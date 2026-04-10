@@ -27,6 +27,7 @@ export function TimelineDot({
   style,
 }: TimelineDotProps) {
   const { theme } = useTheme();
+  const resolvedColor = resolveDotColor(color, theme.colorScheme);
 
   const dotStyle =
     variant === 'filled'

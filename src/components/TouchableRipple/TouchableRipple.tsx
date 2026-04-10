@@ -28,7 +28,7 @@ import type { TouchableRippleProps } from './types';
  *   <Text variant="labelLarge">Press me</Text>
  * </TouchableRipple>
  */
-export function TouchableRipple(rawProps: TouchableRippleProps): React.ReactElement {
+export const TouchableRipple = React.forwardRef<View, TouchableRippleProps>((rawProps, ref) => {
   const props = useComponentDefaults('TouchableRipple', rawProps);
   const {
     onPress,
@@ -105,7 +105,7 @@ export function TouchableRipple(rawProps: TouchableRippleProps): React.ReactElem
   return (
     <GestureDetector gesture={composed}>
       <View
-        ref={viewRef}
+        ref={ref ?? viewRef}
         style={[styles.container, borderless ? styles.borderless : styles.clipped, sxStyle, style]}
         accessible={true}
         accessibilityRole={accessibilityRole}
@@ -128,7 +128,7 @@ export function TouchableRipple(rawProps: TouchableRippleProps): React.ReactElem
       </View>
     </GestureDetector>
   );
-}
+});
 
 const styles = StyleSheet.create({
   container: {

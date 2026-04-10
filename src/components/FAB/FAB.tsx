@@ -28,23 +28,28 @@ export function FAB(rawProps: FABProps): React.ReactElement {
     style,
     accessibilityLabel,
     testID,
+    slots,
+    slotProps,
   } = props;
   const { theme } = useTheme();
   const { colorScheme, shape, elevation: elev } = theme;
   const sxStyle = useSx(sx, theme);
 
+  const SlotRoot = slots?.Root ?? Animated.View;
+  const SlotLabel = slots?.Label ?? Text;
+
   const containerColor: Record<FABVariant, string> = {
-    primary: container,
+    primary: colorScheme.primaryContainer,
     secondary: colorScheme.secondaryContainer,
     tertiary: colorScheme.tertiaryContainer,
     surface: colorScheme.surface,
   };
 
   const iconColor: Record<FABVariant, string> = {
-    primary: onContainer,
+    primary: colorScheme.onPrimaryContainer,
     secondary: colorScheme.onSecondaryContainer,
     tertiary: colorScheme.onTertiaryContainer,
-    surface: bg,
+    surface: colorScheme.primary,
   };
 
   const dim = SIZE_MAP[size];
@@ -81,7 +86,7 @@ export function FAB(rawProps: FABProps): React.ReactElement {
           justifyContent: 'center',
         },
       }),
-    [theme, variant, size, isExtended, container, onContainer, bg],
+    [theme, variant, size, isExtended],
   );
 
   const scale = useSharedValue(1);
@@ -111,16 +116,21 @@ export function FAB(rawProps: FABProps): React.ReactElement {
 
   return (
     <GestureDetector gesture={tapGesture}>
-      <Animated.View
-        style={[styles.container, animatedStyle, sxStyle, style]}
+      <SlotRoot
+        {...slotProps?.Root}
+        style={[styles.container, animatedStyle, sxStyle, style, slotProps?.Root?.style]}
         accessible
         accessibilityRole="button"
         accessibilityLabel={accessibilityLabel}
         testID={testID}
       >
         <View style={styles.iconWrapper}>{icon}</View>
-        {isExtended && <Text style={styles.label}>{label}</Text>}
-      </Animated.View>
+        {isExtended && (
+          <SlotLabel {...slotProps?.Label} style={[styles.label, slotProps?.Label?.style]}>
+            {label}
+          </SlotLabel>
+        )}
+      </SlotRoot>
     </GestureDetector>
   );
 }

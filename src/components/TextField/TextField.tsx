@@ -160,8 +160,8 @@ export function TextField(rawProps: TextFieldProps): React.ReactElement {
   const displayLabel = required ? `${label} *` : label;
 
   const styles = useMemo(
-    () => createTextFieldStyles(theme.colorScheme, theme.shape, variant, hasError, bg, fullWidth),
-    [theme, variant, hasError, bg, fullWidth],
+    () => createTextFieldStyles(theme.colorScheme, theme.shape, variant, hasError, theme.colorScheme.primary, fullWidth),
+    [theme, variant, hasError, fullWidth],
   );
 
   const handleFocus = (): void => {
@@ -180,9 +180,6 @@ export function TextField(rawProps: TextFieldProps): React.ReactElement {
 
   const labelTop = labelAnim.interpolate({ inputRange: [0, 1], outputRange: [16, 8] });
   const labelSize = labelAnim.interpolate({ inputRange: [0, 1], outputRange: [16, 12] });
-
-  // Suppress unused variable warnings for color role outputs not yet used in styles
-  void fg; void container; void onContainer;
 
   return (
     <SlotRoot {...slotProps?.Root} style={[styles.wrapper, disabled && styles.disabledOverlay, sxStyle, style, slotProps?.Root?.style]}>

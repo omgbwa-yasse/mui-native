@@ -20,6 +20,13 @@ const SEGMENT_COUNT = 7;
 
 export function CodeInput(rawProps: CodeInputProps) {
   const props = useComponentDefaults('CodeInput', rawProps);
+  const {
+    value = '',
+    onChange,
+    disabled = false,
+    sx,
+    style,
+  } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
   const inputRefs = useRef<Array<TextInput | null>>(
@@ -32,10 +39,10 @@ export function CodeInput(rawProps: CodeInputProps) {
     (index: number, char: string) => {
       const digit = char.replace(/\D/g, '').slice(-1);
       const newValue = segments
-        .map((s, i) => (i === index ? digit : s))
+        .map((s: string, i: number) => (i === index ? digit : s))
         .join('')
         .trimEnd();
-      onChange(newValue);
+      onChange?.(newValue);
 
       if (digit && index < SEGMENT_COUNT - 1) {
         inputRefs.current[index + 1]?.focus();
@@ -63,7 +70,7 @@ export function CodeInput(rawProps: CodeInputProps) {
             styles.cell,
             {
               borderColor: digit
-                ? bg
+                ? theme.colorScheme.primary
                 : theme.colorScheme.outline,
               color: theme.colorScheme.onSurface,
               backgroundColor: theme.colorScheme.surface,

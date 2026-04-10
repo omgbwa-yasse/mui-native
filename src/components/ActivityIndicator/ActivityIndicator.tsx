@@ -30,6 +30,7 @@ export const ActivityIndicator = memo(function ActivityIndicator(rawProps: Activ
     hidesWhenStopped = true,
     testID,
     accessibilityLabel,
+    color,
     sx,
     style,
   } = props;

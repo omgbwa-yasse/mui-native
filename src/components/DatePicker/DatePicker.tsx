@@ -78,7 +78,7 @@ export const DatePicker = React.memo(function DatePicker(rawProps: DatePickerPro
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
   const localization = useLocalizationOptional();
-  const styles = useMemo(() => createDatePickerStyles(theme, bg), [theme, bg]);
+  const styles = useMemo(() => createDatePickerStyles(theme, theme.colorScheme.primary), [theme]);
 
   // Uncontrolled internal state for the date value
   const isControlled = value !== undefined;
@@ -260,7 +260,7 @@ export const DatePicker = React.memo(function DatePicker(rawProps: DatePickerPro
                   <Text
                     style={{
                       ...theme.typography.labelLarge,
-                      color: bg,
+                      color: theme.colorScheme.primary,
                     }}
                   >
                     OK

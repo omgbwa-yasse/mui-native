@@ -22,10 +22,13 @@ const Checkbox = memo(function Checkbox(rawProps: CheckboxProps) {
     onPress,
     disabled = false,
     size,
+    color,
     sx,
     style,
     testID,
     accessibilityLabel,
+    slots,
+    slotProps,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
@@ -93,6 +96,8 @@ const Checkbox = memo(function Checkbox(rawProps: CheckboxProps) {
     },
   });
 
+  const Root = slots?.Root ?? View;
+
   return (
     <TouchableRipple
       onPress={disabled ? undefined : onPress}
@@ -103,11 +108,11 @@ const Checkbox = memo(function Checkbox(rawProps: CheckboxProps) {
       accessibilityState={{ checked: isChecked, disabled }}
       testID={testID}
     >
-      <View style={[{ padding: 8 }, sxStyle, style]}>
+      <Root {...slotProps?.Root} style={[{ padding: 8 }, sxStyle, style, slotProps?.Root?.style]}>
         <View style={styles.box}>
           <Animated.View style={[styles.checkmark, markStyle]} />
         </View>
-      </View>
+      </Root>
     </TouchableRipple>
   );
 });

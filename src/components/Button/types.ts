@@ -1,7 +1,7 @@
 import type { AccessibilityRole } from 'react-native';
 import type { StyleProp, ViewStyle } from 'react-native';
 import type { SizeProp } from '../../tokens/size';
-import type { ColorProp, SxProps } from '../../types/shared';
+import type { ColorProp, SxProps, SlotPropsConfig } from '../../types/shared';
 
 /**
  * MD3 Button variants.
@@ -14,12 +14,19 @@ export type ButtonVariant =
   | 'text'
   | 'elevated';
 
+import type { ButtonSlots } from './Button';
+
 /**
  * Props for the MD3 Button component.
  */
-export interface ButtonProps {
-  /** Button label text */
-  label: string;
+export interface ButtonProps extends SlotPropsConfig<ButtonSlots> {
+  /**
+   * Button content. When provided, it takes precedence over the `label` prop.
+   * Following MUI Web standards, this is the preferred way to provide content.
+   */
+  children?: React.ReactNode;
+  /** Button label text (Legacy/MD3-Native specific) */
+  label?: string;
   /** Visual style variant. Defaults to 'filled'. */
   variant?: ButtonVariant;
   /** Disable the button — prevents interactions and shows disabled state. */

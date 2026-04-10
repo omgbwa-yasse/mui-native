@@ -216,7 +216,7 @@ export const TimePicker = React.memo(function TimePicker(rawProps: TimePickerPro
                   <Text
                     style={{
                       ...theme.typography.labelLarge,
-                      color: bg,
+                      color: theme.colorScheme.primary,
                     }}
                   >
                     OK

@@ -77,7 +77,7 @@ export const NumberField = memo(function NumberField(rawProps: NumberFieldProps)
   const canIncrement = max === undefined || value < max;
   const canDecrement = min === undefined || value > min;
 
-  const borderColor = focused ? bg : colorScheme.outline;
+  const borderColor = focused ? colorScheme.primary : colorScheme.outline;
 
   return (
     <View testID={testID} style={[styles.wrapper, { opacity: disabled ? 0.38 : 1 }, sxStyle, style]}>

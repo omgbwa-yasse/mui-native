@@ -19,6 +19,7 @@ export const Icon = memo(function Icon(rawProps: IconProps): React.ReactElement 
   const {
     source,
     size = 24,
+    color,
     accessibilityLabel,
     testID,
     sx,

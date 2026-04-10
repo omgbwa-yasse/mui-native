@@ -22,6 +22,7 @@ const RadioButton = memo(function RadioButton(rawProps: RadioButtonProps) {
     value,
     disabled: propDisabled = false,
     size,
+    color,
     sx,
     style,
     testID,

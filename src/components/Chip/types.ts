@@ -13,8 +13,10 @@ export interface ChipSlots {
 export type ChipVariant = 'assist' | 'filter' | 'input' | 'suggestion';
 
 export interface ChipProps extends SlotPropsConfig<ChipSlots> {
-  /** Chip label. */
-  label: string;
+  /** Chip label. Takes precedence over `children` if provided (legacy support). */
+  label?: string;
+  /** Content for the chip. Preferred MUI-aligned way. */
+  children?: React.ReactNode;
   /** Chip variant. Defaults to 'assist'. */
   variant?: ChipVariant;
   /** Whether a filter chip is currently selected. */

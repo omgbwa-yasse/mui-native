@@ -58,7 +58,7 @@ export function createDatePickerStyles(theme: Theme, primaryColor?: string) {
     },
     trailingIcon: {
       marginStart: 8,
-      tintColor: colorScheme.onSurfaceVariant,
+      color: colorScheme.onSurfaceVariant,
     },
     helperText: {
       ...typography.bodySmall,

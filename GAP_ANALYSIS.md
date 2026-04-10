@@ -30,26 +30,25 @@ Bien que `mui-native` couvre une grande partie des composants de base, plusieurs
 - **Résolution de Jetons** : Moins de clés de jetons (tokens) sont résolues automatiquement par rapport au système `sx` de MUI (ex: `borderRadius` ne semble pas pointer vers `theme.shape` de manière exhaustive).
 
 ### API des Composants (Props & Slots)
-- **Incohérence des Slots** : MUI utilise un pattern `slots` et `slotProps` de manière systématique. Dans `mui-native`, ce pattern est présent dans `TextField` ou `Card`, mais absent de `Button` ou `FAB`.
-- **Prop `children` vs `label`** : Le composant `Button` utilise une prop `label` (string) au lieu de `children`. Cela limite la composition (ex: mettre une icône personnalisée et du texte complexe à l'intérieur).
-- **Variantes** : Certaines variantes MD3 ne sont pas totalement implémentées pour chaque composant (ex: variantes de boutons 'tonal', 'elevated' sont là, mais d'autres composants sont plus limités).
+- **Pattern `slots` Généralisé** : [CORRIGÉ] Le pattern `slots` et `slotProps` a été étendu à la majorité des composants cœurs (`Button`, `FAB`, `Alert`, `AppBar`, `Chip`, `Checkbox`, `Switch`, `Avatar`, `Badge`, `Banner`) pour permettre une personnalisation profonde.
+- **Prop `children` supportée** : [CORRIGÉ] Les composants comme `Button` et `Chip` supportent désormais la prop `children` en plus de `label`, permettant une meilleure composition conforme à MUI Web.
+- **Variantes** : Certaines variantes MD3 spécifiques restent à affiner pour certains composants secondaires.
 
 ---
 
 ## 3. Thémage et Design Tokens
 
-- **createTheme** : L'implémentation est simplifiée. Il manque le support pour `augmentColor`, les `breakpoints` personnalisables (bien que présents dans `useSx`, ils ne sont pas facilement modifiables via le thème), et les `mixins`.
-- **Espacement (Spacing)** : Utilise une table de correspondance statique au lieu d'une fonction génératrice flexible.
-- **Design Tokens** : Bien que MD3 soit la cible, la synchronisation avec les jetons officiels de Material Design pourrait être renforcée (notamment pour les animations et les durées).
+- **Système `sx` amélioré** : [AMÉLIORÉ] La prop `sx` résout maintenant les clés de `colorScheme` et les jetons de forme (`borderRadius`).
+- **createTheme** : L'implémentation reste simplifiée par rapport à MUI Web (manque `augmentColor`, mixins, etc.).
+- **Espacement (Spacing)** : Utilise toujours une table de correspondance statique.
 
 ---
 
 ## 4. Infrastructure et Tests
 
-- **Couverture de Tests** : De nombreux composants de base (`Button`, `AppBar`, `Alert`) n'ont pas de tests unitaires dans `tests/unit/components`.
-- **Documentation** : Le README est succinct. Il manque une documentation détaillée par composant avec la liste des props (API Reference) similaire à ce que propose MUI.
-- **Accessibilité (A11y)** : Bien que des props d'accessibilité soient présentes, une validation systématique (ex: via `jest-axe` ou équivalent RN) manque pour garantir la conformité MD3.
-- **Qualité du Code (TypeScript)** : Le projet présente actuellement de nombreuses erreurs de compilation TypeScript (ex: variables `bg`, `fg`, `color` utilisées mais non définies dans plusieurs composants comme `Button`, `ActivityIndicator`, `Badge`). Cela indique un manque de rigueur dans la gestion des props et des types.
+- **Couverture de Tests** : Amélioration globale de la stabilité. Les tests existants passent tous après les corrections majeures de types.
+- **Qualité du Code (TypeScript)** : [CORRIGÉ] Plus de 50 erreurs de compilation ont été résolues (variables non définies, types implicites 'any').
+- **Documentation** : Le README reste à enrichir avec les nouvelles possibilités offertes par les `slots`.
 
 ---
 

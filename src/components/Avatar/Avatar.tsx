@@ -15,11 +15,14 @@ const Avatar = memo(function Avatar(rawProps: AvatarProps) {
     label,
     icon,
     size = DEFAULT_AVATAR_SIZE,
+    color,
     labelColor,
     testID,
     accessibilityLabel,
     sx,
     style,
+    slots,
+    slotProps,
   } = props;
   const { theme } = useTheme();
   const sxStyle = useSx(sx, theme);
@@ -40,9 +43,13 @@ const Avatar = memo(function Avatar(rawProps: AvatarProps) {
 
   const showImage = source && !imageError;
 
+  const Root = slots?.Root ?? View;
+  const Label = slots?.Label ?? Text;
+
   return (
-    <View
-      style={[containerStyle, sxStyle, style]}
+    <Root
+      {...slotProps?.Root}
+      style={[containerStyle, sxStyle, style, slotProps?.Root?.style]}
       accessibilityRole="image"
       accessible
       accessibilityLabel={accessibilityLabel ?? label ?? 'avatar'}
@@ -56,14 +63,14 @@ const Avatar = memo(function Avatar(rawProps: AvatarProps) {
           accessibilityIgnoresInvertColors
         />
       ) : initials ? (
-        <Text style={[styles.initials, { fontSize, color: fgColor }]}>{initials}</Text>
+        <Label {...slotProps?.Label} style={[styles.initials, { fontSize, color: fgColor }, slotProps?.Label?.style]}>{initials}</Label>
       ) : icon ? (
         <Icon source={icon} size={iconSize} color={fgColor} />
       ) : (
         // Generic account icon placeholder
         <View style={[styles.iconPlaceholder, { width: iconSize, height: iconSize, borderRadius: Math.round(iconSize / 2), backgroundColor: fgColor }]} />
       )}
-    </View>
+    </Root>
   );
 });
 
