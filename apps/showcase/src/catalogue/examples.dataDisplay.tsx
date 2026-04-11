@@ -111,16 +111,24 @@ export const avatarExamples: [ExampleConfig, ExampleConfig, ExampleConfig] = [
     ),
   },
   {
-    label: 'Icon',
-    description: 'Avatar with icon child',
+    label: 'Custom Label via slots',
+    description: 'Style the initials Label sub-component with slotProps',
     code: `<Avatar
-  icon={materialIconSource('person')}
-  accessibilityLabel="Person icon avatar"
+  label="AB"
+  accessibilityLabel="Custom label slot avatar"
+  slotProps={{
+    Root: { style: { borderRadius: 8 } },
+    Label: { style: { color: '#ff5722', fontWeight: 'bold' } },
+  }}
 />`,
     render: () => (
       <Avatar
-        icon={materialIconSource('person')}
-        accessibilityLabel="Person icon avatar"
+        label="AB"
+        accessibilityLabel="Custom label slot avatar"
+        slotProps={{
+          Root: { style: { borderRadius: 8 } },
+          Label: { style: { color: '#ff5722', fontWeight: 'bold' } },
+        }}
       />
     ),
   },
@@ -242,14 +250,24 @@ export const badgeExamples: [ExampleConfig, ExampleConfig, ExampleConfig] = [
     ),
   },
   {
-    label: 'Max Count',
-    description: 'Badge capped at max value',
-    code: `<Badge content={120} max={99}>
-  <MaterialIcon name="forum" size={28} />
+    label: 'Custom Badge via slots',
+    description: 'Override the Badge pill colour with slotProps',
+    code: `<Badge
+  content={5}
+  slotProps={{
+    Badge: { style: { backgroundColor: '#9c27b0' } },
+  }}
+>
+  <MaterialIcon name="notifications" size={28} />
 </Badge>`,
     render: () => (
-      <Badge content={120} max={99}>
-        <MaterialIcon name="forum" size={28} />
+      <Badge
+        content={5}
+        slotProps={{
+          Badge: { style: { backgroundColor: '#9c27b0' } },
+        }}
+      >
+        <MaterialIcon name="notifications" size={28} />
       </Badge>
     ),
   },

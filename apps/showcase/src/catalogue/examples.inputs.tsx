@@ -91,10 +91,26 @@ export const buttonExamples: [ExampleConfig, ExampleConfig, ExampleConfig] = [
     render: () => <Button variant="outlined" label="Click me" />,
   },
   {
-    label: 'Disabled',
-    description: 'Non-interactive disabled state',
-    code: `<Button variant="filled" label="Disabled" disabled />`,
-    render: () => <Button variant="filled" label="Disabled" disabled />,
+    label: 'Custom slots',
+    description: 'Style Root and Label sub-components via slotProps',
+    code: `<Button
+  variant="filled"
+  label="Custom Slots"
+  slotProps={{
+    Root: { style: { borderRadius: 4 } },
+    Label: { style: { letterSpacing: 2 } },
+  }}
+/>`,
+    render: () => (
+      <Button
+        variant="filled"
+        label="Custom Slots"
+        slotProps={{
+          Root: { style: { borderRadius: 4 } },
+          Label: { style: { letterSpacing: 2 } },
+        }}
+      />
+    ),
   },
 ];
 
@@ -397,18 +413,24 @@ export const checkboxExamples: [ExampleConfig, ExampleConfig, ExampleConfig] = [
     render: () => <CheckboxIndeterminateExample />,
   },
   {
-    label: 'Disabled',
-    description: 'Non-interactive disabled checkbox',
+    label: 'Custom Root via slots',
+    description: 'Override the Root wrapper style with slotProps',
     code: `<Checkbox
   status="checked"
-  disabled
-  accessibilityLabel="Disabled checkbox"
+  onPress={() => {}}
+  accessibilityLabel="Slotted checkbox"
+  slotProps={{
+    Root: { style: { padding: 8, backgroundColor: '#e3f2fd', borderRadius: 4 } },
+  }}
 />`,
     render: () => (
       <Checkbox
         status="checked"
-        disabled
-        accessibilityLabel="Disabled checkbox"
+        onPress={() => {}}
+        accessibilityLabel="Slotted checkbox"
+        slotProps={{
+          Root: { style: { padding: 8, backgroundColor: '#e3f2fd', borderRadius: 4 } },
+        }}
       />
     ),
   },
@@ -653,20 +675,28 @@ export const fabExamples: [ExampleConfig, ExampleConfig, ExampleConfig] = [
     ),
   },
   {
-    label: 'Small',
-    description: 'Mini-size FAB variant',
+    label: 'Custom Root via slots',
+    description: 'Override the FAB container shape with slotProps',
     code: `<FAB
-  icon={<MaterialIcon name="add" size={18} />}
-  size="small"
-  accessibilityLabel="Quick add"
+  icon={<MaterialIcon name="add" />}
+  label="Compose"
+  accessibilityLabel="Slotted FAB"
   onPress={() => {}}
+  slotProps={{
+    Root: { style: { borderRadius: 8 } },
+    Label: { style: { fontWeight: 'bold' } },
+  }}
 />`,
     render: () => (
       <FAB
-        icon={<MaterialIcon name="add" size={18} />}
-        size="small"
-        accessibilityLabel="Quick add"
+        icon={<MaterialIcon name="add" />}
+        label="Compose"
+        accessibilityLabel="Slotted FAB"
         onPress={() => {}}
+        slotProps={{
+          Root: { style: { borderRadius: 8 } },
+          Label: { style: { fontWeight: 'bold' } },
+        }}
       />
     ),
   },
@@ -1210,20 +1240,24 @@ export const switchExamples: [ExampleConfig, ExampleConfig, ExampleConfig] = [
     render: () => <SwitchLabelledExample />,
   },
   {
-    label: 'Disabled',
-    description: 'Non-interactive disabled switch',
+    label: 'Custom Root via slots',
+    description: 'Style the Switch container with slotProps',
     code: `<Switch
   value={true}
   onValueChange={() => {}}
-  disabled
-  accessibilityLabel="Disabled switch"
+  accessibilityLabel="Slotted switch"
+  slotProps={{
+    Root: { style: { padding: 4, backgroundColor: '#e8f5e9', borderRadius: 16 } },
+  }}
 />`,
     render: () => (
       <Switch
         value={true}
         onValueChange={() => {}}
-        disabled
-        accessibilityLabel="Disabled switch"
+        accessibilityLabel="Slotted switch"
+        slotProps={{
+          Root: { style: { padding: 4, backgroundColor: '#e8f5e9', borderRadius: 16 } },
+        }}
       />
     ),
   },

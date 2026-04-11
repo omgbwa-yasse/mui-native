@@ -328,17 +328,28 @@ export const bannerExamples: [ExampleConfig, ExampleConfig, ExampleConfig] = [
     render: () => <BannerTwoActionsExample />,
   },
   {
-    label: 'With Icon',
-    description: 'Banner with a leading icon',
-    code: `const [visible, setVisible] = React.useState(true);
-<Banner
-  visible={visible}
-  icon={materialIconSource('warning')}
-  actions={[{ label: 'Got it', onPress: () => setVisible(false) }]}
+    label: 'Custom Content via slots',
+    description: 'Override the Content wrapper background with slotProps',
+    code: `<Banner
+  visible={true}
+  actions={[{ label: 'OK', onPress: () => {} }]}
+  slotProps={{
+    Content: { style: { backgroundColor: '#fff8e1', borderRadius: 8 } },
+  }}
 >
-  Storage is almost full.
+  Custom content background via slotProps.
 </Banner>`,
-    render: () => <BannerWithIconExample />,
+    render: () => (
+      <Banner
+        visible={true}
+        actions={[{ label: 'OK', onPress: () => {} }]}
+        slotProps={{
+          Content: { style: { backgroundColor: '#fff8e1', borderRadius: 8 } },
+        }}
+      >
+        Custom content background via slotProps.
+      </Banner>
+    ),
   },
 ];
 
