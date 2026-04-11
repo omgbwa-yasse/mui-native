@@ -14,5 +14,13 @@ module.exports = {
         ios: null,
       },
     },
+    // react-native-svg is installed at the workspace root (not in showcase/node_modules)
+    // so Metro can resolve it, but Gradle should not try to link it natively here.
+    'react-native-svg': {
+      platforms: {
+        android: null,
+        ios: null,
+      },
+    },
   },
 };

@@ -26,6 +26,7 @@ import {
   Grow,
   HelperText,
   Paper,
+  Surface,
   Popover,
   Popper,
   Portal,
@@ -748,15 +749,15 @@ export const paperExamples: [ExampleConfig, ExampleConfig, ExampleConfig] = [
     ),
   },
   {
-    label: 'Square',
-    description: 'Paper without rounded corners',
-    code: `<Paper square>
-  <Text variant="bodyMedium" style={{ padding: 16 }}>Square paper</Text>
-</Paper>`,
+    label: 'Surface alias',
+    description: 'Surface is an alias for Paper (React Native Paper compatibility)',
+    code: `<Surface elevation={2}>
+  <Text variant="bodyMedium" style={{ padding: 16 }}>Surface content</Text>
+</Surface>`,
     render: () => (
-      <Paper square>
-        <Text variant="bodyMedium" style={{ padding: 16 }}>Square paper</Text>
-      </Paper>
+      <Surface elevation={2}>
+        <Text variant="bodyMedium" style={{ padding: 16 }}>Surface content</Text>
+      </Surface>
     ),
   },
 ];

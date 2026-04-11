@@ -15,6 +15,7 @@ import {
   CircularProgress,
   Dialog,
   LinearProgress,
+  ProgressBar,
   MaterialIcon,
   Modal,
   Skeleton,
@@ -470,10 +471,10 @@ export const linearProgressExamples: [ExampleConfig, ExampleConfig, ExampleConfi
     render: () => <LinearProgress variant="determinate" value={65} />,
   },
   {
-    label: 'Buffer',
-    description: 'Buffer variant showing load + buffer positions',
-    code: `<LinearProgress variant="buffer" value={40} valueBuffer={70} />`,
-    render: () => <LinearProgress variant="buffer" value={40} valueBuffer={70} />,
+    label: 'ProgressBar alias',
+    description: 'ProgressBar is an alias for LinearProgress (React Native Paper compatibility)',
+    code: `<ProgressBar value={50} variant="determinate" />`,
+    render: () => <ProgressBar value={50} variant="determinate" />,
   },
 ];
 

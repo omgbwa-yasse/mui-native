@@ -18,6 +18,10 @@ const config = {
     extraNodeModules: {
       'mui-native': path.resolve(rootDir, 'src'),
       '@mui-native': path.resolve(rootDir, 'src'),
+      // react-native-svg exposes `react-native: src/index.ts` in package.json,
+      // but Metro incorrectly appends extensions to an already-extensioned path.
+      // Point directly to the pre-built CommonJS output to bypass that issue.
+      'react-native-svg': path.resolve(showcaseNodeModules, 'react-native-svg/lib/commonjs'),
     },
     nodeModulesPaths: [
       showcaseNodeModules,

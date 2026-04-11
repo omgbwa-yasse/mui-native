@@ -945,6 +945,20 @@ const SearchbarClearExample: React.FC = () => {
   );
 };
 
+const SearchbarCustomIconExample: React.FC = () => {
+  const [query, setQuery] = React.useState('');
+  return (
+    <Searchbar
+      value={query}
+      onChangeText={setQuery}
+      onClearIconPress={() => setQuery('')}
+      placeholder="Filter..."
+      icon={<MaterialIcon source={materialIconSource} name="filter_list" size={20} />}
+      clearIcon={<MaterialIcon source={materialIconSource} name="close" size={20} />}
+    />
+  );
+};
+
 export const searchbarExamples: [ExampleConfig, ExampleConfig, ExampleConfig] = [
   {
     label: 'Basic',
@@ -970,22 +984,17 @@ export const searchbarExamples: [ExampleConfig, ExampleConfig, ExampleConfig] = 
     render: () => <SearchbarClearExample />,
   },
   {
-    label: 'Loading',
-    description: 'Search bar with loading indicator',
+    label: 'Custom Icons',
+    description: 'Searchbar with custom icon and clearIcon via slots',
     code: `<Searchbar
-  value="react native"
-  onChangeText={() => {}}
-  loading
-  placeholder="Search..."
+  value={query}
+  onChangeText={setQuery}
+  onClearIconPress={() => setQuery('')}
+  placeholder="Filter..."
+  icon={<MaterialIcon source={materialIconSource} name="filter_list" size={20} />}
+  clearIcon={<MaterialIcon source={materialIconSource} name="close" size={20} />}
 />`,
-    render: () => (
-      <Searchbar
-        value="react native"
-        onChangeText={() => {}}
-        loading
-        placeholder="Search..."
-      />
-    ),
+    render: () => <SearchbarCustomIconExample />,
   },
 ];
 

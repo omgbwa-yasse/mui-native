@@ -1,6 +1,6 @@
 {
   "name": "mui-native",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "mui-native — Material Design 3 component library for React Native",
   "main": "lib/index.js",
   "module": "lib/index.js",
@@ -36,7 +36,7 @@
     "react-native-gesture-handler": ">=2.0.0",
     "react-native-gifted-charts": ">=1.4.0",
     "react-native-reanimated": ">=3.0.0",
-    "react-native-svg": ">=15.0.0",
+    "react-native-svg": "^15.15.4",
     "react-native-vector-icons": ">=10.0.0"
   },
   "peerDependenciesMeta": {
