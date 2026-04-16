@@ -27,19 +27,20 @@
 | Data Display | 10 | 10 | 0 | 0 | 0 |
 | Feedback | 6 | 6 | 0 | 0 | 0 |
 | Surface | 4 | 4 | 0 | 0 | 0 |
-| Navigation | 9 | 9 | 0 | 0 | 0 |
+| Navigation | 11 | 11 | 0 | 0 | 0 |
 | Layout | 6 | 5 | 0 | 1 | 0 |
 | Lab | 2 | 2 | 0 | 0 | 0 |
 | Utils | 10 | 5 | 1 | 0 | 4 |
-| **TOTAL** | **60** | **52** | **3** | **1** | **4** |
+| **TOTAL** | **62** | **54** | **3** | **1** | **4** |
 
-**Applicable components** (60 − 4 N/A = 56):
-- ✅ Fully aligned: **52 / 56 = 92.9%**
-- ⚠️ Partial coverage: **3 / 56 = 5.4%**
-- ❌ Missing: **1 / 56 = 1.8%**
-- **Overall coverage (✅ + ⚠️): 55 / 56 = 98.2%**
+**Applicable components** (62 − 4 N/A = 58):
+- ✅ Fully aligned: **54 / 58 = 93.1%**
+- ⚠️ Partial coverage: **3 / 58 = 5.2%**
+- ❌ Missing: **1 / 58 = 1.7%**
+- **Overall coverage (✅ + ⚠️): 57 / 58 = 98.3%**
 
-> **Feature 011** (`011-apply-missing-elements`) promoted List, Accordion, Stepper, RadioGroup, and useMediaQuery from partial/absent to fully aligned, raising overall coverage from 96.4% → 98.2%.
+> **Feature 011** (`011-apply-missing-elements`) promoted List, Accordion, Stepper, RadioGroup, and useMediaQuery from partial/absent to fully aligned, raising overall coverage from 96.4% → 98.2%.  
+> **Feature 012 extension** added `NavigationRail` and `SwipeableDrawer`, raising overall coverage to 98.3%.
 
 ---
 
@@ -150,12 +151,14 @@ All 6 Feedback components are **fully aligned**. Snackbar exceeds MUI API with R
 | 34 | Bottom Navigation | `NavigationBar` | `src/components/NavigationBar/` | ✅ | Renamed to `NavigationBar` (matches MD3 naming); `value`, `onChange`, `showLabels` |
 | 35 | Breadcrumbs | `Breadcrumbs` | `src/components/Breadcrumbs/` | ✅ | `separator`, `maxItems`, `itemsBeforeCollapse`, `itemsAfterCollapse` |
 | 36 | Drawer | `Drawer` | `src/components/Drawer/` | ✅ | `anchor` (left/right/top/bottom), `variant` (temporary/permanent/persistent), `open` |
+| 36a | Swipeable Drawer | `SwipeableDrawer` | `src/components/SwipeableDrawer/` | ✅ | Extends `Drawer`; adds `onOpen`, `swipeAreaWidth` (edge hot zone), `hysteresis`, `minFlingVelocity`, `disableSwipeToOpen` |
 | 37 | Link | `Link` | `src/components/Link/` | ✅ | `href`, `color`, `underline`, `variant`; uses RN `Linking` API |
 | 38 | Menu | `Menu` + `MenuItem` | `src/components/Menu/` | ✅ | `anchorEl`, `open`, `dense`; `MenuItem` with `selected`, `disabled`, `divider` |
 | 39 | Pagination | `Pagination` | `src/components/Pagination/` | ✅ | `count`, `page`, `shape`, `size`, `variant`, `siblingCount`, `boundaryCount` |
 | 40 | Speed Dial | `SpeedDial` + `SpeedDialAction` | `src/components/SpeedDial/` | ✅ | `ariaLabel`, `direction`, `open`, `icon`; `SpeedDialAction` with `icon`, `tooltipTitle` |
 | 41 | Stepper | `Stepper` + `Step` + `StepLabel` + `StepContent` + `StepConnector` + `MobileStepper` | `src/components/Stepper/` | ✅ | ✅ Feature 011: composable sub-components added; both data-driven (`steps` prop) and composable APIs; `MobileStepper` with dots/progress/text variants |
-| 42 | Tabs | `Tabs` + `TabPanel` | `src/components/Tabs/` | ✅ | `value`, `onChange`, `orientation`, `variant` (scrollable/fullWidth); `TabPanel` for content |
+| 42 | Navigation Rail | `NavigationRail` | `src/components/NavigationRail/` | ✅ | MD3 vertical rail; `value`, `onChange`, `items`, `position` (left/right), `header`, `showLabels` |
+| 43 | Tabs | `Tabs` + `TabPanel` | `src/components/Tabs/` | ✅ | `value`, `onChange`, `orientation`, `variant` (scrollable/fullWidth); `TabPanel` for content |
 
 
 

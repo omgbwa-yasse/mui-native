@@ -16,6 +16,13 @@ export type ColorMode = 'light' | 'dark';
  */
 export interface Theme {
   colorScheme: ColorScheme;
+  /**
+   * Dark-mode color overrides. Partial: only changed roles need to be specified.
+   * When present and `mode === 'dark'`, ThemeProvider merges these over `colorScheme`.
+   * When absent, `colorScheme` is used for both light and dark mode.
+   * @since 012-platform-themes
+   */
+  darkColorScheme?: Partial<ColorScheme>;
   typography: TypographyScale;
   shape: ShapeScale;
   elevation: ElevationScale;
