@@ -1,0 +1,22 @@
+<svg width="1200" height="420" viewBox="0 0 1200 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Code examples overview">
+  <rect width="1200" height="420" fill="#020617"/>
+  <text x="48" y="60" fill="#e2e8f0" font-size="38" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Code examples</text>
+
+  <rect x="48" y="94" width="350" height="282" rx="14" fill="#0f172a" stroke="#334155"/>
+  <text x="72" y="132" fill="#93c5fd" font-size="20" font-family="Consolas, monospace">NavigationRail</text>
+  <text x="72" y="170" fill="#cbd5e1" font-size="16" font-family="Consolas, monospace">const [value, setValue] =</text>
+  <text x="72" y="194" fill="#cbd5e1" font-size="16" font-family="Consolas, monospace">  useState('home');</text>
+  <text x="72" y="228" fill="#f8fafc" font-size="16" font-family="Consolas, monospace">&lt;NavigationRail ... /&gt;</text>
+
+  <rect x="424" y="94" width="350" height="282" rx="14" fill="#0f172a" stroke="#334155"/>
+  <text x="448" y="132" fill="#86efac" font-size="20" font-family="Consolas, monospace">SwipeableDrawer</text>
+  <text x="448" y="170" fill="#cbd5e1" font-size="16" font-family="Consolas, monospace">const [open, setOpen] =</text>
+  <text x="448" y="194" fill="#cbd5e1" font-size="16" font-family="Consolas, monospace">  useState(false);</text>
+  <text x="448" y="228" fill="#f8fafc" font-size="16" font-family="Consolas, monospace">&lt;SwipeableDrawer ... /&gt;</text>
+
+  <rect x="800" y="94" width="350" height="282" rx="14" fill="#0f172a" stroke="#334155"/>
+  <text x="824" y="132" fill="#fda4af" font-size="20" font-family="Consolas, monospace">Form + Snackbar</text>
+  <text x="824" y="170" fill="#cbd5e1" font-size="16" font-family="Consolas, monospace">const { showSnackbar } =</text>
+  <text x="824" y="194" fill="#cbd5e1" font-size="16" font-family="Consolas, monospace">  useSnackbar();</text>
+  <text x="824" y="228" fill="#f8fafc" font-size="16" font-family="Consolas, monospace">showSnackbar('Saved');</text>
+</svg>

@@ -1,0 +1,22 @@
+<svg width="1200" height="420" viewBox="0 0 1200 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="View card pattern">
+  <rect width="1200" height="420" fill="#020617"/>
+  <text x="48" y="60" fill="#e2e8f0" font-size="38" font-family="Segoe UI, Arial, sans-serif" font-weight="700">View card pattern</text>
+
+  <rect x="80" y="110" width="320" height="250" rx="18" fill="#0f172a" stroke="#334155"/>
+  <rect x="120" y="150" width="240" height="20" rx="10" fill="#60a5fa"/>
+  <rect x="120" y="190" width="180" height="16" rx="8" fill="#94a3b8"/>
+  <rect x="120" y="220" width="220" height="16" rx="8" fill="#94a3b8"/>
+  <rect x="120" y="260" width="100" height="32" rx="10" fill="#22c55e"/>
+
+  <rect x="440" y="110" width="320" height="250" rx="18" fill="#0f172a" stroke="#334155"/>
+  <rect x="480" y="150" width="240" height="20" rx="10" fill="#f59e0b"/>
+  <rect x="480" y="190" width="180" height="16" rx="8" fill="#94a3b8"/>
+  <rect x="480" y="220" width="220" height="16" rx="8" fill="#94a3b8"/>
+  <rect x="480" y="260" width="100" height="32" rx="10" fill="#ef4444"/>
+
+  <rect x="800" y="110" width="320" height="250" rx="18" fill="#0f172a" stroke="#334155"/>
+  <rect x="840" y="150" width="240" height="20" rx="10" fill="#a78bfa"/>
+  <rect x="840" y="190" width="180" height="16" rx="8" fill="#94a3b8"/>
+  <rect x="840" y="220" width="220" height="16" rx="8" fill="#94a3b8"/>
+  <rect x="840" y="260" width="100" height="32" rx="10" fill="#14b8a6"/>
+</svg>

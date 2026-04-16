@@ -1,0 +1,25 @@
+<svg width="1200" height="420" viewBox="0 0 1200 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Theme presets">
+  <rect width="1200" height="420" fill="#0f172a"/>
+  <text x="50" y="62" fill="#e2e8f0" font-size="40" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Theme presets</text>
+
+  <rect x="50" y="100" width="145" height="210" rx="12" fill="#f1f5f9"/>
+  <text x="72" y="340" fill="#cbd5e1" font-size="18" font-family="Segoe UI, Arial, sans-serif">Pure</text>
+
+  <rect x="220" y="100" width="145" height="210" rx="12" fill="#faf5ff"/>
+  <text x="234" y="340" fill="#cbd5e1" font-size="18" font-family="Segoe UI, Arial, sans-serif">Beautiful</text>
+
+  <rect x="390" y="100" width="145" height="210" rx="12" fill="#fef3c7"/>
+  <text x="418" y="340" fill="#cbd5e1" font-size="18" font-family="Segoe UI, Arial, sans-serif">Pencil</text>
+
+  <rect x="560" y="100" width="145" height="210" rx="12" fill="#cffafe"/>
+  <text x="588" y="340" fill="#cbd5e1" font-size="18" font-family="Segoe UI, Arial, sans-serif">Aurora</text>
+
+  <rect x="730" y="100" width="145" height="210" rx="12" fill="#dcfce7"/>
+  <text x="760" y="340" fill="#cbd5e1" font-size="18" font-family="Segoe UI, Arial, sans-serif">Breeze</text>
+
+  <rect x="900" y="100" width="145" height="210" rx="12" fill="#dbeafe"/>
+  <text x="940" y="340" fill="#cbd5e1" font-size="18" font-family="Segoe UI, Arial, sans-serif">Nova</text>
+
+  <rect x="1070" y="100" width="95" height="210" rx="12" fill="#fee2e2"/>
+  <text x="1078" y="340" fill="#cbd5e1" font-size="18" font-family="Segoe UI, Arial, sans-serif">Pulse</text>
+</svg>

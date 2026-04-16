@@ -1,0 +1,20 @@
+<svg width="1200" height="380" viewBox="0 0 1200 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Installation flow">
+  <rect width="1200" height="380" fill="#f8fafc"/>
+  <text x="50" y="64" fill="#0f172a" font-size="40" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Installation flow</text>
+
+  <rect x="50" y="110" width="300" height="180" rx="14" fill="#e0f2fe" stroke="#38bdf8"/>
+  <text x="84" y="165" fill="#0c4a6e" font-size="24" font-family="Segoe UI, Arial, sans-serif" font-weight="700">1. Install package</text>
+  <text x="84" y="205" fill="#0c4a6e" font-size="18" font-family="Consolas, monospace">npm install mui-native</text>
+
+  <rect x="450" y="110" width="300" height="180" rx="14" fill="#dcfce7" stroke="#22c55e"/>
+  <text x="485" y="165" fill="#14532d" font-size="24" font-family="Segoe UI, Arial, sans-serif" font-weight="700">2. Peer deps</text>
+  <text x="485" y="205" fill="#14532d" font-size="18" font-family="Consolas, monospace">react-native</text>
+  <text x="485" y="232" fill="#14532d" font-size="18" font-family="Consolas, monospace">reanimated + gesture-handler</text>
+
+  <rect x="850" y="110" width="300" height="180" rx="14" fill="#ede9fe" stroke="#8b5cf6"/>
+  <text x="885" y="165" fill="#4c1d95" font-size="24" font-family="Segoe UI, Arial, sans-serif" font-weight="700">3. Use in app</text>
+  <text x="885" y="205" fill="#4c1d95" font-size="18" font-family="Consolas, monospace">ThemeProvider + components</text>
+
+  <line x1="350" y1="200" x2="450" y2="200" stroke="#475569" stroke-width="4"/>
+  <line x1="750" y1="200" x2="850" y2="200" stroke="#475569" stroke-width="4"/>
+</svg>

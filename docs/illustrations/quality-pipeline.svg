@@ -1,0 +1,24 @@
+<svg width="1200" height="360" viewBox="0 0 1200 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Quality pipeline">
+  <rect width="1200" height="360" fill="#ffffff"/>
+  <text x="50" y="58" fill="#111827" font-size="38" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Quality pipeline</text>
+
+  <rect x="50" y="98" width="220" height="170" rx="14" fill="#fef3c7" stroke="#f59e0b"/>
+  <text x="86" y="165" fill="#78350f" font-size="24" font-family="Segoe UI, Arial, sans-serif" font-weight="700">TypeScript</text>
+  <text x="86" y="195" fill="#78350f" font-size="18" font-family="Segoe UI, Arial, sans-serif">strict mode</text>
+
+  <rect x="340" y="98" width="220" height="170" rx="14" fill="#dbeafe" stroke="#3b82f6"/>
+  <text x="392" y="165" fill="#1e3a8a" font-size="24" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Lint</text>
+  <text x="392" y="195" fill="#1e3a8a" font-size="18" font-family="Segoe UI, Arial, sans-serif">eslint</text>
+
+  <rect x="630" y="98" width="220" height="170" rx="14" fill="#dcfce7" stroke="#22c55e"/>
+  <text x="678" y="165" fill="#14532d" font-size="24" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Tests</text>
+  <text x="678" y="195" fill="#14532d" font-size="18" font-family="Segoe UI, Arial, sans-serif">unit + themes</text>
+
+  <rect x="920" y="98" width="220" height="170" rx="14" fill="#ede9fe" stroke="#8b5cf6"/>
+  <text x="952" y="165" fill="#4c1d95" font-size="24" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Showcase</text>
+  <text x="952" y="195" fill="#4c1d95" font-size="18" font-family="Segoe UI, Arial, sans-serif">integration checks</text>
+
+  <line x1="270" y1="183" x2="340" y2="183" stroke="#6b7280" stroke-width="4"/>
+  <line x1="560" y1="183" x2="630" y2="183" stroke="#6b7280" stroke-width="4"/>
+  <line x1="850" y1="183" x2="920" y2="183" stroke="#6b7280" stroke-width="4"/>
+</svg>

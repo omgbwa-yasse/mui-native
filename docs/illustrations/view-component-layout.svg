@@ -1,0 +1,17 @@
+<svg width="1200" height="420" viewBox="0 0 1200 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="View component layout example">
+  <rect width="1200" height="420" fill="#f8fafc"/>
+  <text x="48" y="60" fill="#0f172a" font-size="38" font-family="Segoe UI, Arial, sans-serif" font-weight="700">View component layout</text>
+
+  <rect x="60" y="100" width="1080" height="280" rx="16" fill="#0f172a"/>
+
+  <rect x="100" y="140" width="250" height="200" rx="12" fill="#1d4ed8"/>
+  <text x="150" y="250" fill="#dbeafe" font-size="26" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Header</text>
+
+  <rect x="380" y="140" width="440" height="200" rx="12" fill="#16a34a"/>
+  <text x="520" y="250" fill="#dcfce7" font-size="26" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Content</text>
+
+  <rect x="850" y="140" width="250" height="200" rx="12" fill="#ea580c"/>
+  <text x="925" y="250" fill="#ffedd5" font-size="26" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Aside</text>
+
+  <text x="76" y="396" fill="#334155" font-size="20" font-family="Segoe UI, Arial, sans-serif">Built with nested View blocks, spacing, and responsive alignment</text>
+</svg>

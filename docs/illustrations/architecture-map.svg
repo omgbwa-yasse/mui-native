@@ -1,0 +1,29 @@
+<svg width="1200" height="560" viewBox="0 0 1200 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="mui-native architecture map">
+  <rect x="0" y="0" width="1200" height="560" fill="#f8fafc"/>
+  <text x="50" y="64" fill="#0f172a" font-size="42" font-family="Segoe UI, Arial, sans-serif" font-weight="700">mui-native architecture</text>
+
+  <rect x="50" y="110" rx="14" ry="14" width="240" height="120" fill="#dbeafe" stroke="#60a5fa"/>
+  <text x="84" y="158" fill="#1e3a8a" font-size="24" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Theme Core</text>
+  <text x="84" y="190" fill="#1e3a8a" font-size="18" font-family="Segoe UI, Arial, sans-serif">tokens, palette, presets</text>
+
+  <rect x="340" y="110" rx="14" ry="14" width="240" height="120" fill="#dcfce7" stroke="#4ade80"/>
+  <text x="380" y="158" fill="#14532d" font-size="24" font-family="Segoe UI, Arial, sans-serif" font-weight="700">UI Components</text>
+  <text x="380" y="190" fill="#14532d" font-size="18" font-family="Segoe UI, Arial, sans-serif">buttons, forms, data</text>
+
+  <rect x="630" y="110" rx="14" ry="14" width="240" height="120" fill="#fef9c3" stroke="#facc15"/>
+  <text x="680" y="158" fill="#713f12" font-size="24" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Navigation</text>
+  <text x="680" y="190" fill="#713f12" font-size="18" font-family="Segoe UI, Arial, sans-serif">app bar, rails, drawer</text>
+
+  <rect x="920" y="110" rx="14" ry="14" width="240" height="120" fill="#fee2e2" stroke="#f87171"/>
+  <text x="973" y="158" fill="#7f1d1d" font-size="24" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Runtime</text>
+  <text x="973" y="190" fill="#7f1d1d" font-size="18" font-family="Segoe UI, Arial, sans-serif">RN + Reanimated + GH</text>
+
+  <line x1="290" y1="170" x2="340" y2="170" stroke="#334155" stroke-width="3"/>
+  <line x1="580" y1="170" x2="630" y2="170" stroke="#334155" stroke-width="3"/>
+  <line x1="870" y1="170" x2="920" y2="170" stroke="#334155" stroke-width="3"/>
+
+  <rect x="170" y="300" rx="16" ry="16" width="860" height="200" fill="#0f172a"/>
+  <text x="210" y="352" fill="#e2e8f0" font-size="28" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Delivery pipeline</text>
+  <text x="210" y="394" fill="#cbd5e1" font-size="22" font-family="Segoe UI, Arial, sans-serif">Develop components -> Export from index -> Test in unit + showcase -> Publish package</text>
+  <text x="210" y="438" fill="#93c5fd" font-size="22" font-family="Segoe UI, Arial, sans-serif">Focused on accessibility, strict typing, and Material consistency</text>
+</svg>

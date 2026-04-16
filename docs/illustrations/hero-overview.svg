@@ -1,0 +1,40 @@
+<svg width="1200" height="520" viewBox="0 0 1200 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="mui-native overview">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0ea5e9"/>
+      <stop offset="100%" stop-color="#22c55e"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="520" fill="url(#bg)"/>
+
+  <circle cx="1080" cy="90" r="130" fill="#334155" opacity="0.35"/>
+  <circle cx="120" cy="420" r="170" fill="#1d4ed8" opacity="0.2"/>
+
+  <text x="72" y="120" fill="#e2e8f0" font-size="56" font-family="Segoe UI, Arial, sans-serif" font-weight="700">
+    mui-native
+  </text>
+  <text x="72" y="168" fill="#93c5fd" font-size="28" font-family="Segoe UI, Arial, sans-serif">
+    Material Design 3 for React Native
+  </text>
+
+  <rect x="72" y="212" rx="18" ry="18" width="490" height="210" fill="#0b1220" stroke="#334155"/>
+  <text x="100" y="258" fill="#cbd5e1" font-size="24" font-family="Segoe UI, Arial, sans-serif">What you get</text>
+  <text x="100" y="300" fill="#e2e8f0" font-size="20" font-family="Segoe UI, Arial, sans-serif">• Rich Material component set</text>
+  <text x="100" y="334" fill="#e2e8f0" font-size="20" font-family="Segoe UI, Arial, sans-serif">• Theme presets + token sync</text>
+  <text x="100" y="368" fill="#e2e8f0" font-size="20" font-family="Segoe UI, Arial, sans-serif">• Strict TypeScript + unit tests</text>
+
+  <rect x="624" y="124" rx="22" ry="22" width="500" height="300" fill="#0b1220" stroke="#334155"/>
+  <rect x="662" y="170" rx="14" ry="14" width="190" height="90" fill="url(#card)"/>
+  <text x="706" y="224" fill="#062022" font-size="26" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Button</text>
+
+  <rect x="878" y="170" rx="14" ry="14" width="208" height="90" fill="#1e40af"/>
+  <text x="922" y="224" fill="#dbeafe" font-size="24" font-family="Segoe UI, Arial, sans-serif" font-weight="700">NavigationRail</text>
+
+  <rect x="662" y="290" rx="14" ry="14" width="424" height="90" fill="#14532d"/>
+  <text x="792" y="344" fill="#dcfce7" font-size="24" font-family="Segoe UI, Arial, sans-serif" font-weight="700">SwipeableDrawer</text>
+</svg>
