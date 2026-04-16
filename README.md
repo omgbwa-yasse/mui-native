@@ -2,50 +2,50 @@
 
 Material Design 3 component library for React Native.
 
-mui-native fournit une base UI complete, themeable, et orientee production pour React Native, avec TypeScript strict, tests unitaires, et composants Material + wrappers RN.
+mui-native provides a complete, themeable, production-ready UI foundation for React Native — with strict TypeScript, unit tests, Material Design components, and React Native primitive wrappers.
 
 ![mui-native hero](docs/illustrations/hero-overview.svg)
 
 ---
 
-## Sommaire
+## Table of Contents
 
-- [Pourquoi mui-native](#pourquoi-mui-native)
-- [Nouveautes avril 2026](#nouveautes-avril-2026)
-- [Illustration architecture](#illustration-architecture)
+- [Why mui-native](#why-mui-native)
+- [What's New — April 2026](#whats-new--april-2026)
+- [Architecture](#architecture)
 - [Installation](#installation)
-- [Quick start](#quick-start)
+- [Quick Start](#quick-start)
 - [Theming](#theming)
-- [Exemples de code](#exemples-de-code)
-- [Exemples View](#exemples-view)
-- [Catalogue des composants](#catalogue-des-composants)
-- [Developpement local](#developpement-local)
-- [Qualite](#qualite)
+- [Code Examples](#code-examples)
+- [View Examples](#view-examples)
+- [Component Catalog](#component-catalog)
+- [Local Development](#local-development)
+- [Quality](#quality)
 - [Requirements](#requirements)
 - [License](#license)
 
 ---
 
-## Pourquoi mui-native
+## Why mui-native
 
-- Material Design 3 pour React Native, pret a l'emploi.
-- API centralisee et stable exposee depuis le package.
-- Presets de themes multiplateformes (Android / iOS / Web).
-- Couverture de tests unitaires sur les composants critiques.
-- Integration avec `react-native-reanimated` et `react-native-gesture-handler`.
-
----
-
-## Nouveautes avril 2026
-
-- Ajout de composants RN manquants: `View`, `Pressable`, `TextInput`, `Image`, `ImageBackground`, `ScrollView`, `FlatList`, `SectionList`, `VirtualizedList`, `RefreshControl`, `SafeAreaView`, `KeyboardAvoidingView`, `DrawerLayoutAndroid`, `TouchableOpacity`, `TouchableHighlight`.
-- Ajout de composants Material complementaires: `NavigationRail`, `SwipeableDrawer`.
-- Ajout de presets de themes avec synchronisation des tokens.
-- Renforcement des tests unitaires et des scenarios d'accessibilite.
+- Material Design 3 for React Native, ready to use out of the box.
+- Centralized, stable public API exported from a single package entry point.
+- Cross-platform theme presets (Android / iOS / Web).
+- Unit test coverage across critical components.
+- Built-in integration with `react-native-reanimated` and `react-native-gesture-handler`.
 
 ---
 
-## Illustration architecture
+## What's New — April 2026
+
+- Added missing React Native primitives: `View`, `Pressable`, `TextInput`, `Image`, `ImageBackground`, `ScrollView`, `FlatList`, `SectionList`, `VirtualizedList`, `RefreshControl`, `SafeAreaView`, `KeyboardAvoidingView`, `DrawerLayoutAndroid`, `TouchableOpacity`, `TouchableHighlight`.
+- Added new Material Design components: `NavigationRail`, `SwipeableDrawer`.
+- Added platform-specific theme presets with design token synchronization.
+- Expanded unit tests and accessibility coverage.
+
+---
+
+## Architecture
 
 ![mui-native architecture](docs/illustrations/architecture-map.svg)
 
@@ -59,7 +59,7 @@ mui-native fournit une base UI complete, themeable, et orientee production pour 
 npm install mui-native
 ```
 
-### Peer dependencies
+### Peer Dependencies
 
 ```bash
 npm install react-native react-native-reanimated react-native-gesture-handler
@@ -67,7 +67,7 @@ npm install react-native react-native-reanimated react-native-gesture-handler
 
 ---
 
-## Quick start
+## Quick Start
 
 ```tsx
 import { ThemeProvider, Button, Text } from 'mui-native';
@@ -105,17 +105,17 @@ export default function App() {
 }
 ```
 
-### Presets disponibles
+### Available Presets
 
 `PureTheme`, `BeautifulTheme`, `PencilTheme`, `AuroraTheme`, `BreezeTheme`, `NovaTheme`, `PulseTheme`
 
 ---
 
-## Exemples de code
+## Code Examples
 
 ![code examples](docs/illustrations/code-examples.svg)
 
-### NavigationRail controlee
+### Controlled NavigationRail
 
 ```tsx
 import { useState } from 'react';
@@ -141,7 +141,7 @@ export function RailExample() {
 }
 ```
 
-### SwipeableDrawer temporaire
+### Temporary SwipeableDrawer
 
 ```tsx
 import { useState } from 'react';
@@ -171,7 +171,7 @@ export function DrawerExample() {
 }
 ```
 
-### Formulaire simple avec TextInput
+### Simple Form with TextInput
 
 ```tsx
 import { useState } from 'react';
@@ -196,7 +196,7 @@ export function FormExample() {
 }
 ```
 
-### Snackbar via hook
+### Snackbar via Hook
 
 ```tsx
 import { Button, SnackbarHost, Text, useSnackbar } from 'mui-native';
@@ -223,11 +223,11 @@ export function SnackbarExample() {
 
 ---
 
-## Exemples View
+## View Examples
 
 ![view layout](docs/illustrations/view-component-layout.svg)
 
-### Layout de page avec View
+### Page Layout with View
 
 ```tsx
 import { View, Text } from 'mui-native';
@@ -254,7 +254,7 @@ export function ViewLayoutExample() {
 
 ![view cards](docs/illustrations/view-card-pattern.svg)
 
-### Card pattern compose avec View
+### Composite Card Pattern with View
 
 ```tsx
 import { View, Text, Button } from 'mui-native';
@@ -283,9 +283,9 @@ export function ViewCardExample() {
 
 ---
 
-## Catalogue des composants
+## Component Catalog
 
-### Layout et structure
+### Layout & Structure
 
 `Box`, `View`, `Container`, `Stack`, `Grid`, `GridItem`, `Paper`, `Surface`, `Divider`, `ScrollView`, `FlatList`, `SectionList`, `VirtualizedList`, `SafeAreaView`, `KeyboardAvoidingView`, `RefreshControl`
 
@@ -293,23 +293,23 @@ export function ViewCardExample() {
 
 `AppBar`, `NavigationBar`, `NavigationRail`, `Tabs`, `TabPanel`, `Drawer`, `SwipeableDrawer`, `DrawerLayoutAndroid`, `BottomSheet`, `Breadcrumbs`, `Link`, `Menu`, `MenuItem`
 
-### Actions et boutons
+### Actions & Buttons
 
 `Button`, `ButtonGroup`, `IconButton`, `FAB`, `ToggleButton`, `ToggleButtonGroup`, `SpeedDial`, `Pressable`, `TouchableRipple`, `TouchableOpacity`, `TouchableHighlight`
 
-### Saisie et formulaires
+### Inputs & Forms
 
 `TextField`, `TextInput`, `NumberField`, `Searchbar`, `Select`, `Autocomplete`, `Checkbox`, `RadioButton`, `Radio`, `RadioGroup`, `Switch`, `Slider`, `SegmentedButtons`, `DatePicker`, `TimePicker`, `DateTimePicker`, `LocalizationProvider`, `IntlDateAdapter`, `useLocalization`
 
-### Affichage et media
+### Display & Media
 
 `Text`, `Typography`, `HelperText`, `Avatar`, `AvatarGroup`, `Badge`, `Chip`, `Icon`, `MaterialIcon`, `materialIconSource`, `Image`, `ImageBackground`, `ImageList`, `ImageListItem`, `Skeleton`, `Rating`, `ActivityIndicator`
 
-### Data, overlays et utilitaires
+### Data, Overlays & Utilities
 
 `DataTable`, `DataGrid`, `useGridApiRef`, `Snackbar`, `SnackbarHost`, `useSnackbar`, `Dialog`, `Modal`, `Portal`, `PortalHost`, `Popover`, `Popper`, `Tooltip`, `Accordion`, `Stepper`, `Pagination`, `Timeline`, `SimpleTreeView`, `BarChart`, `LineChart`, `Masonry`
 
-### Exemple import global
+### Global Import Example
 
 ```tsx
 import {
@@ -327,7 +327,7 @@ import {
 
 ---
 
-## Developpement local
+## Local Development
 
 ```bash
 npm install
@@ -335,7 +335,7 @@ npm run lint
 npm test
 ```
 
-Pour executer uniquement certains tests:
+To run specific tests:
 
 ```bash
 npx jest --testPathPattern="NavigationRail|SwipeableDrawer" --no-coverage
@@ -343,14 +343,14 @@ npx jest --testPathPattern="NavigationRail|SwipeableDrawer" --no-coverage
 
 ---
 
-## Qualite
+## Quality
 
 ![quality pipeline](docs/illustrations/quality-pipeline.svg)
 
-- TypeScript 5 strict mode sur toute la librairie.
-- API publique centralisee et exportee de facon consistente.
-- Tests unitaires par composant et tests de themes.
-- Composants overlay testes avec `Portal` et `PortalHost`.
+- TypeScript 5 strict mode enforced across the entire library.
+- Centralized public API with consistent exports.
+- Per-component unit tests and theme integration tests.
+- Overlay components tested with `Portal` and `PortalHost`.
 
 ---
 

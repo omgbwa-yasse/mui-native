@@ -1,6 +1,6 @@
 {
   "name": "mui-native",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "mui-native — Material Design 3 component library for React Native",
   "main": "lib/index.js",
   "module": "lib/index.js",
