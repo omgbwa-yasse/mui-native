@@ -12,6 +12,15 @@ export { createTheme } from './theme/createTheme';
 export type { CreateThemeOptions } from './theme/createTheme';
 export { generatePalette } from './theme/generatePalette';
 
+// Platform-inspired theme presets (012-platform-themes)
+export { PureTheme } from './theme/presets/PureTheme';
+export { BeautifulTheme } from './theme/presets/BeautifulTheme';
+export { PencilTheme } from './theme/presets/PencilTheme';
+export { AuroraTheme } from './theme/presets/AuroraTheme';
+export { BreezeTheme } from './theme/presets/BreezeTheme';
+export { NovaTheme } from './theme/presets/NovaTheme';
+export { PulseTheme } from './theme/presets/PulseTheme';
+
 // Tokens
 export type { ColorScheme } from './tokens/colors';
 export { baseLightColors, baseDarkColors } from './tokens/colors';
@@ -55,6 +64,8 @@ export type { BottomSheetProps } from './components/BottomSheet';
 
 export { NavigationBar } from './components/NavigationBar';
 export type { NavigationBarProps, NavigationBarItem } from './components/NavigationBar';
+export { NavigationRail } from './components/NavigationRail';
+export type { NavigationRailProps, NavigationRailItem } from './components/NavigationRail';
 
 // New components (alphabetical)
 export {
@@ -96,6 +107,9 @@ export type { BannerProps, BannerAction } from './components/Banner';
 export { Box } from './components/Box';
 export type { BoxProps } from './components/Box';
 
+export { View } from './components/View';
+export type { ViewProps } from './components/View';
+
 export { Breadcrumbs } from './components/Breadcrumbs';
 export type { BreadcrumbsProps, BreadcrumbItem } from './components/Breadcrumbs';
 
@@ -116,6 +130,14 @@ export type { DividerProps } from './components/Divider';
 
 export { Drawer } from './components/Drawer';
 export type { DrawerProps } from './components/Drawer';
+export { SwipeableDrawer } from './components/SwipeableDrawer';
+export type { SwipeableDrawerProps } from './components/SwipeableDrawer';
+
+export { DrawerLayoutAndroid } from './components/DrawerLayoutAndroid';
+export type { DrawerLayoutAndroidProps } from './components/DrawerLayoutAndroid';
+
+export { FlatList } from './components/FlatList';
+export type { FlatListProps, FlatListBaseProps } from './components/FlatList';
 
 export { Grid, GridItem } from './components/Grid';
 export type { GridProps, GridItemProps } from './components/Grid';
@@ -129,11 +151,20 @@ export type { IconProps, IconSource } from './components/Icon';
 export { IconButton } from './components/IconButton';
 export type { IconButtonProps } from './components/IconButton';
 
+export { Image } from './components/Image';
+export type { ImageProps } from './components/Image';
+
+export { ImageBackground } from './components/ImageBackground';
+export type { ImageBackgroundProps } from './components/ImageBackground';
+
 export { ImageList, ImageListItem } from './components/ImageList';
 export type { ImageListProps, ImageListItemProps, ImageListVariant } from './components/ImageList';
 
 export { Link } from './components/Link';
 export type { LinkProps } from './components/Link';
+
+export { KeyboardAvoidingView } from './components/KeyboardAvoidingView';
+export type { KeyboardAvoidingViewProps } from './components/KeyboardAvoidingView';
 
 export { MaterialIcon } from './components/MaterialIcon';
 export { materialIconSource } from './components/MaterialIcon';
@@ -180,11 +211,26 @@ export type { PaperProps, PaperElevation, PaperMode, PaperProps as SurfaceProps 
 export { Portal, PortalHost } from './components/Portal';
 export type { PortalProps, PortalHostProps } from './components/Portal';
 
+export { Pressable } from './components/Pressable';
+export type { PressableProps } from './components/Pressable';
+
 export { RadioButton, Radio, RadioGroup } from './components/RadioButton';
 export type { RadioButtonProps, RadioGroupProps, RadioGroupContextValue, RadioProps } from './components/RadioButton';
 
 export { Rating } from './components/Rating';
 export type { RatingProps } from './components/Rating';
+
+export { RefreshControl } from './components/RefreshControl';
+export type { RefreshControlProps } from './components/RefreshControl';
+
+export { SafeAreaView } from './components/SafeAreaView';
+export type { SafeAreaViewProps } from './components/SafeAreaView';
+
+export { ScrollView } from './components/ScrollView';
+export type { ScrollViewProps } from './components/ScrollView';
+
+export { SectionList } from './components/SectionList';
+export type { SectionListProps, SectionListBaseProps } from './components/SectionList';
 
 export { Searchbar } from './components/Searchbar';
 export type { SearchbarProps } from './components/Searchbar';
@@ -235,6 +281,9 @@ export type { TabsProps, TabItem } from './components/Tabs';
 export { Text } from './components/Text';
 export type { TextProps, TypeScaleVariant } from './components/Text';
 
+export { TextInput } from './components/TextInput';
+export type { TextInputProps } from './components/TextInput';
+
 export { ToggleButton, ToggleButtonGroup } from './components/ToggleButton';
 export type { ToggleButtonProps, ToggleButtonGroupProps, ToggleButtonGroupContextValue } from './components/ToggleButton';
 
@@ -243,6 +292,12 @@ export type { TooltipProps, TooltipPlacement } from './components/Tooltip';
 
 export { TouchableRipple } from './components/TouchableRipple';
 export type { TouchableRippleProps } from './components/TouchableRipple';
+
+export { TouchableOpacity } from './components/TouchableOpacity';
+export type { TouchableOpacityProps } from './components/TouchableOpacity';
+
+export { TouchableHighlight } from './components/TouchableHighlight';
+export type { TouchableHighlightProps } from './components/TouchableHighlight';
 
 export { TransferList } from './components/TransferList';
 export type { TransferListProps, TransferItem } from './components/TransferList';
@@ -347,3 +402,47 @@ export { typographyVariantMap } from './tokens/typography';
 // Typography alias — MUI Web naming compatibility (source: Text component)
 export { Text as Typography } from './components/Text';
 export type { TextProps as TypographyProps } from './components/Text';
+
+export { VirtualizedList } from './components/VirtualizedList';
+export type { VirtualizedListProps, VirtualizedListBaseProps } from './components/VirtualizedList';
+
+// ─── React Native core utilities ─────────────────────────────────────────────
+// Re-exported for consumers who want a single import surface.
+// These are standard RN APIs with no wrapping applied.
+export {
+  StyleSheet,
+  Dimensions,
+  Platform,
+  Animated,
+  LayoutAnimation,
+  Linking,
+  Vibration,
+  AppState,
+  Keyboard,
+  useColorScheme,
+  StatusBar,
+  // Re-exported as NativeAlert to avoid conflict with the MUI Alert component
+  Alert as NativeAlert,
+  // Android-specific APIs
+  BackHandler,
+  PermissionsAndroid,
+  ToastAndroid,
+  // iOS-specific APIs
+  ActionSheetIOS,
+  // Utility APIs
+  PixelRatio,
+  AccessibilityInfo,
+  AppRegistry,
+  Easing,
+  InteractionManager,
+  NativeEventEmitter,
+  NativeModules,
+  PanResponder,
+  PlatformColor,
+  Share,
+  // Hooks
+  useWindowDimensions,
+  useAnimatedValue,
+} from 'react-native';
+
+

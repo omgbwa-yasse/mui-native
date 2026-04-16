@@ -54,7 +54,7 @@ react {
 /**
  * Set this to true to Run Proguard on Release builds to minify the Java bytecode.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
 
 /**
  * The preferred build flavor of JavaScriptCore (JSC)
@@ -81,6 +81,9 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        ndk {
+            abiFilters "arm64-v8a"  // single ABI: ~4x smaller than bundling all 4
+        }
     }
     signingConfigs {
         debug {
@@ -99,8 +102,16 @@ android {
             // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            shrinkResources enableProguardInReleaseBuilds
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
+    }
+    // Explicitly drop all non-arm64-v8a native libs (ndk.abiFilters alone is insufficient
+    // when sub-project AARs compile for all ABIs before APK packaging)
+    packagingOptions {
+        exclude "lib/armeabi-v7a/**"
+        exclude "lib/x86/**"
+        exclude "lib/x86_64/**"
     }
 }
 
